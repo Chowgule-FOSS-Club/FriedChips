@@ -68,12 +68,13 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                     ["label" => "Layout", "url" => ["site/layout"], "icon" => "files-o"],
                                     ["label" => "Error page", "url" => ["site/error-page"], "icon" => "close"],
                                     [
-                                        "label" => "Widgets",
+                                        "label" => "ADMIN",
                                         "icon" => "th",
                                         "url" => "#",
                                         "items" => [
-                                            ["label" => "Menu", "url" => ["site/menu"]],
-                                            ["label" => "Panel", "url" => ["site/panel"]],
+                                            ["label" => "Product", "url" => ["product/index"]],
+                                            ["label" => "Specification", "url" => ["specification/index"]],
+                                            ["label" => "Product Specs", "url" => ["product-specs/index"]],
                                         ],
                                     ],
                                     [
