@@ -148,9 +148,10 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                     <a data-toggle="tooltip" data-placement="top" title="Lock">
                         <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                     </a>
+                    
                     <a data-toggle="tooltip" data-placement="top" title="Logout">
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                    </a>
+                    </a> 
                 </div>
                 <!-- /menu footer buttons -->
             </div>
@@ -183,7 +184,17 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                 <li>
                                     <a href="javascript:;">Help</a>
                                 </li>
-                                <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                <li>
+                                    <?=
+                                        HTML::a(
+                                            "<i class=\"fa fa-sign-out pull-right\"></i> Log Out",
+                                            ['site/logout'],
+                                            [
+                                                'data-method' => 'POST',
+                                            ]
+
+                                        );
+                                    ?>          
                                 </li>
                             </ul>
                         </li>
