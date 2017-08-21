@@ -75,6 +75,8 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                             ["label" => "Product", "url" => ["product/index"]],
                                             ["label" => "Specification", "url" => ["specification/index"]],
                                             ["label" => "Product Specs", "url" => ["product-specs/index"]],
+                                            ["label" => "Questions", "url" => ["questions/index"]],
+                                            ["label" => "Product Questions", "url" => ["product-question/index"]],
                                         ],
                                     ],
                                     [

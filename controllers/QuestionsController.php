@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Product;
-use app\models\ProductSearch;
+use app\models\Questions;
+use app\models\QuestionsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
+
 /**
- * ProductController implements the CRUD actions for Product model.
+ * QuestionsController implements the CRUD actions for Questions model.
  */
-class ProductController extends Controller
+class QuestionsController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class ProductController extends Controller
     }
 
     /**
-     * Lists all Product models.
+     * Lists all Questions models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
+        $searchModel = new QuestionsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Displays a single Product model.
+     * Displays a single Questions model.
      * @param integer $id
      * @return mixed
      */
@@ -57,20 +57,16 @@ class ProductController extends Controller
     }
 
     /**
-     * Creates a new Product model.
+     * Creates a new Questions model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Product();       
+        $model = new Questions();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->file = UploadedFile::getInstance($model,'file');
-            $model->file->saveAs('uploads/'.$model->name.'.'.$model->file->extension);
-            $model->image = 'uploads/'.$model->name.'.'.$model->file->extension;
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->pid]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->qid]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -79,7 +75,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Updates an existing Product model.
+     * Updates an existing Questions model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -88,12 +84,8 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->file = UploadedFile::getInstance($model,'file');
-            $model->file->saveAs('uploads/'.$model->name.'.'.$model->file->extension);
-            $model->image = 'uploads/'.$model->name.'.'.$model->file->extension;
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->pid]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->qid]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -102,7 +94,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Deletes an existing Product model.
+     * Deletes an existing Questions model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -115,15 +107,15 @@ class ProductController extends Controller
     }
 
     /**
-     * Finds the Product model based on its primary key value.
+     * Finds the Questions model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Product the loaded model
+     * @return Questions the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Product::findOne($id)) !== null) {
+        if (($model = Questions::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

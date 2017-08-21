@@ -38,7 +38,7 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description', 'image', 'status'], 'required'],
+            [['name', 'description', 'image', 'status','file'], 'required'],
             [['description', 'status'], 'string'],
             ['file','file'],
             [['name'], 'string', 'max' => 25],

@@ -4,18 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ProductSearch */
+/* @var $searchModel app\models\ProductQuestionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Products';
+$this->title = 'Product Questions';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-index">
-     <h1><?= Html::encode($this->title) ?></h1>
+<div class="product-question-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Product Question', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -23,15 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'name',
-            'description:ntext',
-             [
-            'attribute'=>'image',
-            'format' => 'image',
-            'value' => function ($model) {
-             return $model->image; 
-            },
+            [
+                'attribute'=>'pid',
+                'value'=>'p.name'
             ],
+            [
+                'attribute'=>'qid',
+                'value'=>'q.name'
+            ],
+            'value',
             'status',
 
             ['class' => 'yii\grid\ActionColumn'],
