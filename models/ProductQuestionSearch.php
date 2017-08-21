@@ -60,8 +60,8 @@ class ProductQuestionSearch extends ProductQuestion
        $query->joinWith('p');
     $query->joinWith('q');
 
-        $query->andFilterWhere(['like', 'value', $this->value])
-            ->andFilterWhere(['like', 'status', $this->status])
+        $query->andFilterWhere(['like', 'product_question.value', $this->value])
+            ->andFilterWhere(['like', 'product_question.status', $this->status])
             ->andFilterWhere(['like', 'questions.name', $this->qid])
             ->andFilterWhere(['like', 'product.name', $this->pid]);
 
