@@ -14,17 +14,15 @@ use app\models\Product;
 
     <?php $form = ActiveForm::begin(); ?>
 
-      <?= $form->field($model,'pid')->dropDownList(
+    <?= $form->field($model,'pid')->dropDownList(
         ArrayHelper::map(Product::find()->all(), 'pid','name'),
-        ['prompt'=>'Select Product']
-    ) ?>
+        ['prompt'=>'Select Product',
+    ]);?>
 
     <?= $form->field($model,'qid')->dropDownList(
         ArrayHelper::map(Questions::find()->all(), 'qid','name'),
         ['prompt'=>'Select Question']
     ) ?>
-
-    <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->dropDownList([ 'true' => 'True', 'false' => 'False', ], ['prompt' => '']) ?>
 

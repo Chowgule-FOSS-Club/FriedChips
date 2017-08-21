@@ -18,7 +18,7 @@ class ProductQuestionSearch extends ProductQuestion
     public function rules()
     {
         return [
-            [['value', 'status','pid', 'qid'], 'safe'],
+            [['status','pid', 'qid'], 'safe'],
         ];
     }
 
@@ -58,12 +58,11 @@ class ProductQuestionSearch extends ProductQuestion
 
         // grid filtering conditions
        $query->joinWith('p');
-    $query->joinWith('q');
+        $query->joinWith('q');
 
-        $query->andFilterWhere(['like', 'product_question.value', $this->value])
-            ->andFilterWhere(['like', 'product_question.status', $this->status])
-            ->andFilterWhere(['like', 'questions.name', $this->qid])
-            ->andFilterWhere(['like', 'product.name', $this->pid]);
+        $query->andFilterWhere(['like', 'product_question.status', $this->status])
+        ->andFilterWhere(['like', 'product.name', $this->pid])
+        ->andFilterWhere(['like', 'question.name', $this->qid]);
 
         return $dataProvider;
     }

@@ -26,8 +26,6 @@ use app\models\Product;
         ['prompt'=>'Select Specification']
     ) ?>
 
-
-
     <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->dropDownList([ 'true' => 'True', 'false' => 'False', ], ['prompt' => 'status']) ?>

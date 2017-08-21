@@ -9,7 +9,6 @@ use Yii;
  *
  * @property integer $pid
  * @property integer $qid
- * @property string $value
  * @property string $status
  *
  * @property Product $p
@@ -31,10 +30,9 @@ class ProductQuestion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pid', 'qid', 'value', 'status'], 'required'],
+            [['pid', 'qid', 'status'], 'required'],
             [['pid', 'qid'], 'integer'],
             [['status'], 'string'],
-            [['value'], 'string', 'max' => 500],
             [['pid'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['pid' => 'pid']],
             [['qid'], 'exist', 'skipOnError' => true, 'targetClass' => Questions::className(), 'targetAttribute' => ['qid' => 'qid']],
         ];
@@ -48,7 +46,6 @@ class ProductQuestion extends \yii\db\ActiveRecord
         return [
             'pid' => 'Product',
             'qid' => 'Question',
-            'value' => 'Value',
             'status' => 'Status',
         ];
     }

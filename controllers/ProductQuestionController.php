@@ -95,6 +95,8 @@ class ProductQuestionController extends Controller
         }
     }
 
+
+
     /**
      * Deletes an existing ProductQuestion model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
