@@ -96,11 +96,7 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-        $model = new LoginForm();
-        $this->layout = 'main-login';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+        $this->redirect(['site/login']);
     }
 
     /**

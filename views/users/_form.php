@@ -12,12 +12,13 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'fname')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'fname')->textInput(['maxlength' => true])->label("First Name"); ?>
 
-    <?= $form->field($model, 'lname')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'lname')->textInput(['maxlength' => true])->label("Surname "); ?>
 
     <?= \kato\DropZone::widget([
             'options' => [
+                    'maxFiles' => '1',
                     'url' => 'index.php?r=users/upload',
                     'maxFilesize' => '2',
             ],

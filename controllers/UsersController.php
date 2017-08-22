@@ -152,7 +152,7 @@ class UsersController extends Controller
                 echo \yii\helpers\Json::encode($file);
             }
         }
-
         return false;
     }
+
 }
