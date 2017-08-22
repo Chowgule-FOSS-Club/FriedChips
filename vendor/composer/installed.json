@@ -3403,17 +3403,17 @@
     },
     {
         "name": "yiister/yii2-gentelella",
-        "version": "1.2.5",
-        "version_normalized": "1.2.5.0",
+        "version": "1.3.0",
+        "version_normalized": "1.3.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/yiister/yii2-gentelella.git",
-            "reference": "60e79128a3999c8d9ff826ee5ea26e74c7c64eed"
+            "reference": "7bf07425074231de7acfc6e1e9f4e787590f365b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiister/yii2-gentelella/zipball/60e79128a3999c8d9ff826ee5ea26e74c7c64eed",
-            "reference": "60e79128a3999c8d9ff826ee5ea26e74c7c64eed",
+            "url": "https://api.github.com/repos/yiister/yii2-gentelella/zipball/7bf07425074231de7acfc6e1e9f4e787590f365b",
+            "reference": "7bf07425074231de7acfc6e1e9f4e787590f365b",
             "shasum": ""
         },
         "require": {
@@ -3423,7 +3423,7 @@
             "yiisoft/yii2": "~2.0.0",
             "yiisoft/yii2-bootstrap": "~2.0.0"
         },
-        "time": "2017-07-12T03:46:01+00:00",
+        "time": "2017-08-19T09:05:56+00:00",
         "type": "yii2-extension",
         "extra": {
             "asset-installer-paths": {
@@ -3458,6 +3458,50 @@
             "extension",
             "gentelella",
             "theme",
+            "yii2"
+        ]
+    },
+    {
+        "name": "perminder-klair/yii2-dropzone",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/perminder-klair/yii2-dropzone.git",
+            "reference": "41e8145d940cc9955011138a9f16ad80e9831423"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/perminder-klair/yii2-dropzone/zipball/41e8145d940cc9955011138a9f16ad80e9831423",
+            "reference": "41e8145d940cc9955011138a9f16ad80e9831423",
+            "shasum": ""
+        },
+        "require": {
+            "yiisoft/yii2": "2.0.*"
+        },
+        "time": "2015-11-09T11:28:44+00:00",
+        "type": "yii2-extension",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "kato\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Parminder Klair",
+                "email": "perminder.klair@gmail.com"
+            }
+        ],
+        "description": "DropzoneJs Extention for Yii2",
+        "keywords": [
+            "dropzone",
+            "extension",
+            "upload",
             "yii2"
         ]
     }

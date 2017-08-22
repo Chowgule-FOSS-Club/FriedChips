@@ -60,10 +60,19 @@ return array (
   'yiister/yii2-gentelella' => 
   array (
     'name' => 'yiister/yii2-gentelella',
-    'version' => '1.2.5.0',
+    'version' => '1.3.0.0',
     'alias' => 
     array (
       '@yiister/gentelella' => $vendorDir . '/yiister/yii2-gentelella',
+    ),
+  ),
+  'perminder-klair/yii2-dropzone' => 
+  array (
+    'name' => 'perminder-klair/yii2-dropzone',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kato' => $vendorDir . '/perminder-klair/yii2-dropzone',
     ),
   ),
 );
