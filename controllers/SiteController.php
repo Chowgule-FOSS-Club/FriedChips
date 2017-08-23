@@ -61,14 +61,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        
         if(Yii::$app->user->isGuest){
             return $this->render('login', ['model' => new LoginForm()]);
         }
+        else{
+        $this->layout = 'frontend';
         return $this->render('index');
+        }
     }
 
     /**
-     * Login action.
+     * Login <action class=""></action>
      *
      * @return Response|string
      */
