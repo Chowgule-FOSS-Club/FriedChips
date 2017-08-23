@@ -14,20 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'fname')->textInput(['maxlength' => true])->label("First Name"); ?>
 
-    <?= $form->field($model, 'lname')->textInput(['maxlength' => true])->label("Surname "); ?>
-
-    <?= \kato\DropZone::widget([
-            'options' => [
-                    'maxFiles' => '1',
-                    'url' => 'index.php?r=users/upload',
-                    'maxFilesize' => '2',
-            ],
-            'clientEvents' => [
-                'complete' => "function(file){console.log(file)}",
-                'removedfile' => "function(file){alert(file.name + ' is removed')}"
-            ],
-        ]) 
-   ?>
+    <?= $form->field($model, 'lname')->textInput(['maxlength' => true])->label("Surname"); ?>
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
