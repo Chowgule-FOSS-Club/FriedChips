@@ -49,7 +49,13 @@ class ProductController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionViewProducts()
+    {
+        $this->layout = 'product';
+        return $this->render('view_products');
+    }
+
+     public function actionView($id)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),

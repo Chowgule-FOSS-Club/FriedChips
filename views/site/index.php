@@ -1,6 +1,10 @@
- <div class="back-img jumbotron text-center">
+
+
+ 
+
+  <div class="back-img jumbotron text-center">
     <h1>SALGAOCAR ENGINEERS PVT. LTD</h1>
-    <a target="_blank" href="product.html" class="btn btn-outlined btn-theme btn-lg" data-wow-delay="0.7s">See Our Products</a>
+    <a target="_blank" href="index.php?r=product/view-products" class="btn btn-outlined btn-theme btn-lg" data-wow-delay="0.7s">See Our Products</a>
   </div>
 
   <!-- Container (About Section) -->
@@ -128,3 +132,21 @@
       </div>
     </div>
   </div>
+
+
+ <div id="googleMap" style="height:400px;width:100%;"></div> 
+  <script>
+function myMap() {
+var myCenter = new google.maps.LatLng(41.878114, -87.629798);
+var mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+var marker = new google.maps.Marker({position:myCenter});
+marker.setMap(map);
+}
+</script> 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script> -->
+  <!--
+To use this code on your website, get a free API key from Google.
+Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
+
+-->
