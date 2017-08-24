@@ -13,12 +13,12 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class HomeAsset extends AssetBundle
+class ProductAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/home-style.css',
+        'css/style.css',
     ];
     public $js = [
         'js/bootstrap.min.js',

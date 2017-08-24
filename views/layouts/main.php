@@ -77,7 +77,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                         \yiister\gentelella\widgets\Menu::widget(
                             [
                                 "items" => [
-                                    ["label" => "Home", "url" => "/", "icon" => "home"],
+                                    ["label" => "Home",  "url" => ["site/index"], "icon" => "home"],
                                     ["label" => "Layout", "url" => ["site/layout"], "icon" => "files-o"],
                                     ["label" => "Error page", "url" => ["site/error-page"], "icon" => "close"],
                                     [
