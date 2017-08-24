@@ -11,7 +11,11 @@ use kartik\file\FileInput;
 
 <div class="users-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(
+        ['options' => ['enctype' => 'multipart/form-data'],
+        'id' => 'contact-form',
+        'enableAjaxValidation' => true]
+    ); ?>
 
     <?= $form->field($model, 'fname')->textInput(['maxlength' => true])->label("First Name"); ?>
 

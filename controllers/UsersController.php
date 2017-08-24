@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\web\Response;
 use app\models\ImageUpload;
 use app\models\Users;
 use app\controllers\UsersSearchController;
@@ -10,6 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\widgets\ActiveForm;
 
 
 /**
@@ -67,7 +69,13 @@ class UsersController extends Controller
      */
     public function actionCreate()
     {
+
         $model = new Users();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post()) ) {
             $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
             $model->imageFile = UploadedFile::getInstance($model,'imageFile');
@@ -96,7 +104,10 @@ class UsersController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
         if ($model->load(Yii::$app->request->post())) {
             $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
             $model->imageFile = UploadedFile::getInstance($model,'imageFile');
