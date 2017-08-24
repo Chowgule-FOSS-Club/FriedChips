@@ -40,7 +40,18 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                 <!-- menu prile quick info -->
                 <div class="profile">
                     <div class="profile_pic">
-                        <img src="http://placehold.it/128x128" alt="..." class="img-circle profile_img">
+                        <?php 
+                            if(!Yii::$app->user->isGuest){
+                                echo HTML::img(
+                                    Yii::$app->user->identity->image,
+                                    [
+                                        
+                                        'class' => 'img-circle profile_img'
+                                    ]
+                                );
+                            }
+                        ?>
+                        <!--<img src="http://placehold.it/128x128" alt="..." class="img-circle profile_img"> -->
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
@@ -180,10 +191,14 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="http://placehold.it/128x128" alt="">
+                               
                                 <?php 
                                     if(!Yii::$app->user->isGuest){
+                                        echo HTML::img(
+                                            Yii::$app->user->identity->image
+                                        );
                                         echo Yii::$app->user->identity->getName() ; 
+                                        
                                     }
                                 ?>
                                 <span class=" fa fa-angle-down"></span>

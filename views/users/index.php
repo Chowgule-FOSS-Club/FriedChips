@@ -28,6 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'lname',
             'password',
             'email:email',
+            [
+                'attribute'=>'image',
+                'format' => 'image',
+                'value' => function ($model) {
+                    return $model->image; 
+                },
+            ],
             // 'authKey',
 
             ['class' => 'yii\grid\ActionColumn'],

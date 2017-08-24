@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\web\UploadedFile;
 use Yii;
 
 /**
@@ -21,9 +22,11 @@ use Yii;
  */
 class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    public $imageFile;
     /**
      * @inheritdoc
      */
+     
     public static function tableName()
     {
         return 'users';
@@ -50,6 +53,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'userid' => 'Userid',
             'fname' => 'Fname',
             'lname' => 'Lname',
+            'image' => 'image',
             'password' => 'Password',
             'email' => 'Email',
             'authKey' => 'Auth Key',
