@@ -1,8 +1,4 @@
-
 $(document).ready(function () {
-
-  
-
   $('#modal-1').on('hidden.bs.modal', function (e) {
     $(this)
       .find("input,textarea,email")
@@ -39,7 +35,9 @@ $(document).ready(function () {
     element = $('body');
     offset = element.offset();
     offsetTop = offset.top;
-    $('html, body').animate({ scrollTop: offsetTop }, 300, 'linear');
+    $('html, body').animate({
+      scrollTop: offsetTop
+    }, 300, 'linear');
   }
   // Add smooth scrolling to all links in navbar + footer link
   $(".navbar a, footer a[href='#myPage']").on('click', function (event) {
@@ -74,3 +72,8 @@ $(document).ready(function () {
     });
   });
 });
+ $(window).load(function () {
+    setTimeout(function () {
+      $('#enquirypopup').modal('show');
+    }, 3000);
+  });

@@ -17,9 +17,12 @@ HomeAsset::register($this);
 <html lang="<?= Yii::$app->language ?>">
 <head>
 
-   <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link href='https://fonts.googleapis.com/css?family=Khula' rel='stylesheet'>
   <link href='https://fonts.googleapis.com/css?family=Cambay' rel='stylesheet'>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,7 +34,8 @@ HomeAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
- <nav class="navbar navbar-default navbar-fixed-top">
+
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -43,12 +47,11 @@ HomeAsset::register($this);
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="index.php?r=product/view-products">OUR PRODUCTS</a></li>
+        <li><a href="?r=product/view-products">PRODUCTS</a></li>
           <li><a href="#about">ABOUT</a></li>
           <li><a href="#services">SERVICES</a></li>
           <li><a href="#clients">CLIENTS</a></li>
           <li><a href="#contact">CONTACT</a></li>
-          <li><a href="index.php?r=login/index">LOGIN</a></li>
         </ul>
       </div>
     </div>

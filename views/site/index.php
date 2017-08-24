@@ -1,11 +1,17 @@
 
-
- 
-
-  <div class="back-img jumbotron text-center">
+ <div class="wrapper text-center">
+    <div class="image-wrap"></div>
+    <div class="image-wrap2"></div>
+    <div class="image-overlay"></div>
+    <div class="text">
     <h1>SALGAOCAR ENGINEERS PVT. LTD</h1>
-    <a target="_blank" href="index.php?r=product/view-products" class="btn btn-outlined btn-theme btn-lg" data-wow-delay="0.7s">See Our Products</a>
+    <a target="_blank" href="?r=product/view-products" class="btn btn-outlined btn-theme btn-lg" data-wow-delay="0.7s">See Our Products</a>
+    </div>
   </div>
+  <!-- <div class="back-img jumbotron text-center">
+    <h1>SALGAOCAR ENGINEERS PVT. LTD</h1>
+    <a target="_blank" href="product.html" class="btn btn-outlined btn-theme btn-lg" data-wow-delay="0.7s">See Our Products</a>
+  </div> -->
 
   <!-- Container (About Section) -->
   <div id="about" class="container-fluid">
@@ -23,7 +29,8 @@
             ore, barge building, real estate, pharmaceuticals, newspaper publishing, etc. The entire Group consists of more
             than fifteen companies and is regarded as the pioneer in the mining and export of iron ore from Goa. Our reserves
             are the largest in Goa (approximately 300 million tonnes) and annual export turnover is approximately 3 million
-            tonnes.</p>
+            tonnes.
+          </p>
         </h4><br>
 
       </div>
@@ -55,7 +62,7 @@
 
 
   <!-- Container (Services Section) -->
-  <div id="clients" class="container-fluid text-center">
+  <div id="clients" class="container-fluid  text-center">
     <h2>OUR CLIENTS</h2>
 
     <br>
@@ -132,21 +139,3 @@
       </div>
     </div>
   </div>
-
-
- <div id="googleMap" style="height:400px;width:100%;"></div> 
-  <script>
-function myMap() {
-var myCenter = new google.maps.LatLng(41.878114, -87.629798);
-var mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};
-var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-var marker = new google.maps.Marker({position:myCenter});
-marker.setMap(map);
-}
-</script> 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script> -->
-  <!--
-To use this code on your website, get a free API key from Google.
-Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
-
--->

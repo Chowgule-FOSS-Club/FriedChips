@@ -1,5 +1,4 @@
-
-
+/* modal styling */
 .modal-open{
     overflow:visible ;
 }
@@ -9,64 +8,99 @@
 
 .modal-scrollbar-measure {position:absolute;top:-9999px;width:50px;height:50px;overflow:visible}
 
+/*modal form*/
 
-/*forms*/
-form{position:relative;}
 .contact-detail{padding-top:4%}
-.product-info{padding-top: 4%}
+.product-info{padding-top: 2%}
 
-/*modal navigation bar*/
+@media screen and (max-width: 413px) {
+  label{
+    font-size: .8em;
+  }
+}
+
+form {
+  position: relative;
+}
+
 .breadcrumb {
-    padding: 0px;
-    background: transparent;
-    list-style: none;
-    overflow: hidden;
-    margin-top: 20px;
-    margin-bottom: 0px;
-    border-radius: 4px;
-    text-align: center;
+  padding: 0px;
+  background: transparent;
+  list-style: none;
+  overflow: hidden;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  border-radius: 4px;
+  text-align: center;
 }
- 
-  .breadcrumb li.completed span {
-    
-    color: #009688;
+
+.breadcrumb li.completed span {
+  color: #009688;
+  font-size: 1.6em;
 }
+
+.form-control:focus {
+  border-color: #009788;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.has-error .form-control:focus {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.rest-body {
+  font-family: 'khula';
+}
+
 
 /*card styling*/
 
-body {
-  font-family: 'khula';
+@media all and (max-width: 1200px) {
+  /* screen size until 1200px */
+  .card-title a {
+    font-size: 1em;
+    /* 1.5x default size */
+  }
+  .lead {
+    font-size: 1em;
+    /* 1.5x default size */
+  }
 }
-@media all and (max-width: 1200px) { /* screen size until 1200px */
-    .card-title a  {
-        font-size: 1em; /* 1.5x default size */
-    }
-      .lead {
-        font-size: 1em; /* 1.5x default size */
-    }
+
+@media all and (max-width: 1000px) {
+  /* screen size until 1000px */
+  .card-title a {
+    font-size: .6em;
+    /* 1.2x default size */
+  }
+  .lead {
+    font-size: 1em;
+    /* 1.5x default size */
+  }
 }
-@media all and (max-width: 1000px) { /* screen size until 1000px */
-   .card-title a {
-        font-size: .6em; /* 1.2x default size */
-        }
-      .lead  {
-        font-size: 1em; /* 1.5x default size */
-    }
-    }
-  @media all and (max-width: 764px) { /* screen size until 1000px */
-   .card-title a {
-        font-size: 1em; /* 1.2x default size */
-        }
-      
-    }
-@media all and (max-width: 500px) { /* screen size until 500px */
-  .card-title a  {
-        font-size: 1.1em; /* 0.8x default size */
-        }
-      .lead  {
-        font-size: 1em; /* 1.5x default size */
-    }
-    }
+
+@media all and (max-width: 764px) {
+  /* screen size until 1000px */
+  .card-title a {
+    font-size: 1em;
+    /* 1.2x default size */
+  }
+}
+
+@media all and (max-width: 500px) {
+  /* screen size until 500px */
+  .card-title a {
+    font-size: 1.1em;
+    /* 0.8x default size */
+  }
+  .lead {
+    font-size: 1em;
+    /* 1.5x default size */
+  }
+}
+
 h3 {
   font-weight: bold;
 }
@@ -92,6 +126,7 @@ h2 {
   padding-right: 85px;
   transition: 0.5s;
   font-weight: bold;
+  border-radius:5px;
 }
 
 .btinqr:hover {
@@ -100,6 +135,52 @@ h2 {
   display: inline-block;
   color: white;
   font-weight: bold;
+}
+.btncollapse {
+    border: 2px solid #009688;
+    background-color: #F7F7F7;
+    padding: 12px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 20px;
+    transition: 0.5s;
+    font-weight: bold;
+    position: relative;
+    left: 14px;
+    top: 6px;
+}
+.btncollapse:hover {
+    border: 2px solid #009688;
+    background-color: #009688;
+    display: inline-block;
+    color: white;
+    font-weight: bold;
+}
+
+.table{
+    margin-top: 20px;
+}
+
+hr {
+    height: 3px;
+    margin-left: 15px;
+    margin-bottom: 14px;
+    position: relative;
+    right: 15px;
+}
+
+.hr-primary {
+    background-image: -webkit-linear-gradient(left, rgba(18, 176, 126, .8), rgba(23, 216, 155, .6), rgba(255, 255, 255, 0));
+}
+
+.h2title {
+    padding-top: 8px;
+   
+    font-family: 'Laila' !important;
+    
+}
+  .info{
+    text-align: justify;
 }
 
 .s2 {
@@ -126,13 +207,52 @@ h2 {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   transition: box-shadow .25s;
   margin-bottom: 25px;
- 
+   -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1); 
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1); 
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1);
+    transition: all 200ms ease-in;
+    transform: scale(1);   
+
+}
+.card1 {
+    font-family: 'Cambay';
+    display: block;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border-radius: 2px;
+    transition: box-shadow .25s;
 }
 
 .card:hover {
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   z-index: 2;
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1.1);
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1.1);   
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1.1);
+    transition: all 200ms ease-in;
+    transform: scale(1.1);
+}
+.img-card1 {
+    width: 100%;
+    height: 375px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    display: block;
+    overflow: hidden;
 }
 
+.img-card1 img {
+    width: 100%;
+    height: 300px;
+    object-fit: scale-down;
+    transition: all .25s ease;
+}
 .img-card {
   width: 100%;
   height: 200px;
@@ -159,15 +279,17 @@ h2 {
   margin-top: 0px;
   font-weight: 700;
   font-size: 1.35em;
-  background-color: #009688;
+  background-color: #00c1af;
   padding: 15px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
+
+
 /*Glyphicon color*/
+
 .green {
-    color: #009788
+  color: #009788;
 }
 
 /*viewmore page styling */
@@ -182,6 +304,7 @@ h2 {
     font-weight: bold;
     position: center;
     margin-bottom: 50px;
+    border-radius:5px;
 }
 
 .btnview:hover {
@@ -270,6 +393,7 @@ hr {
   font-family: 'Cambay';
   color: #fff;
 }
+
 .card-title a:hover {
   font-family: 'Cambay';
   color: #fff;
@@ -350,15 +474,48 @@ li.dropdown.dropdown-large>a {
 .dropdown-menu-large .dropdown-header {
   color: #009688;
   font-size: 18px;
+  font-weight:bold;
   display: block;
   padding: 3px 15px;
   clear: both;
-  font-weight: normal;
+  
   line-height: 1.428571429;
   white-space: normal;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 767px) {
+  .card {
+  font-family: 'Cambay';
+  display: block;
+  line-height: 1.42857143;
+  background-color: #f8f8f8;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  transition: box-shadow .25s;
+  margin-bottom: 25px;
+     -webkit-transition: none;
+    -webkit-transform: scale(1); 
+    -ms-transition: none;
+    -ms-transform: scale(1); 
+    -moz-transition: none;
+    -moz-transform: scale(1);
+    transition: none;
+    transform: scale(1);   
+}
+  .card:hover {
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   z-index: 2;
+    -webkit-transition: none;
+    -webkit-transform: scale(1);
+    -ms-transition: none;
+    -ms-transform: scale(1);   
+    -moz-transition: none;
+    -moz-transform: scale(1);
+    transition: none;
+    transform: scale(1);
+}
+
+
   .dropdown-menu-large {
     margin-left: 0;
     margin-right: 0;
@@ -380,7 +537,8 @@ li.dropdown.dropdown-large>a {
 .navbar {
   padding-left: 10px;
   border: none !important;
-  border-radius: 0px !important;
+  border-radius: 0px !important; 
+ 
 }
 
 .navbar.navbar-inverse a {
@@ -393,7 +551,10 @@ li.dropdown.dropdown-large>a {
 
 .navbar-brand {
   position: relative;
+  font-size: 18px !important;
+  font-weight: bold;
   z-index: 2;
+ 
 }
 
 .navbar-nav.navbar-right .btn {
@@ -406,6 +567,11 @@ li.dropdown.dropdown-large>a {
 
 .navbar .navbar-collapse {
   position: relative;
+}
+
+.navbar .navbar-collapse .navbar-right>li{
+  font-size: 14px !important;
+  font-weight: bold;
 }
 
 .navbar .navbar-collapse .navbar-right>li:last-child {
@@ -448,12 +614,19 @@ li.dropdown.dropdown-large>a {
   border-radius: 50px;
   border-width: 2px;
   border-color: white;
+  font-size: 14px !important;
+  font-weight: bold;
 }
 
 .btn-danger {
   display: inline-block;
 }
-
+.btn-green{
+  background: #009688;
+  color: white;
+  font-size: 1.3em;
+  font-weight: bold;
+}
 .btn.btn-outline {
   background-color: transparent;
 }
@@ -475,6 +648,10 @@ li.dropdown.dropdown-large>a {
 }
 
 @media screen and (max-width: 767px) {
+  .btn-danger{
+    
+    width: 100%;
+  }
   .navbar .navbar-collapse .navbar-right>li:last-child {
     padding-left: 15px;
     padding-right: 15px;
@@ -506,10 +683,6 @@ li.dropdown.dropdown-large>a {
     transform: translate(0px, 0px);
   }
 }
-
-
-/* footer styling */
-
 
 /* footer styling */
 
@@ -619,8 +792,6 @@ a.socialIcon:hover,
 .icon {
   border: solid 3px white;
 }
-
-
 /* scroll top styling */
 
 .scroll-top-wrapper {
@@ -630,7 +801,7 @@ a.socialIcon:hover,
   overflow: hidden;
   text-align: center;
   z-index: 99999999;
-  background-color: #009688;
+  background-color: #BD3518;
   color: #eeeeee;
   width: 50px;
   height: 48px;

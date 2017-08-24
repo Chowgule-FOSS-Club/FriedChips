@@ -19,7 +19,6 @@ class HomeAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/home-style.css',
-        'css/bootstrap.min.css',
     ];
     public $js = [
         'js/bootstrap.min.js',
