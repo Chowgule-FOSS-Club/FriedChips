@@ -29,9 +29,8 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cid', 'name'], 'required'],
-            [['cid'], 'integer'],
-            [['name'], 'string', 'max' => 25],
+            [['name'], 'required'],
+            [['name'], 'string', 'max' => 100],
         ];
     }
 
@@ -42,7 +41,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'cid' => 'Cid',
-            'name' => 'Name',
+            'name' => 'Category',
         ];
     }
 
