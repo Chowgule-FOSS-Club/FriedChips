@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.14
--- http://www.phpmyadmin.net
+-- version 4.7.0
+-- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 21, 2017 at 12:08 PM
--- Server version: 5.6.26
--- PHP Version: 5.6.12
+-- Generation Time: Aug 24, 2017 at 04:33 AM
+-- Server version: 10.1.22-MariaDB
+-- PHP Version: 7.1.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,7 +28,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `category`
 --
 
-CREATE TABLE IF NOT EXISTS `category` (
+CREATE TABLE `category` (
   `cid` int(11) NOT NULL,
   `name` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -37,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `category` (
 -- Table structure for table `customer_questions`
 --
 
-CREATE TABLE IF NOT EXISTS `customer_questions` (
+CREATE TABLE `customer_questions` (
   `userid` int(11) NOT NULL,
   `qid` int(11) NOT NULL,
   `value` varchar(500) NOT NULL,
@@ -50,13 +52,13 @@ CREATE TABLE IF NOT EXISTS `customer_questions` (
 -- Table structure for table `product`
 --
 
-CREATE TABLE IF NOT EXISTS `product` (
+CREATE TABLE `product` (
   `pid` int(11) NOT NULL,
   `name` varchar(25) NOT NULL,
   `description` text NOT NULL,
   `image` varchar(200) NOT NULL,
   `status` enum('true','false') NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `product`
@@ -73,7 +75,7 @@ INSERT INTO `product` (`pid`, `name`, `description`, `image`, `status`) VALUES
 -- Table structure for table `product_category`
 --
 
-CREATE TABLE IF NOT EXISTS `product_category` (
+CREATE TABLE `product_category` (
   `pid` int(11) NOT NULL,
   `cid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -84,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `product_category` (
 -- Table structure for table `product_question`
 --
 
-CREATE TABLE IF NOT EXISTS `product_question` (
+CREATE TABLE `product_question` (
   `pid` int(11) NOT NULL,
   `qid` int(11) NOT NULL,
   `status` enum('true','false') NOT NULL
@@ -110,7 +112,7 @@ INSERT INTO `product_question` (`pid`, `qid`, `status`) VALUES
 -- Table structure for table `product_specs`
 --
 
-CREATE TABLE IF NOT EXISTS `product_specs` (
+CREATE TABLE `product_specs` (
   `sid` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   `value` varchar(500) NOT NULL,
@@ -137,10 +139,10 @@ INSERT INTO `product_specs` (`sid`, `pid`, `value`, `status`) VALUES
 -- Table structure for table `questions`
 --
 
-CREATE TABLE IF NOT EXISTS `questions` (
+CREATE TABLE `questions` (
   `qid` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `questions`
@@ -157,10 +159,10 @@ INSERT INTO `questions` (`qid`, `name`) VALUES
 -- Table structure for table `specification`
 --
 
-CREATE TABLE IF NOT EXISTS `specification` (
+CREATE TABLE `specification` (
   `sid` int(11) NOT NULL,
   `name` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `specification`
@@ -178,14 +180,22 @@ INSERT INTO `specification` (`sid`, `name`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE `users` (
   `userid` int(11) NOT NULL,
   `fname` varchar(25) NOT NULL,
   `lname` varchar(25) NOT NULL,
-  `password` varchar(25) NOT NULL,
+  `image` text NOT NULL,
+  `password` text NOT NULL,
   `email` varchar(50) NOT NULL,
   `authKey` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`userid`, `fname`, `lname`, `image`, `password`, `email`, `authKey`) VALUES
+(11, 'John', 'Snow', 'uploads/Jon-Snow-4.jpg', '$2y$13$cmwzxlMt/szWnmrdG1mtvu8vXqDLD15S4RU86GN0YgYB2ZbBXRC7e', 'john@snow.com', '');
 
 -- --------------------------------------------------------
 
@@ -193,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Table structure for table `user_admin`
 --
 
-CREATE TABLE IF NOT EXISTS `user_admin` (
+CREATE TABLE `user_admin` (
   `userid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -203,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `user_admin` (
 -- Table structure for table `user_customer`
 --
 
-CREATE TABLE IF NOT EXISTS `user_customer` (
+CREATE TABLE `user_customer` (
   `userid` int(11) NOT NULL,
   `company` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -295,22 +305,22 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `specification`
 --
 ALTER TABLE `specification`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- Constraints for dumped tables
 --
@@ -354,6 +364,7 @@ ALTER TABLE `user_admin`
 --
 ALTER TABLE `user_customer`
   ADD CONSTRAINT `user_customer_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

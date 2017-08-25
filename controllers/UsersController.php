@@ -3,17 +3,23 @@
 namespace app\controllers;
 
 use Yii;
+use yii\web\Response;
+use app\models\ImageUpload;
 use app\models\Users;
 use app\controllers\UsersSearchController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use yii\widgets\ActiveForm;
+
 
 /**
  * UsersController implements the CRUD actions for Users model.
  */
 class UsersController extends Controller
 {
+
     /**
      * @inheritdoc
      */
@@ -63,10 +69,18 @@ class UsersController extends Controller
      */
     public function actionCreate()
     {
+
         $model = new Users();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
 
         if ($model->load(Yii::$app->request->post()) ) {
             $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+            $model->imageFile = UploadedFile::getInstance($model,'imageFile');
+            $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
+            $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
             if($model->save()){
                 return $this->redirect(['view', 'id' => $model->userid]);
             }else{
@@ -90,9 +104,15 @@ class UsersController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
         if ($model->load(Yii::$app->request->post())) {
             $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+            $model->imageFile = UploadedFile::getInstance($model,'imageFile');
+            $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
+            $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
             if($model->save()){
                 return $this->redirect(['view', 'id' => $model->userid]);
             }else{
@@ -134,25 +154,6 @@ class UsersController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function actionUpload(){
-        $fileName = 'file';
-        $uploadPath = './uploads';
-
-        if (isset($_FILES[$fileName])) {
-            $file = \yii\web\UploadedFile::getInstanceByName($fileName);
-
-            //Print file data
-            //print_r($file);
-
-            if ($file->saveAs($uploadPath . '/' . $file->name)) {
-                //Now save file data to database
-
-                echo \yii\helpers\Json::encode($file);
-            }
-        }
-        return false;
     }
 
 }

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Users */
@@ -10,11 +11,25 @@ use yii\widgets\ActiveForm;
 
 <div class="users-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(
+        ['options' => ['enctype' => 'multipart/form-data'],
+        'id' => 'contact-form',
+        'enableAjaxValidation' => true]
+    ); ?>
 
     <?= $form->field($model, 'fname')->textInput(['maxlength' => true])->label("First Name"); ?>
 
     <?= $form->field($model, 'lname')->textInput(['maxlength' => true])->label("Surname"); ?>
+
+
+    <?php 
+        if($model->image != null){
+            echo "<img src='".$model->image."'/>";
+        }
+    ?>
+
+     <?= $form->field($model, 'imageFile')->widget(FileInput::classname()); ?> 
+     
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 

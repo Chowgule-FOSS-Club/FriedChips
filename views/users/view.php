@@ -31,6 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'userid',
             'fname',
             'lname',
+            [
+                'attribute'=>'image',
+                'format' => 'image',
+                'value' => function ($model) {
+                    return $model->image; 
+                },
+            ],
             'password',
             'email:email',
             'authKey',
