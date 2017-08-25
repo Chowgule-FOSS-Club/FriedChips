@@ -4,12 +4,14 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Product;
+use app\models\ProductCategory;
 use app\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\data\Pagination;
+use app\models\Category;
 /**
  * ProductController implements the CRUD actions for Product model.
  */
@@ -52,22 +54,31 @@ class ProductController extends Controller
      */
     public function actionViewProducts()
     {
-        $query = Product::find();
+        $product_query = Product::find();
+
+        $category_query = Category::find();
 
         $pagination = new Pagination([
         'defaultPageSize' => 6,
-        'totalCount'=> $query->count(),
+        'totalCount'=> $product_query->count(),
         ]);
 
-        $product = $query->orderBy('name')
+        $product = $product_query->orderBy('name')
         ->offset($pagination->offset)
         ->limit($pagination->limit)
-        ->all();
+        ->all();  
+
+        $category_query->joinWith('ps');
+
+         $product_query->joinWith('cs');
+
+        $category = $category_query->all();
 
         $this->layout = 'product';
         return $this->render('view_products',
         ['product'=>$product,
         'pagination'=>$pagination,
+        'categorys'=>$category,
         ]);
     }
 
