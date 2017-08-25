@@ -1,4 +1,6 @@
-
+<?php use yii\helpers\Html;
+use yii\widgets\LinkPager;
+?>
     <!-- modal form -->
     <div class="modal fade "  id="modal-1" >
 
@@ -215,16 +217,17 @@
         </div>
 
         <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-4  zoom col-centered">
+
+            <?php foreach ($product as $products): ?>
+            <div id='<?= $products->pid ?>' class="col-xs-12 col-sm-4  zoom col-centered">
                     <div class="card">
                         <h4 class="card-title text-center">
                             <a class="product" href="#">
-                           Bulldozers
+                          <?= $products->name ?>
                         </a>
                         </h4>
                         <a class="img-card" href="#">
-                    <img class="img-responsive" src="images\bulldozer.png"/>
+                    <img class="img-responsive" src="<?= $products->image ?>"/>
                 </a>
                         <br />
                         <div class="card-content">
@@ -245,160 +248,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-4  zoom col-centered">
-                    <div class="card">
-                        <h4 class="card-title text-center">
-                            <a class="product" href="#">
-                           Raise Climbers & Equipment
-                        </a>
-                        </h4>
-                        <a class="img-card" href="#">
-                    <img class="img-responsive" src="images/raise.jpg"/>
-                </a>
-                        <br />
-                        <div class="card-content">
 
-                            <div class="">
 
-                                <p class="lead text-center">Category:Mining equipment</p>
-                            </div>
-                            <div class=" text-center text-capitalize">
-                                <a class="btn">
-                                    <a href="viewmore.html"><h4>View More info</h4></a>
-                                </a>
-                            </div>
+                <?php endforeach; ?>
 
-                        </div>
-                        <div class="btcnt" style="text-align:Center">
-                            <button type="submit" class="btinqr btn-block" data-target="#modal-1" data-toggle="modal"><p class="s2">ENQUIRE</p></button>
-                        </div>
-                        
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-4  zoom col-centered">
-                    <div class="card">
-                        <h4 class="card-title text-center">
-                            <a class="product" href="#">
-                          Hydraulic Rock Breakers
-                        </a>
-                        </h4>
-                        <a class="img-card" href="#">
-                    <img class="img-responsive" src="images/breaker.png"/>
-                </a>
-                        <br />
-                        <div class="card-content">
 
-                            <div class="">
 
-                                <p class="lead text-center">Category:Mining equipment</p>
-                            </div>
-                            <div class=" text-center text-capitalize">
-                                <a class="btn">
-                                    <h4>View More info</h4>
-                                </a>
-                            </div>
-
-                        </div>
-                        <div class="btcnt" style="text-align:Center">
-                            <button type="submit" class="btinqr btn-block" data-target="#modal-1" data-toggle="modal"><p class="s2">ENQUIRE</p></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-4  zoom col-centered">
-                    <div class="card">
-                        <h4 class="card-title text-center">
-                            <a class="product" href="#">
-                           Bulldozers
-                        </a>
-                        </h4>
-                        <a class="img-card" href="#">
-                    <img class="img-responsive" src="images/images.jpg"/>
-                </a>
-                        <br />
-                        <div class="card-content">
-
-                            <div class="">
-
-                                <p class="lead text-center">Category:Dozers</p>
-                            </div>
-                            <div class=" text-center text-capitalize">
-                                <a class="btn">
-                                    <h4>View More info</h4>
-                                </a>
-                            </div>
-
-                        </div>
-                        <div class="btcnt" style="text-align:Center">
-                            <button type="submit" class="btinqr btn-block" data-target="#modal-1" data-toggle="modal"><p class="s2">ENQUIRE</p></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-4  zoom col-centered">
-                    <div class="card">
-                        <h4 class="card-title text-center">
-                            <a class="product" href="#">
-                           Raise Climbers & Equipment
-                        </a>
-                        </h4>
-                        <a class="img-card" href="#">
-                    <img class="img-responsive" src="images/raise.jpg"/>
-                </a>
-                        <br />
-                        <div class="card-content">
-
-                            <div class="">
-
-                                <p class="lead text-center">Category:Mining equipment</p>
-                            </div>
-                            <div class=" text-center text-capitalize">
-                                <a class="btn">
-                                    <h4>View More info</h4>
-                                </a>
-                            </div>
-
-                        </div>
-                        <div class="btcnt" style="text-align:Center">
-                            <button type="submit" class="btinqr btn-block" data-target="#modal-1" data-toggle="modal"><p class="s2">ENQUIRE</p></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-4  zoom col-centered">
-                    <div class="card">
-                        <h4 class="card-title text-center">
-                            <a class="product" href="#">
-                          Hydraulic Rock Breakers
-                        </a>
-                        </h4>
-                        <a class="img-card" href="#">
-                    <img class="img-responsive" src="images/foss.jpeg"/>
-                </a>
-                        <br />
-                        <div class="card-content">
-
-                            <div class="">
-
-                                <p class="lead text-center">Category:Mining equipment</p>
-                            </div>
-                            <div class=" text-center text-capitalize">
-                                <a class="btn">
-                                    <h4>View More info</h4>
-                                </a>
-                            </div>
-
-                        </div>
-                        <div class="btcnt" style="text-align:Center">
-                            <button type="submit" class="btinqr btn-block" data-target="#modal-1" data-toggle="modal"><p class="s2">ENQUIRE</p></button>
-                        </div>
-                    </div>
-                </div>
-
+               
             </div>
-        </div>
+           
+            <center> <h2>  <?= LinkPager::widget(['pagination' => $pagination]) ?> <h2> </center>
     </div>
 
-    
+
 
     <!-- scroll top -->
     <div class="scroll-top-wrapper ">

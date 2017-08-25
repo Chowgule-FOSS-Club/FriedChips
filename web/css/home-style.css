@@ -50,10 +50,7 @@
      overflow: hidden;
  }
 
- .wrapper:hover .image-wrap2 {
-     opacity: 1.0;
-     transform: scale(1.02);
- }
+
 
  .wrapper .image-overlay {
      background-color: rgb(8, 43, 68);
