@@ -183,15 +183,12 @@
                     <div class="table table-striped">
                         <table class="table">
                             <tbody>
-
-                            <?php foreach ($product as $product_spec) : ?> 
-       
+                            <?php foreach ($product as $product_spec) : ?>       
                                 <tr>
                                     <th> <?= $product_spec->s->name?></th>
                                     <td> <?= $product_spec->value?></td>
                                 </tr>
-                                <?php endforeach?>
-                                
+                                <?php endforeach?>                                
                             </tbody>
                         </table>
                     </div>

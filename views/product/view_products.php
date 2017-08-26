@@ -169,7 +169,7 @@ use yii\widgets\LinkPager;
                                     <ul>
                                         <li class="dropdown-header">  <?= $category->name?></li>
                                         <?php foreach ($category->ps as $products) : ?>
-                                        <li><a href="#"><?= $products->name ?></a></li>
+                                        <li><a href="index.php?r=product/view-specs&id=<?=$products->pid?>"><?= $products->name ?></a></li>
                                         <?php endforeach; ?>
                                         <li class="divider"></li>
 
