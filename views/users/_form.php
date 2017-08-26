@@ -22,16 +22,15 @@ use kartik\file\FileInput;
     <?= $form->field($model, 'lname')->textInput(['maxlength' => true])->label("Surname"); ?>
 
 
+
+
+     
     <?php 
-        if($model->image != null){
-            echo "<img src='".$model->image."'/>";
+        if(empty($model->userid)){
+            echo $form->field($model, 'password')->passwordInput(['maxlength' => true]);
+            echo $form->field($model, 'imageFile')->widget(FileInput::classname());
         }
     ?>
-
-     <?= $form->field($model, 'imageFile')->widget(FileInput::classname()); ?> 
-     
-
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 

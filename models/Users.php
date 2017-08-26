@@ -23,6 +23,8 @@ use Yii;
 class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     public $imageFile;
+    public $password_repeat;
+    public $old_password;
     /**
      * @inheritdoc
      */
@@ -31,6 +33,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return 'users';
     }
+
 
     /**
      * @inheritdoc
@@ -42,7 +45,18 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['fname', 'lname'], 'string', 'max' => 25],
             [['email', 'authKey'], 'string', 'max' => 50],
             [['email'], 'unique'],
+            ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],
+            ['old_password', 'required', 'when' => function($model) {
+                return $model->password = $model->old_password;
+            }, on => self::SCENARIO_],
         ];
+    }
+
+    public function scenarios()
+    {
+		$scenarios = parent::scenarios();
+        $scenarios['create'] = ['fname','lname', 'email', 'password', 'authKey' ];
+        return $scenarios;
     }
 
     /**
