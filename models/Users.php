@@ -93,7 +93,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $this->hasOne(UserCustomer::className(), ['userid' => 'userid']);
     }
 
-        public static function findIdentity($id)
+    public static function findIdentity($id)
     {
         return static::findOne($id);
     }
@@ -123,7 +123,8 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
 
-    public function getName(){
+    public function getName()
+    {
         return $this->fname . ' ' . $this->lname;
     }
 
@@ -131,5 +132,4 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return self::findOne(['email' => $username]);
     }
-
 }

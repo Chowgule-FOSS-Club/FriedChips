@@ -11,6 +11,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use Imagine\Image\Box;
+use yii\imagine\Image;
 use yii\widgets\ActiveForm;
 
 
@@ -81,7 +83,11 @@ class UsersController extends Controller
             $model->imageFile = UploadedFile::getInstance($model,'imageFile');
             $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
             $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
+            
             if($model->save()){
+                Image::frame('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension)
+                ->thumbnail(new box(400, 400))
+                ->save('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension, ['quality' => 50]);
                 return $this->redirect(['view', 'id' => $model->userid]);
             }else{
                 return $this->render('create', [
@@ -114,6 +120,9 @@ class UsersController extends Controller
             $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
             $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
             if($model->save()){
+                Image::frame('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension)
+                ->thumbnail(new box(400, 400))
+                ->save('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension, ['quality' => 50]);
                 return $this->redirect(['view', 'id' => $model->userid]);
             }else{
                 return $this->render('create', [
