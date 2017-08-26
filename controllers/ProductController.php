@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Product;
 use app\models\ProductCategory;
+use app\models\ProductSpecs;
 use app\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -12,6 +13,7 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\data\Pagination;
 use app\models\Category;
+
 /**
  * ProductController implements the CRUD actions for Product model.
  */
@@ -66,15 +68,16 @@ class ProductController extends Controller
         $product = $product_query->orderBy('name')
         ->offset($pagination->offset)
         ->limit($pagination->limit)
-        ->all();  
+        ->all();
 
         $category_query->joinWith('ps');
 
-         $product_query->joinWith('cs');
+        $product_query->joinWith('cs');
 
         $category = $category_query->all();
 
         $this->layout = 'product';
+        
         return $this->render('view_products',
         ['product'=>$product,
         'pagination'=>$pagination,
@@ -82,10 +85,32 @@ class ProductController extends Controller
         ]);
     }
 
-     public function actionView($id)
+    public function actionViewSpecs($id)
+    {
+        $product_query = ProductSpecs::find();
+
+        //$product_query->joinWith('productCategories');
+        $product_query->joinWith('s');
+        $product_query->joinWith('p');
+
+        $product=$product_query->where(['product.pid' => $id])->all();
+
+        
+        
+        if ($product!=null) {
+            $this->layout = 'product';
+            return $this->render('view_product_specs',
+            ['product'=>$product]);
+        } else {
+            $this->layout = 'frontend';
+            return $this->render('../site/index');
+        }
+    }
+
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+          'model' => $this->findModel($id),
         ]);
     }
 
@@ -96,10 +121,10 @@ class ProductController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Product();       
+        $model = new Product();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->file = UploadedFile::getInstance($model,'file');
+            $model->file = UploadedFile::getInstance($model, 'file');
             $model->file->saveAs('uploads/'.$model->name.'.'.$model->file->extension);
             $model->image = 'uploads/'.$model->name.'.'.$model->file->extension;
             $model->save();
@@ -122,7 +147,7 @@ class ProductController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->file = UploadedFile::getInstance($model,'file');
+            $model->file = UploadedFile::getInstance($model, 'file');
             $model->file->saveAs('uploads/'.$model->name.'.'.$model->file->extension);
             $model->image = 'uploads/'.$model->name.'.'.$model->file->extension;
             $model->save();
