@@ -1,8 +1,6 @@
-<?php use yii\helpers\Html;
-use yii\widgets\LinkPager;
-?>
-    <!-- modal form -->
-    <div class="modal fade "  id="modal-1" >
+<div class="container">
+
+<div class="modal fade "  id="modal-1" >
 
                             <div class="modal-dialog ">
                                 <div class="modal-content">
@@ -73,31 +71,31 @@ use yii\widgets\LinkPager;
                                             </ul>
                                         </div>
                                         <hr class="hr-primary">
-                                        <form class="product-info">
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div class="col-xs-5">
-                                                        <label for="quantity">Quantity</label>
-                                                        <input type="text" id="quantity" class="form-control" name="quantity">
-                                                    </div>
+                                        
 
-                                                    <div class="col-xs-5">
-                                                        <label for="unit">Select Unit</label>
-                                                        <select id="units" class="form-control" name="unit">
-                                                                <option value="0" disabled selected>Select from below</option>
+                            <form class="product-info">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-xs-3">
+                                            <label  for="quantity">Quantity</label>
+                                            <input type="text" id="quantity" class="form-control" name="quantity">
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <label  for="unit">Select Unit</label>
+                                            <select id="units" class="form-control" name="unit">
+                                                                <option value="0" disabled selected>Select unit</option>
                                                         <option value="Kilograms">Kilograms</option>
                                                         <option value="Nos">Nos</option>
                                                         <option value="Pieces">Pieces</option>
                                                         <option value="Tons">Tons</option>
                                                         <option value="Unit">Unit</option>
                                                     </select>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
 
-                                            <div class="form-group" style="padding-top: 2%">
-                                                <label class="m-t-10">Approximate Order Value</label>
-                                                <select id="value" class="form-control" name="value">
+                                            <label  >Approximate Order Value</label>
+                                            <select id="value" class="form-control" name="value">
                                                         <option value="0" disabled selected>Select from below</option>
                                     <option value="1k">Upto 1,000</option>
                                     <option value="1k to 3k">1,000 to 3,000</option>
@@ -106,14 +104,20 @@ use yii\widgets\LinkPager;
                                     <option value="20k to 50k">20,000 to 50,000</option>
                                     <option value="50k to 100k">50,000 to 1 Lakh</option>
                                 </select>
-                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                            <div class="row-fluid" style="padding-top:3%">
                                             <div class="form-group">
-                                                <label for="usage" class="m-t-10">Usage/Application</label>
+                                                <label for="usage" class="">Usage/Application</label>
                                                 <input type="text" id="usage" class="form-control" name="usage">
                                             </div>
                                             <div class="form-group">
-                                                <label for="other" class="m-t-10">Other Requirements</label>
+                                                <label for="other" class="">Other Requirements</label>
                                                 <textarea name="InputMessage" rows="6" class="form-control" type="text" placeholder="Provide any specific details about :'Product/Service required', 'Quality', 'Standard', 'Size' etc... "></textarea>
+                                            </div>
                                             </div>
                                         </form>
                                     </div>
@@ -145,99 +149,55 @@ use yii\widgets\LinkPager;
                                 </div>
                             </div>
                         </div>
-                        <!-- modal form end -->
-    <!-- Second navbar for search -->
 
-    <!-- /.navbar -->
-    <div class="rest-body container" >
-        <div class="catalog">
-            <nav class="navbar navbar-default navbar-static">
-                <div class="navbar-header">
-                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                </button>
-                    <h2>PRODUCT CATALOGS</h2>
-                </div>
-                <div class="collapse navbar-collapse js-navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown dropdown-large">
-                            <a href="#" class=" btn  btn-outlined dropdown-toggle " data-toggle="dropdown">Search by Catagories <b class="caret"></b></a>
+            <div class="row">
+                <div class=" col-md-4">
 
-                            <ul class="dropdown-menu dropdown-menu-large row">
-                            <?php foreach ($categorys as $category) : ?>
-                                <li class="col-sm-4">
-                                    <ul>
-                                        <li class="dropdown-header">  <?= $category->name?></li>
-                                        <?php foreach ($category->ps as $products) : ?>
-                                        <li><a href="index.php?r=product/view-specs&id=<?=$products->pid?>"><?= $products->name ?></a></li>
-                                        <?php endforeach; ?>
-                                        <li class="divider"></li>
+                    <div>
+                        <div class="img-card1">
+                            <img class="img-responsive" src="<?=$product[0]->p->image?>" />
 
-                                    </ul>
-                                </li>
-                            <?php endforeach; ?>
+                            <br />
+                        </div>
 
-                            </ul>
+                        <div class="btcnt" style="text-align:center">
 
-                        </li>
-                    </ul>
-
-                </div>
-                <!-- /.nav-collapse -->
-            </nav>
-
-
-
-        </div>
-
-        <div class="container">
-
-            <?php foreach ($product as $products) : ?>
-            <div id='<?= $products->pid ?>' class="col-xs-12 col-sm-4 zoom col-centered">
-                    <div class="card">
-                        <h4 class="card-title text-center">
-                            <a class="product" href="#">
-                            <?= $products->name ?>
-                        </a>
-                        </h4>
-                        <a class="img-card" href="#">
-                    <img class="img-responsive" src="<?= $products->image ?>"/>
-                </a>
-                        <br />
-                        <div class="card-content">    
-                            
-                         
-                            <div class=" text-center">
-                                <a href="index.php?r=product/view-specs&id=<?=$products->pid?>" class="btn">
-                                    <h4>View More info</h4>
-                                </a>
-                            </div>
+                            <button type="submit" class="btnview btn-responsive" data-target="#modal-1" data-toggle="modal"><p >ENQUIRE</p></button>
 
                         </div>
-                        <div class="btcnt" style="text-align:Center">
-                            <button type="submit" class="btinqr btn-block" data-target="#modal-1" data-toggle="modal"><p class="s2">ENQUIRE</p></button>
-                        </div>
+                    </div>
+
+                </div>
+                <div class=" col-sm-8">
+                    <h2 class="h2title"><?=$product[0]->p->name?></h2>
+                    <hr class="hr-primary">
+
+                    <p class="info">
+                       <?=$product[0]->p->description?>
+                    </p>
+                </div>
+
+                <button type="button" class="btncollapse col-sm-5 col-md-4 col-xs-7 col-lg-2" data-toggle="collapse" data-target="#table">Specification</button>
+
+                <div id="table" class="collapse col-sm-8 col-md-8 col-xs-8 col-lg-8">
+                    <div class="table table-striped">
+                        <table class="table">
+                            <tbody>
+                            <?php foreach ($product as $product_spec) : ?>       
+                                <tr>
+                                    <th> <?= $product_spec->s->name?></th>
+                                    <td> <?= $product_spec->value?></td>
+                                </tr>
+                                <?php endforeach?>                                
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
 
-                <?php endforeach; ?>
-
-
-
-            <div class="row">
-               
             </div>
-           
-            <center> <h2>  <?= LinkPager::widget(['pagination' => $pagination]) ?> <h2> </center>
-    </div>
 
+        </div>
+        
 
-
-    <!-- scroll top -->
-    <div class="scroll-top-wrapper ">
-        <span class="scroll-top-inner">
-    <i class="fa fa-2x fa-arrow-circle-up"></i>
-  </span>
-    </div>
     </div>
