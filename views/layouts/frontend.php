@@ -52,6 +52,7 @@ HomeAsset::register($this);
           <li><a href="#services">SERVICES</a></li>
           <li><a href="#clients">CLIENTS</a></li>
           <li><a href="#contact">CONTACT</a></li>
+
           <?php 
             if(Yii::$app->user->isGuest){
                 echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
@@ -59,6 +60,7 @@ HomeAsset::register($this);
                 echo "<li><a data-method='POST' href=\"index.php?r=site/logout\">(". Yii::$app->user->identity->getName() .") LOGOUT</a></li>";
             }
           ?>
+
         </ul>
       </div>
     </div>

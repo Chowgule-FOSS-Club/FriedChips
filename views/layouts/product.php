@@ -53,14 +53,14 @@ ProductAsset::register($this);
           <li><a href="index.php">SERVICES</a></li>
           <li><a href="index.php">CLIENTS</a></li>
           <li><a href="index.php">CONTACT</a></li>
-          <?php 
-            if(Yii::$app->user->isGuest){
+            <?php
+            if (Yii::$app->user->isGuest) {
                 echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
-            }else{
+            } else {
                 echo "<li><a data-method='POST' href=\"index.php?r=site/logout\">(". Yii::$app->user->identity->getName() .") LOGOUT</a></li>";
             }
-          ?>
-          
+            ?>
+
                 </ul>
                 <div class="collapse nav navbar-nav nav-collapse slide-down" id="nav-collapse3">
                     <form class="navbar-form navbar-right" role="search">
@@ -90,15 +90,15 @@ ProductAsset::register($this);
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>Find us on</h3>
-                        	
+                            
                     <ul class="social-network social-circle">
                        
                         <li><a href="#" class="icoFacebook icon" title="Facebook"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="#" class="icoTwitter icon" title="Twitter"><i class="fa fa-twitter"></i></a></li>
                         <li><a href="#" class="icoGoogle icon" title="Google +"><i class="fa fa-google-plus"></i></a></li>
                         <li><a href="#" class="icoLinkedin icon" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-                    </ul>				
-				
+                    </ul>               
+                
                     </div>
                     <div class="col-md-4">
                         <h3>Contact numbers</h3>
