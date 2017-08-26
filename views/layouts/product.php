@@ -49,7 +49,22 @@ ProductAsset::register($this);
             <div class="collapse navbar-collapse" id="navbar-collapse-3">
                 <ul class="nav navbar-nav navbar-right">
                      <li><a href="index.php">HOME</a></li>
+<<<<<<< HEAD
           <li><a href="index.php?r=login/index">LOGIN</a></li>
+=======
+           <li><a href="index.php">ABOUT</a></li>
+          <li><a href="index.php">SERVICES</a></li>
+          <li><a href="index.php">CLIENTS</a></li>
+          <li><a href="index.php">CONTACT</a></li>
+          <?php 
+            if(Yii::$app->user->isGuest){
+                echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
+            }else{
+                echo "<li><a data-method='POST' href=\"index.php?r=site/logout\">(". Yii::$app->user->identity->getName() .") LOGOUT</a></li>";
+            }
+          ?>
+          
+>>>>>>> 61e1c2381c4be5e825edc5a2602a53ed92e42d72
                 </ul>
                 <div class="collapse nav navbar-nav nav-collapse slide-down" id="nav-collapse3">
                     <form class="navbar-form navbar-right" role="search">

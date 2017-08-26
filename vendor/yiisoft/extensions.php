@@ -66,13 +66,13 @@ return array (
       '@yiister/gentelella' => $vendorDir . '/yiister/yii2-gentelella',
     ),
   ),
-  'perminder-klair/yii2-dropzone' => 
+  'yiisoft/yii2-imagine' => 
   array (
-    'name' => 'perminder-klair/yii2-dropzone',
-    'version' => '9999999-dev',
+    'name' => 'yiisoft/yii2-imagine',
+    'version' => '2.1.0.0',
     'alias' => 
     array (
-      '@kato' => $vendorDir . '/perminder-klair/yii2-dropzone',
+      '@yii/imagine' => $vendorDir . '/yiisoft/yii2-imagine',
     ),
   ),
   'kartik-v/yii2-krajee-base' => 
@@ -91,15 +91,6 @@ return array (
     'alias' => 
     array (
       '@kartik/file' => $vendorDir . '/kartik-v/yii2-widget-fileinput',
-    ),
-  ),
-  'yiisoft/yii2-imagine' => 
-  array (
-    'name' => 'yiisoft/yii2-imagine',
-    'version' => '2.1.0.0',
-    'alias' => 
-    array (
-      '@yii/imagine' => $vendorDir . '/yiisoft/yii2-imagine',
     ),
   ),
 );

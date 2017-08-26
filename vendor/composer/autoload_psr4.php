@@ -17,7 +17,6 @@ return array(
     'yii\\' => array($vendorDir . '/yiisoft/yii2'),
     'rmrevin\\yii\\fontawesome\\' => array($vendorDir . '/rmrevin/yii2-fontawesome'),
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
-    'kato\\' => array($vendorDir . '/perminder-klair/yii2-dropzone'),
     'kartik\\plugins\\fileinput\\' => array($vendorDir . '/kartik-v/bootstrap-fileinput'),
     'kartik\\file\\' => array($vendorDir . '/kartik-v/yii2-widget-fileinput'),
     'kartik\\base\\' => array($vendorDir . '/kartik-v/yii2-krajee-base'),
