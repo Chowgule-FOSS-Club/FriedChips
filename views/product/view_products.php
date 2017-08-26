@@ -149,15 +149,12 @@ use yii\widgets\LinkPager;
     <!-- Second navbar for search -->
 
     <!-- /.navbar -->
-    <div class="rest-body">
+    <div class="rest-body container" >
         <div class="catalog">
             <nav class="navbar navbar-default navbar-static">
                 <div class="navbar-header">
                     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
 		        </button>
                     <h2>PRODUCT CATALOGS</h2>
                 </div>
@@ -167,41 +164,18 @@ use yii\widgets\LinkPager;
                             <a href="#" class=" btn  btn-outlined dropdown-toggle " data-toggle="dropdown">Search by Catagories <b class="caret"></b></a>
 
                             <ul class="dropdown-menu dropdown-menu-large row">
+                            <?php foreach ($categorys as $category): ?>
                                 <li class="col-sm-4">
                                     <ul>
-                                        <li class="dropdown-header">Hyd. Electric Project</li>
-                                        <li><a href="#">Tunnel Heading & Mucking Machine</a></li>
-                                        <li><a href="#">Raise Climbers Rack & Pinion Hoists</a></li>
-                                        <li><a href="#">Low Profile Dump Trucks</a></li>
-                                        <li><a href="#">Load Haul Dump- Loaders</a></li>
-                                        <li><a href="#">Utility Vehicles</a></li>
-
+                                        <li class="dropdown-header">  <?= $category->name?></li>
+                                        <?php foreach ($category->ps as $products): ?>
+                                        <li><a href="#"><?= $products->name ?></a></li>
+                                        <?php endforeach; ?>
                                         <li class="divider"></li>
 
                                     </ul>
                                 </li>
-                                <li class="col-sm-4">
-                                    <ul>
-                                        <li class="dropdown-header">Equipment for underground & open cast mines</li>
-                                        <li><a href="#">Transverse cutting units for tunneling & <br>demolition</a></li>
-                                        <li><a href="#">Battery Locomotives & <br>Trolley Locomotives</a></li>
-                                        <li><a href="#">Underground Mining Equipment,<br> Drilling Jumbos, LHD’s & Underground Trucks</a></li>
-                                        <li><a href="#">Nesting</a></li>
-                                        <li><a href="#">Vertical variation</a></li>
-                                        <li class="divider"></li>
-
-                                    </ul>
-                                </li>
-                                <li class="col-sm-4">
-                                    <ul>
-                                        <li class="dropdown-header">Road Construction & <br>Maintenance equipment</li>
-                                        <li><a href="#">Bitumen & Emulsion Plants</a></li>
-                                        <li><a href="#">Cranes</a></li>
-                                        <li><a href="#">Pipe Layers</a></li>
-                                        <li><a href="#">Micro-surface Paver and<br> Road Maintainance Equipment</a></li>
-                                        <li class="divider"></li>
-                                    </ul>
-                                </li>
+                            <?php endforeach; ?>
 
                             </ul>
 
@@ -219,7 +193,7 @@ use yii\widgets\LinkPager;
         <div class="container">
 
             <?php foreach ($product as $products): ?>
-            <div id='<?= $products->pid ?>' class="col-xs-12 col-sm-4  zoom col-centered">
+            <div id='<?= $products->pid ?>' class="col-xs-12 col-sm-4 zoom col-centered">
                     <div class="card">
                         <h4 class="card-title text-center">
                             <a class="product" href="#">
@@ -230,12 +204,9 @@ use yii\widgets\LinkPager;
                     <img class="img-responsive" src="<?= $products->image ?>"/>
                 </a>
                         <br />
-                        <div class="card-content">
-
-                            <div class="">
-
-                                <p class="lead text-center">Category:Dozers</p>
-                            </div>
+                        <div class="card-content">    
+                            
+                         
                             <div class=" text-center">
                                 <a class="btn">
                                     <h4>View More info</h4>
@@ -268,4 +239,5 @@ use yii\widgets\LinkPager;
         <span class="scroll-top-inner">
     <i class="fa fa-2x fa-arrow-circle-up"></i>
   </span>
+    </div>
     </div>
