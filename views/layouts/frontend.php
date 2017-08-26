@@ -52,6 +52,7 @@ HomeAsset::register($this);
           <li><a href="#services">SERVICES</a></li>
           <li><a href="#clients">CLIENTS</a></li>
           <li><a href="#contact">CONTACT</a></li>
+          <li><a href="?r=users/index">LOGIN</a></li>
         </ul>
       </div>
     </div>
