@@ -45,17 +45,29 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['fname', 'lname'], 'string', 'max' => 25],
             [['email', 'authKey'], 'string', 'max' => 50],
             [['email'], 'unique'],
-            ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],
-            ['old_password', 'required', 'when' => function($model) {
-                return $model->password = $model->old_password;
-            }, on => self::SCENARIO_],
+            ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match",
+                'on' => 'update-password'
+            ],
+            ['old_password', 'findPasswords', 'on' => 'update-password'],
+            [['old_password', 'password_repeat', 'password'], 'required', 'on' => 'update-password'],
+            ['imageFile', 'required', 'on' => 'update-dp'],
         ];
     }
+
+     public function findPasswords($attribute, $params){
+            $user = Users::find()->where([
+                'userid'=>Yii::$app->user->identity->userid
+            ])->one();
+            $password_tmp = $user->password;
+            if(!Yii::$app->getSecurity()->validatePassword($this->old_password, $password_tmp))
+                $this->addError($attribute,'Old password is incorrect');
+        }
 
     public function scenarios()
     {
 		$scenarios = parent::scenarios();
-        $scenarios['create'] = ['fname','lname', 'email', 'password', 'authKey' ];
+        $scenarios['update-password'] = ['old_password', 'password', 'password_repeat' ];
+        $scenarios['update-dp'] = ['imageFile'];
         return $scenarios;
     }
 
