@@ -20,14 +20,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php 
-            if(!Yii::$app->user->identity->userid === $model->userid){
-                echo Html::a('Delete', ['delete', 'id' => $model->userid], [
-                    'class' => 'btn btn-danger',
-                    'data' => [
-                        'confirm' => 'Are you sure you want to delete this item?',
-                        'method' => 'post',
-                    ],
-                ]);
+            if(!Yii::$app->user->isGuest){
+                if(!Yii::$app->user->identity->userid === $model->userid){
+                    echo Html::a('Delete', ['delete', 'id' => $model->userid], [
+                        'class' => 'btn btn-danger',
+                        'data' => [
+                            'confirm' => 'Are you sure you want to delete this item?',
+                            'method' => 'post',
+                        ],
+                    ]);
+                }
             }
         ?>
         <?= Html::a('Update', ['update', 'id' => $model->userid], ['class' => 'btn btn-primary']) ?>
