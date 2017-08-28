@@ -124,7 +124,7 @@ class ProductController extends Controller
         $model = new Product();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->file = UploadedFile::getInstance($model, 'file');
+            $model->file = UploadedFile::getInstance($model, 'image');
             $model->file->saveAs('uploads/'.$model->name.'.'.$model->file->extension);
             $model->image = 'uploads/'.$model->name.'.'.$model->file->extension;
             $model->save();
@@ -147,7 +147,7 @@ class ProductController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->file = UploadedFile::getInstance($model, 'file');
+            $model->file = UploadedFile::getInstance($model, 'image');
             $model->file->saveAs('uploads/'.$model->name.'.'.$model->file->extension);
             $model->image = 'uploads/'.$model->name.'.'.$model->file->extension;
             $model->save();

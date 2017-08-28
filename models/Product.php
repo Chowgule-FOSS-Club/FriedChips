@@ -41,6 +41,7 @@ class Product extends \yii\db\ActiveRecord
             [['name', 'description', 'image', 'status','file'], 'required'],
             [['description', 'status'], 'string'],
             ['file','file'],
+            ['name', 'unique',],
             [['name'], 'string', 'max' => 25],
             [['image'], 'string', 'max' => 200],
         ];
