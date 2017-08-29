@@ -23,6 +23,8 @@ use Yii;
 class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     public $imageFile;
+    public $password_repeat;
+    public $old_password;
     /**
      * @inheritdoc
      */
@@ -31,6 +33,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return 'users';
     }
+
 
     /**
      * @inheritdoc
@@ -42,7 +45,30 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['fname', 'lname'], 'string', 'max' => 25],
             [['email', 'authKey'], 'string', 'max' => 50],
             [['email'], 'unique'],
+            ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match",
+                'on' => 'update-password'
+            ],
+            ['old_password', 'findPasswords', 'on' => 'update-password'],
+            [['old_password', 'password_repeat', 'password'], 'required', 'on' => 'update-password'],
+            ['imageFile', 'required', 'on' => 'update-dp'],
         ];
+    }
+
+     public function findPasswords($attribute, $params){
+            $user = Users::find()->where([
+                'userid'=>Yii::$app->user->identity->userid
+            ])->one();
+            $password_tmp = $user->password;
+            if(!Yii::$app->getSecurity()->validatePassword($this->old_password, $password_tmp))
+                $this->addError($attribute,'Old password is incorrect');
+        }
+
+    public function scenarios()
+    {
+		$scenarios = parent::scenarios();
+        $scenarios['update-password'] = ['old_password', 'password', 'password_repeat' ];
+        $scenarios['update-dp'] = ['imageFile'];
+        return $scenarios;
     }
 
     /**
@@ -93,7 +119,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $this->hasOne(UserCustomer::className(), ['userid' => 'userid']);
     }
 
-        public static function findIdentity($id)
+    public static function findIdentity($id)
     {
         return static::findOne($id);
     }
@@ -123,7 +149,8 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
 
-    public function getName(){
+    public function getName()
+    {
         return $this->fname . ' ' . $this->lname;
     }
 
@@ -131,5 +158,4 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return self::findOne(['email' => $username]);
     }
-
 }

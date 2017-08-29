@@ -128,7 +128,7 @@ use yii\widgets\LinkPager;
                 <div class="navbar-header">
                     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
-		        </button>
+                </button>
                     <h2>PRODUCT CATALOGS</h2>
                 </div>
                 <div class="collapse navbar-collapse js-navbar-collapse">
@@ -137,12 +137,12 @@ use yii\widgets\LinkPager;
                             <a href="#" class=" btn  btn-outlined dropdown-toggle " data-toggle="dropdown">Search by Catagories <b class="caret"></b></a>
 
                             <ul class="dropdown-menu dropdown-menu-large row">
-                            <?php foreach ($categorys as $category): ?>
+                            <?php foreach ($categorys as $category) : ?>
                                 <li class="col-sm-4">
                                     <ul>
                                         <li class="dropdown-header">  <?= $category->name?></li>
-                                        <?php foreach ($category->ps as $products): ?>
-                                        <li><a href="#"><?= $products->name ?></a></li>
+                                        <?php foreach ($category->ps as $products) : ?>
+                                        <li><a href="index.php?r=product/view-specs&id=<?=$products->pid?>"><?= $products->name ?></a></li>
                                         <?php endforeach; ?>
                                         <li class="divider"></li>
 
@@ -165,12 +165,12 @@ use yii\widgets\LinkPager;
 
         <div class="container">
 
-            <?php foreach ($product as $products): ?>
+            <?php foreach ($product as $products) : ?>
             <div id='<?= $products->pid ?>' class="col-xs-12 col-sm-4 zoom col-centered">
                     <div class="card">
                         <h4 class="card-title text-center">
                             <a class="product" href="#">
-                          <?= $products->name ?>
+                            <?= $products->name ?>
                         </a>
                         </h4>
                         <a class="img-card" href="#">
@@ -181,7 +181,7 @@ use yii\widgets\LinkPager;
                             
                          
                             <div class=" text-center">
-                                <a class="btn">
+                                <a href="index.php?r=product/view-specs&id=<?=$products->pid?>" class="btn">
                                     <h4>View More info</h4>
                                 </a>
                             </div>

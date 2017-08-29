@@ -10,7 +10,8 @@ use yii\widgets\ActiveForm;
 
 <div class="specification-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'create-specification-form',
+        'enableAjaxValidation' => true,]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

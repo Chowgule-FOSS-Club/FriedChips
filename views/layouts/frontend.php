@@ -47,11 +47,20 @@ HomeAsset::register($this);
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="?r=product/view-products">PRODUCTS</a></li>
-          <li><a href="#about">ABOUT</a></li>
-          <li><a href="#services">SERVICES</a></li>
-          <li><a href="#clients">CLIENTS</a></li>
-          <li><a href="#contact">CONTACT</a></li>
+        <li><a href="?r=product/view-products">Products</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#clients">Clientel</a></li>
+          <li><a href="#contact">Contact Info</a></li>
+
+          <?php 
+            if(Yii::$app->user->isGuest){
+                echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
+            }else{
+                echo "<li><a data-method='POST' href=\"index.php?r=site/logout\">(". Yii::$app->user->identity->getName() .") LOGOUT</a></li>";
+            }
+          ?>
+
         </ul>
       </div>
     </div>

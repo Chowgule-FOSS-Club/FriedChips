@@ -11,8 +11,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use Imagine\Image\Box;
+use yii\imagine\Image;
 use yii\widgets\ActiveForm;
-
 
 /**
  * UsersController implements the CRUD actions for Users model.
@@ -76,17 +77,18 @@ class UsersController extends Controller
             return ActiveForm::validate($model);
         }
 
-        if ($model->load(Yii::$app->request->post()) ) {
+        if ($model->load(Yii::$app->request->post())) {
             $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
-            $model->imageFile = UploadedFile::getInstance($model,'imageFile');
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
             $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
-            if($model->save()){
+            if ($model->save()) {
+                Image::frame('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension)
+                ->thumbnail(new box(400, 400))
+                ->save('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension, ['quality' => 50]);
                 return $this->redirect(['view', 'id' => $model->userid]);
-            }else{
-                return $this->render('create', [
-                'model' => $model,
-                ]);
+            } else {
+                echo "error while saving..";
             }
         } else {
             return $this->render('create', [
@@ -109,13 +111,16 @@ class UsersController extends Controller
             return ActiveForm::validate($model);
         }
         if ($model->load(Yii::$app->request->post())) {
-            $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+            /*$model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
             $model->imageFile = UploadedFile::getInstance($model,'imageFile');
             $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
-            $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
-            if($model->save()){
+            $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;*/
+            if ($model->save()) {
+                /*Image::frame('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension)
+                ->thumbnail(new box(400, 400))
+                ->save('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension, ['quality' => 50]);*/
                 return $this->redirect(['view', 'id' => $model->userid]);
-            }else{
+            } else {
                 return $this->render('create', [
                 'model' => $model,
                 ]);
@@ -139,6 +144,7 @@ class UsersController extends Controller
 
         return $this->redirect(['index']);
     }
+    
 
     /**
      * Finds the Users model based on its primary key value.
@@ -156,4 +162,50 @@ class UsersController extends Controller
         }
     }
 
+    public function actionChangePassword($id)
+    {
+        
+        $model = $this->findModel($id);
+        $model->scenario = 'update-password';
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->password_repeat === $model->password){
+                $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                $model->password_repeat = $model->password;
+            }
+            if ($model->save()) {
+                return $this->redirect(['users/view', 'id' => $model->userid]);
+            }
+        }
+        
+        $model->password = "";
+        $model->password_repeat = "";
+        $model->old_password = "";
+
+        return $this->render(
+            'update_password', [
+                'model' => $model,
+            ]
+        );
+    }
+
+    public function actionUpdateDp($id){
+        $model = $this->findModel($id);
+        $model->scenario = 'update-dp';
+        if ($model->load(Yii::$app->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model,'imageFile');
+            $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
+            $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
+            if ($model->save()) {
+                Image::frame('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension)
+                ->thumbnail(new box(400, 400))
+                ->save('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension, ['quality' => 50]);
+                return $this->redirect(['view', 'id' => $model->userid]);
+            }
+        }
+        return $this->render(
+            'update_dp', [
+                'model' => $model,
+            ]
+        );
+    }
 }

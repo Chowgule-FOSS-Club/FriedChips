@@ -8,6 +8,7 @@ use app\models\QuestionsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\widgets\ActiveForm; 
 
 /**
  * QuestionsController implements the CRUD actions for Questions model.
@@ -64,6 +65,11 @@ class QuestionsController extends Controller
     public function actionCreate()
     {
         $model = new Questions();
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = 'json';
+            return ActiveForm::validate($model);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->qid]);
