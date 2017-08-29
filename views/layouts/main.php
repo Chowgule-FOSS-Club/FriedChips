@@ -227,7 +227,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                         if(!Yii::$app->user->isGuest){
                                             echo HTML::a(
                                                 'Change Profile',
-                                                ['users/', 'id' => Yii::$app->user->identity->userid]
+                                                ['users/update-dp', 'id' => Yii::$app->user->identity->userid]
                                             ) ; 
                                         }
                                     ?>

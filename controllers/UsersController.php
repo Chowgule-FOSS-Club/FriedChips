@@ -80,12 +80,20 @@ class UsersController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
-            $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
+            if(empty($model->imageFile)){
+                $model->image = 'uploads/default.png';
+            }else{
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
+                $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
+            }
+            
             if ($model->save()) {
-                Image::frame('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension)
-                ->thumbnail(new box(400, 400))
-                ->save('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension, ['quality' => 50]);
+                if(!empty($model->imageFile)){
+                    Image::frame('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension)
+                    ->thumbnail(new box(400, 400))
+                    ->save('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension, ['quality' => 50]);
+                }
                 return $this->redirect(['view', 'id' => $model->userid]);
             } else {
                 echo "error while saving..";
