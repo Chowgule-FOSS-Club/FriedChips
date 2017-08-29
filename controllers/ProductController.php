@@ -12,6 +12,11 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\data\Pagination;
 use app\models\Category;
+use app\models\ProductQuestion;
+use app\models\Questions;
+use app\models\ProductContactForm;
+use yii\web\Response;
+use yii\helpers\Json;
 /**
  * ProductController implements the CRUD actions for Product model.
  */
@@ -54,6 +59,8 @@ class ProductController extends Controller
      */
     public function actionViewProducts()
     {
+        $this->layout = 'product';
+
         $product_query = Product::find();
 
         $category_query = Category::find();
@@ -74,7 +81,7 @@ class ProductController extends Controller
 
         $category = $category_query->all();
 
-        $this->layout = 'product';
+        
         return $this->render('view_products',
         ['product'=>$product,
         'pagination'=>$pagination,
@@ -87,6 +94,27 @@ class ProductController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+
+    public function actionDisplayQuestions($id)
+    {
+        $question_query = ProductQuestion::find()->select('product_question.qid')->where(['pid' => $id , 'status' => true]);
+        $question_query->joinWith('q');
+        $questions = Questions::findAll($question_query);
+        echo Json::encode($questions);
+    }
+
+    public function actionEnquiryForm()
+    {
+        $this->enableCsrfValidation = false;
+        $data = Yii::$app->request->post('data');
+        $mydata = json_decode($data , true);
+        // for ($i=0; $i < sizeof($mydata) ; $i++) {
+        //     echo $mydata[$i]['pid'] . "-->" . $mydata[$i]['qid'] . "-->" . $mydata[$i]['answer'] . "<br/><br/>";
+        // }
+        echo "Your data has been submitted";
+
     }
 
     /**
@@ -143,7 +171,6 @@ class ProductController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 
@@ -162,4 +189,5 @@ class ProductController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

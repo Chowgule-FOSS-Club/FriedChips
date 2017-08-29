@@ -1,7 +1,14 @@
-<?php use yii\helpers\Html;
+<?php 
+use yii\helpers\Html;
+use yii\widgets\Pjax;
 use yii\widgets\LinkPager;
 ?>
-    <!-- modal form -->
+<script>
+      
+</script>  
+
+                                                                                               
+ <!-- modal form -->
     <div class="modal fade "  id="modal-1" >
 
                             <div class="modal-dialog ">
@@ -20,7 +27,7 @@ use yii\widgets\LinkPager;
                                         </div>
                                         <hr class="hr-primary">
 
-                                        <form class="contact-detail">
+                                        <form class="contact-detail" name="contact-form">
                                             <div class=" form-line">
                                                 <div class="form-group">
                                                     <div class="input-group">
@@ -37,22 +44,15 @@ use yii\widgets\LinkPager;
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-phone green"></i></span>
-                                                        <input type="email" name="InputCno" placeholder="Phone : (+91)" class="form-control" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker green "></i></span>
-                                                        <textarea class="form-control" rows="4" id="description" placeholder="Enter Address"></textarea>
+                                                        <input type="text" name="InputCno" placeholder="Phone : (+91)" class="form-control" required>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                        </form>
-                                    </div>
-
-                                    <button class="btinqr btn-block text-center" data-dismiss="modal" data-target="#modal-2" data-toggle="modal">NEXT</button>
-
+                                        
+                                            </div>                                    
+                                     <button name="contact-form-btn" type="submit" class="btinqr btn-block text-center" data-dismiss="modal" data-target="#modal-2" data-toggle="modal">NEXT</button>
+                                      </form>        
                                 </div>
                             </div>
                         </div>
@@ -73,53 +73,19 @@ use yii\widgets\LinkPager;
                                             </ul>
                                         </div>
                                         <hr class="hr-primary">
-                                        <form class="product-info">
+                                         <form class="product-info" id="prod-info" name="prod-question-form"> 
                                             <div class="row">
                                                 <div class="form-group">
-                                                    <div class="col-xs-5">
-                                                        <label for="quantity">Quantity</label>
-                                                        <input type="text" id="quantity" class="form-control" name="quantity">
-                                                    </div>
-
-                                                    <div class="col-xs-5">
-                                                        <label for="unit">Select Unit</label>
-                                                        <select id="units" class="form-control" name="unit">
-                                                                <option value="0" disabled selected>Select from below</option>
-                                                        <option value="Kilograms">Kilograms</option>
-                                                        <option value="Nos">Nos</option>
-                                                        <option value="Pieces">Pieces</option>
-                                                        <option value="Tons">Tons</option>
-                                                        <option value="Unit">Unit</option>
-                                                    </select>
+                                                    <div class="col-xs-5" id="prod-question">
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="form-group" style="padding-top: 2%">
-                                                <label class="m-t-10">Approximate Order Value</label>
-                                                <select id="value" class="form-control" name="value">
-                                                        <option value="0" disabled selected>Select from below</option>
-                                    <option value="1k">Upto 1,000</option>
-                                    <option value="1k to 3k">1,000 to 3,000</option>
-                                    <option value="3k to 10k">3,000 to 10,000</option>
-                                    <option value="10k to 20k">10,000 to 20,000</option>
-                                    <option value="20k to 50k">20,000 to 50,000</option>
-                                    <option value="50k to 100k">50,000 to 1 Lakh</option>
-                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="usage" class="m-t-10">Usage/Application</label>
-                                                <input type="text" id="usage" class="form-control" name="usage">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="other" class="m-t-10">Other Requirements</label>
-                                                <textarea name="InputMessage" rows="6" class="form-control" type="text" placeholder="Provide any specific details about :'Product/Service required', 'Quality', 'Standard', 'Size' etc... "></textarea>
-                                            </div>
-                                        </form>
+                                         
                                     </div>
 
-                                    <button class="btinqr btn-block text-center" data-dismiss="modal" data-target="#modal-3" data-toggle="modal">NEXT</button>
-
+                                    </form>
+                                    <button name="prod-question-btn" type="submit" class="btinqr btn-block text-center" data-dismiss="modal" data-target="#modal-3" data-toggle="modal">NEXT</button>
+                                     
                                 </div>
                             </div>
                         </div>
@@ -138,10 +104,17 @@ use yii\widgets\LinkPager;
                                             </ul>
                                         </div>
                                         <hr class="hr-primary">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-xs-5" id="finalize-div">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         
                                     </div>
-                                    <div>
-                                        <button class="btinqr btn-block text-center" data-dismiss="modal"><span >DONE</span></button>
-                                    </div>
+                                    
+                                        <button name="finalize-btn" data-dismiss="modal" class="btinqr btn-block text-center" ><span >DONE</span></button>
+                                   </div>
                                 </div>
                             </div>
                         </div>
@@ -215,15 +188,13 @@ use yii\widgets\LinkPager;
 
                         </div>
                         <div class="btcnt" style="text-align:Center">
-                            <button type="submit" class="btinqr btn-block" data-target="#modal-1" data-toggle="modal"><p class="s2">ENQUIRE</p></button>
+                            <?= Html::button($content = 'ENQUIRE', $options = ['value' => $products->pid , 'name' => 'enquire' , 'class' => 'btinqr btn-block' , 'data-target' => '#modal-1' , 'data-toggle' => 'modal' ]); ?>
                         </div>
                     </div>
                 </div>
 
 
                 <?php endforeach; ?>
-
-
 
             <div class="row">
                
@@ -241,3 +212,65 @@ use yii\widgets\LinkPager;
   </span>
     </div>
     </div>
+<?php
+   $script = <<< JS
+    $('document').ready(function(){
+        var data;
+        var pid;
+        $('[name="enquire"]').click(function(){
+        $('#prod-question').html("");
+        var id = $(this).val();
+        pid = id;
+        $.get('index.php?r=product/display-questions' , { id : id} , function(data){
+            var raw = data;
+            data = $.parseJSON(data);
+            for(i=0 ; i<Object.keys(data).length ; i++){
+                $('#prod-question').append(data[i].name + '<br/>' +
+                    '<input type="text" name="' + data[i].qid + '" /> <br/><br/>' 
+                );
+            }
+            $('#prod-question').append('<br/>' +
+                    '<input type="hidden" name="all-questions"/> <br/><br/>');
+            $('[name="all-questions"]').val(raw);
+            })
+        });
+
+        $('[name="prod-question-btn"]').click(function(){
+            var name = $('[name="InputName"]').val();        
+            var email = $('[name="InputEmail"]').val();
+            var cno = $('[name="InputCno"]').val();
+            data = $('[name="all-questions"]').val();
+            data = $.parseJSON(data);
+            $('#finalize-div').html(name + '<br>' + email + '<br>' + cno + '<br>');
+            for(i=0 ; i<Object.keys(data).length ; i++){
+                    var answer = $('[name="' + data[i].qid + '"]').val();
+                    $('#finalize-div').append(data[i].name + ' : ' + answer + '<br/>');
+                } 
+        });
+
+        $('[name="finalize-btn"]').click(function(){
+            var answerJson = [];
+            for(i=0 ; i<Object.keys(data).length ; i++){
+                    var answer = $('[name="' + data[i].qid + '"]').val();
+                    answerJson.push({
+                        pid : pid,
+                        qid : data[i].qid,
+                        answer : answer
+                    });
+                }               
+            $.post("index.php?r=product/enquiry-form" ,
+                    {
+                        data : JSON.stringify(answerJson) ,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        _csrf: yii.getCsrfToken(),
+                    } , function(data){
+                            alert(data);
+                        })            
+                });
+});
+    
+    
+JS;
+$this->registerJS($script);
+?>
