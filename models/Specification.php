@@ -30,7 +30,8 @@ class Specification extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name'], 'string', 'max' => 25],
+            [['name'], 'string', 'max' => 25], 
+            [['name'],'unique'],
         ];
     }
 
