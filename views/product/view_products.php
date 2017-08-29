@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\widgets\LinkPager;
+use app\models\UserCustomer;
 ?>
 <script>
       
@@ -31,20 +32,49 @@ use yii\widgets\LinkPager;
                                             <div class=" form-line">
                                                 <div class="form-group">
                                                     <div class="input-group">
+                                                        <?php 
+                                                            /*
+                                                                getting the customer from the cutomer table based on the user logged in.
+                                                                If customer not there in customer table, the customer variable will be empty.
+                                                            */
+                                                            $customer;
+                                                            if(!Yii::$app->user->isGuest){
+                                                                $customer = UserCustomer::findOne(['userid' => Yii::$app->user->identity->userid]);
+                                                            }
+                                                        ?>
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user green"></i></span>
-                                                        <input type="text" name="InputName" placeholder="Enter Name" class="form-control" autofocus="autofocus" required>
+                                                        <?php 
+                                                            if(!empty($customer)){
+                                                                echo "<input value='". Yii::$app->user->identity->getName() ."' type=\"text\" name=\"InputName\" placeholder=\"Enter Name\" class=\"form-control\" autofocus=\"autofocus\" required>";
+                                                            }else{
+                                                                echo "<input type=\"text\" name=\"InputName\" placeholder=\"Enter Name\" class=\"form-control\" autofocus=\"autofocus\" required>";    
+                                                            }
+                                                        ?>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope green"></i></span>
-                                                        <input type="email" name="InputEmail" placeholder="Enter Email" class="form-control" required>
+                                                        <?php 
+                                                            if(!empty($customer)){
+                                                                echo "<input value='".Yii::$app->user->identity->email."' type=\"email\" name=\"InputEmail\" placeholder=\"Enter Email\" class=\"form-control\" required>";
+                                                            }else{
+                                                                echo "<input type=\"email\" name=\"InputEmail\" placeholder=\"Enter Email\" class=\"form-control\" required>";
+                                                            }
+                                                        ?>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-phone green"></i></span>
-                                                        <input type="text" name="InputCno" placeholder="Phone : (+91)" class="form-control" required>
+                                                        <?php 
+                                                            if(!empty($customer)){
+                                                                echo "<input value='".$customer->phone."' type=\"text\" name=\"InputCno\" placeholder=\"Phone : 9652145236\" class=\"form-control\" required>";
+                                                            }else{
+                                                                echo "<input type=\"text\" name=\"InputCno\" placeholder=\"Phone : 9652145236\" class=\"form-control\" required>";
+                                                            }
+                                                            ?>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>

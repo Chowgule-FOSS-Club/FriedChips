@@ -9,6 +9,7 @@ use app\models\Users;
 use app\controllers\UsersSearchController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use Imagine\Image\Box;
@@ -70,39 +71,43 @@ class UsersController extends Controller
      */
     public function actionCreate()
     {
-
-        $model = new Users();
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-
-        if ($model->load(Yii::$app->request->post())) {
-            $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            if(empty($model->imageFile)){
-                $model->image = 'uploads/default.png';
-            }else{
+        if(Yii::$app->user->can("create-user")){
+            $model = new Users();
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
+    
+            if ($model->load(Yii::$app->request->post())) {
+                $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
                 $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-                $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
-                $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
-            }
-            
-            if ($model->save()) {
-                if(!empty($model->imageFile)){
-                    Image::frame('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension)
-                    ->thumbnail(new box(400, 400))
-                    ->save('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension, ['quality' => 50]);
+                if(empty($model->imageFile)){
+                    $model->image = 'uploads/default.png';
+                }else{
+                    $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                    $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
+                    $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
                 }
-                return $this->redirect(['view', 'id' => $model->userid]);
+                
+                if ($model->save()) {
+                    if(!empty($model->imageFile)){
+                        Image::frame('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension)
+                        ->thumbnail(new box(400, 400))
+                        ->save('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension, ['quality' => 50]);
+                    }
+                    return $this->redirect(['view', 'id' => $model->userid]);
+                } else {
+                    echo "error while saving..";
+                }
             } else {
-                echo "error while saving..";
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
             }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        }else{
+            throw new ForbiddenHttpException;
         }
+        
     }
 
     /**
@@ -113,31 +118,36 @@ class UsersController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-        if ($model->load(Yii::$app->request->post())) {
-            /*$model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
-            $model->imageFile = UploadedFile::getInstance($model,'imageFile');
-            $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
-            $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;*/
-            if ($model->save()) {
-                /*Image::frame('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension)
-                ->thumbnail(new box(400, 400))
-                ->save('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension, ['quality' => 50]);*/
-                return $this->redirect(['view', 'id' => $model->userid]);
+        if(Yii::$app->user->can("update-user")){
+            $model = $this->findModel($id);
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
+            if ($model->load(Yii::$app->request->post())) {
+                /*$model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                $model->imageFile = UploadedFile::getInstance($model,'imageFile');
+                $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
+                $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;*/
+                if ($model->save()) {
+                    /*Image::frame('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension)
+                    ->thumbnail(new box(400, 400))
+                    ->save('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension, ['quality' => 50]);*/
+                    return $this->redirect(['view', 'id' => $model->userid]);
+                } else {
+                    return $this->render('create', [
+                    'model' => $model,
+                    ]);
+                }
             } else {
-                return $this->render('create', [
-                'model' => $model,
+                return $this->render('update', [
+                    'model' => $model,
                 ]);
             }
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        }else{
+            throw new ForbiddenHttpException;
         }
+        
     }
 
     /**
