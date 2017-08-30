@@ -72,8 +72,9 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                             [
                                 "items" => [
                                     ["label" => "Home",  "url" => ["site/index"], "icon" => "home"],
-                                    ["label" => "Layout", "url" => ["site/layout"], "icon" => "files-o"],
-                                    ["label" => "Error page", "url" => ["site/error-page"], "icon" => "close"],
+
+                                    //["label" => "Layout", "url" => ["site/layout"], "icon" => "files-o"],
+                                    //["label" => "Error page", "url" => ["site/error-page"], "icon" => "close"],
                                     [
                                         "label" => "Products",
                                         "icon" => "briefcase",
@@ -98,6 +99,16 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                         ]
                                     ],
                                     [
+                                        "label" => "Access Control",
+                                        "icon" => "lock",
+                                        "url" => "#",
+                                        "items" => [
+                                            ["label" => "Create Permission", "url" => ["auth/create"]],
+                                            ["label" => "All Permissions", "url" => ["auth/index"]],
+                                            ["label" => "Create Roles", "url" => ["auth/create-role"]]
+                                        ]
+                                    ],
+                                    /*[
                                         "label" => "Badges",
                                         "url" => "#",
                                         "icon" => "table",
@@ -145,7 +156,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                                 ],
                                             ],
                                         ],
-                                    ],
+                                    ], */
                                 ],
                             ]
                         )

@@ -71,7 +71,6 @@ class UsersController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can("create-user")){
             $model = new Users();
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -104,9 +103,6 @@ class UsersController extends Controller
                     'model' => $model,
                 ]);
             }
-        }else{
-            throw new ForbiddenHttpException;
-        }
         
     }
 
@@ -118,7 +114,7 @@ class UsersController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can("update-user")){
+        //if(Yii::$app->user->can("update-user")){
             $model = $this->findModel($id);
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -144,9 +140,9 @@ class UsersController extends Controller
                     'model' => $model,
                 ]);
             }
-        }else{
-            throw new ForbiddenHttpException;
-        }
+        //}else{
+        //    throw new ForbiddenHttpException;
+        //}
         
     }
 
