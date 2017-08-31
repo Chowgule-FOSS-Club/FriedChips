@@ -55,8 +55,7 @@ class UserAnsQuestionsSearch extends UserAnsQuestions
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
-        }uery->andFilterWhere(['like', 'answer', $this->answer]);
-
+        }
           // grid filtering conditions
        $query->joinWith('p');
        $query->joinWith('q');
