@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 29, 2017 at 06:51 PM
+-- Generation Time: Aug 30, 2017 at 04:55 PM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -34,15 +34,6 @@ CREATE TABLE `auth_assignment` (
   `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `auth_assignment`
---
-
-INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('create-user', '5', NULL),
-('create-user', '6', NULL),
-('update-user', '5', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -64,8 +55,10 @@ CREATE TABLE `auth_item` (
 --
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-('create-user', 1, 'Create a new user', NULL, NULL, NULL, NULL),
-('update-user', 1, 'update a user in the database', NULL, NULL, NULL, NULL);
+('Admin', 1, NULL, NULL, NULL, 1504089287, 1504089287),
+('create-user', 2, 'a new user can be added to the database', NULL, NULL, 1504085233, 1504085233),
+('delete-user', 2, 'a user can be deleted', NULL, NULL, 1504085258, 1504085258),
+('update-user', 2, 'user can be updated', NULL, NULL, 1504085276, 1504085276);
 
 -- --------------------------------------------------------
 
@@ -77,6 +70,15 @@ CREATE TABLE `auth_item_child` (
   `parent` varchar(64) NOT NULL,
   `child` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `auth_item_child`
+--
+
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+('Admin', 'create-user'),
+('Admin', 'delete-user'),
+('Admin', 'update-user');
 
 -- --------------------------------------------------------
 
@@ -322,7 +324,8 @@ CREATE TABLE `user_admin` (
 CREATE TABLE `user_ans_questions` (
   `userid` int(11) NOT NULL,
   `qid` int(11) NOT NULL,
-  `pid` int(11) NOT NULL
+  `pid` int(11) NOT NULL,
+  `answer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
