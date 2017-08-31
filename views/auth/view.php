@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\roles\AuthItem */
 
-$this->title = $model->name;
+$this->title = $model->name.' Permission';
 $this->params['breadcrumbs'][] = ['label' => 'Auth Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,10 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'name',
-            'type',
             'description:ntext',
-            'rule_name',
-            'data:ntext',
             'created_at',
             'updated_at',
         ],

@@ -27,6 +27,8 @@ class AuthItem extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $permissions;
+
     public static function tableName()
     {
         return 'auth_item';
@@ -42,8 +44,18 @@ class AuthItem extends \yii\db\ActiveRecord
             [['type', 'created_at', 'updated_at'], 'integer'],
             [['description', 'data'], 'string'],
             [['name', 'rule_name'], 'string', 'max' => 64],
+            [['name'], 'unique'],
             [['rule_name'], 'exist', 'skipOnError' => true, 'targetClass' => AuthRule::className(), 'targetAttribute' => ['rule_name' => 'name']],
+            ['permissions', 'required', 'on' => 'create-role'],
+            [['name'], 'unique', 'on' => 'create-role'],
         ];
+    }
+
+    public function scenarios()
+    {
+		$scenarios = parent::scenarios();
+        $scenarios['create-role'] = ['permissions', 'name', 'type', 'description'];
+        return $scenarios;
     }
 
     /**

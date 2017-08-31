@@ -4,10 +4,14 @@ namespace app\controllers;
 
 use Yii;
 use app\models\roles\AuthItem;
-use app\models\roles\AuthSearchModel;
+use app\models\roles\AuthItemChild;
+use app\models\Permissions;
+use app\models\AuthSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\widgets\ActiveForm;
+use yii\web\Response;
 
 /**
  * AuthController implements the CRUD actions for AuthItem model.
@@ -65,7 +69,16 @@ class AuthController extends Controller
     {
         $model = new AuthItem();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            $authManager = Yii::$app->authManager;
+            $newPermission = $authManager->createPermission($model->name);
+            $newPermission->description = $model->description;
+            $authManager->add($newPermission);
             return $this->redirect(['view', 'id' => $model->name]);
         } else {
             return $this->render('create', [
@@ -83,7 +96,7 @@ class AuthController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->name]);
         } else {
@@ -106,6 +119,36 @@ class AuthController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionCreateRole(){
+        $model = new AuthItem();
+        $model->scenario = "create-role";
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        if($model->load(Yii::$app->request->post())){
+            $authManager = Yii::$app->authManager;
+            $newRole = $authManager->createRole($model->name);
+            $authManager->add($newRole);
+            foreach($model->permissions as $permission){
+                $fetchedPermission = $authManager->getPermission($permission);
+                $authManager->addChild($newRole, $fetchedPermission);
+            }
+            
+        }else{
+            return $this->render(
+                'create-role',
+                [
+                    'model' => $model,
+                ]
+            );
+        }
+    }
+
+    public function actionViewRoles(){
+        
+    }
+
     /**
      * Finds the AuthItem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -121,4 +164,6 @@ class AuthController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+
 }
