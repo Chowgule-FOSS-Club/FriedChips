@@ -154,6 +154,16 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $this->fname . ' ' . $this->lname;
     }
 
+    public function getFname()
+    {
+        return $this->fname;
+    }
+
+    public function getLname()
+    {
+        return $this->lname;
+    }
+
     public static function findByUsername($username)
     {
         return self::findOne(['email' => $username]);

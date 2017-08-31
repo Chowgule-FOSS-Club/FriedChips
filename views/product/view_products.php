@@ -45,13 +45,30 @@ use app\models\UserCustomer;
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user green"></i></span>
                                                         <?php 
                                                             if(!empty($customer)){
-                                                                echo "<input value='". Yii::$app->user->identity->getName() ."' type=\"text\" name=\"InputName\" placeholder=\"Enter Name\" class=\"form-control\" autofocus=\"autofocus\" required>";
+                                                                echo "<input value='". Yii::$app->user->identity->getFname() ."' type=\"text\" name=\"InputFname\" placeholder=\"Enter Firstame\" class=\"form-control\" autofocus=\"autofocus\" required>";
+                                                            
                                                             }else{
-                                                                echo "<input type=\"text\" name=\"InputName\" placeholder=\"Enter Name\" class=\"form-control\" autofocus=\"autofocus\" required>";    
+                                                                echo "<input type=\"text\" name=\"InputFname\" placeholder=\"Enter Firstname\" class=\"form-control\" autofocus=\"autofocus\" required>";    
                                                             }
                                                         ?>
                                                     </div>
                                                 </div>
+
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                       
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user green"></i></span>
+                                                        <?php 
+                                                            if(!empty($customer)){
+                                                                echo "<input value='". Yii::$app->user->identity->getLname() ."' type=\"text\" name=\"InputLname\" placeholder=\"Enter Lastname\" class=\"form-control\" required>";
+                                                            
+                                                            }else{
+                                                                echo "<input type=\"text\" name=\"InputLname\" placeholder=\"Enter Lastname\" class=\"form-control\" required>";    
+                                                            }
+                                                        ?>
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope green"></i></span>
@@ -242,9 +259,12 @@ use app\models\UserCustomer;
   </span>
     </div>
     </div>
+
+
 <?php
    $script = <<< JS
     $('document').ready(function(){
+        var contactDetails;
         var data;
         var pid;
         $('[name="enquire"]').click(function(){
@@ -266,9 +286,16 @@ use app\models\UserCustomer;
         });
 
         $('[name="prod-question-btn"]').click(function(){
-            var name = $('[name="InputName"]').val();        
+            var fname = $('[name="InputFname"]').val();
+            var lname = $('[name="InputLname"]').val();        
             var email = $('[name="InputEmail"]').val();
             var cno = $('[name="InputCno"]').val();
+            contactDetails = {
+                "fname" : fname,
+                "lname" : lname,
+                "email" : email,
+                "cno" : cno
+                };
             data = $('[name="all-questions"]').val();
             data = $.parseJSON(data);
             $('#finalize-div').html(name + '<br>' + email + '<br>' + cno + '<br>');
@@ -280,6 +307,7 @@ use app\models\UserCustomer;
 
         $('[name="finalize-btn"]').click(function(){
             var answerJson = [];
+            answerJson.push(contactDetails);
             for(i=0 ; i<Object.keys(data).length ; i++){
                     var answer = $('[name="' + data[i].qid + '"]').val();
                     answerJson.push({
@@ -287,15 +315,16 @@ use app\models\UserCustomer;
                         qid : data[i].qid,
                         answer : answer
                     });
-                }               
+                }           
             $.post("index.php?r=product/enquiry-form" ,
                     {
-                        data : JSON.stringify(answerJson) ,
+                        data : JSON.stringify(answerJson),
                         contentType: 'application/json; charset=utf-8',
                         dataType: 'json',
                         _csrf: yii.getCsrfToken(),
                     } , function(data){
                             alert(data);
+                            contactDetails = [];
                         })            
                 });
 });
