@@ -218,4 +218,8 @@ class ProductController extends Controller
         }
     }
 
+    public function actionHello(){
+        echo "ameer";
+    }
+
 }

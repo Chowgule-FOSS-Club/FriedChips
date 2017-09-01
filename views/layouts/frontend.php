@@ -52,7 +52,11 @@ HomeAsset::register($this);
           <li><a href="#services">Services</a></li>
           <li><a href="#clients">Clientel</a></li>
           <li><a href="#contact">Contact Info</a></li>
-
+          <?php 
+            if(!Yii::$app->user->isGuest){
+                echo "<li><a href=\"index.php?r=users/view&id=".Yii::$app->user->identity->userid."\">Control Panel</a></li>";
+            }
+          ?>  
           <?php 
             if(Yii::$app->user->isGuest){
                 echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
@@ -60,7 +64,6 @@ HomeAsset::register($this);
                 echo "<li><a data-method='POST' href=\"index.php?r=site/logout\">(". Yii::$app->user->identity->getName() .") LOGOUT</a></li>";
             }
           ?>
-
         </ul>
       </div>
     </div>
