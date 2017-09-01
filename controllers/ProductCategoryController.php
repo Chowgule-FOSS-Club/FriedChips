@@ -8,6 +8,7 @@ use app\models\ProductCategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\widgets\ActiveForm; 
 
 /**
  * ProductCategoryController implements the CRUD actions for ProductCategory model.
@@ -64,10 +65,10 @@ class ProductCategoryController extends Controller
      */
     public function actionCreate()
     {
-        $model = new ProductCategory();
+        $model = new ProductCategory();       
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'pid' => $model->pid, 'cid' => $model->cid]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {       
+            return $this->redirect(['view', 'pid' => $model->pid, 'cid' => $model->cid]);                  
         } else {
             return $this->render('create', [
                 'model' => $model,

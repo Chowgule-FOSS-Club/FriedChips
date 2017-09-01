@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="product-form">
 
     <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data',],
-                                       'id' => 'create-category-form',
+                                       'id' => 'create-product-form',
                                        //'enableAjaxValidation' => true,
     ]); ?>
 

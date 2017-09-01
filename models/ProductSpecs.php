@@ -34,6 +34,7 @@ class ProductSpecs extends \yii\db\ActiveRecord
             [['sid', 'pid', 'value','status'], 'required'],
             [['sid', 'pid'], 'integer'],
             [['status'], 'string'],
+            [['sid', 'pid'], 'unique', 'targetAttribute' => ['sid', 'pid']],
             [['value'], 'string', 'max' => 500],
             [['pid'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['pid' => 'pid']],
             [['sid'], 'exist', 'skipOnError' => true, 'targetClass' => Specification::className(), 'targetAttribute' => ['sid' => 'sid']],
