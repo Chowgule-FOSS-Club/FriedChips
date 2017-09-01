@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
         'enableAjaxValidation' => true
     ]); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true] ) ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
