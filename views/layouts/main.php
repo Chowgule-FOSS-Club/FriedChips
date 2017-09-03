@@ -87,6 +87,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                             ["label" => "Product Questions", "url" => ["product-question/index"]],
                                             ["label" => "Category", "url" => ["category/index"]],
                                             ["label" => "Product Category", "url" => ["product-category/index"]],
+                                            ["label" => "User Answers Questions", "url" => ["user-ans-questions/index"]]
                                         ],
                                     ],
                                     [
@@ -105,7 +106,8 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                         "items" => [
                                             ["label" => "Create Permission", "url" => ["auth/create"]],
                                             ["label" => "All Permissions", "url" => ["auth/index"]],
-                                            ["label" => "Create Roles", "url" => ["auth/create-role"]]
+                                            ["label" => "Create Roles", "url" => ["auth/create-role"]],
+                                            ["label" => "View Roles", "url" => ["auth/view-roles"]]
                                         ]
                                     ],
                                     /*[

@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\data\ArrayDataProvider;
 use app\models\roles\AuthItem;
 use app\models\roles\AuthItemChild;
 use app\models\Permissions;
@@ -146,7 +148,15 @@ class AuthController extends Controller
     }
 
     public function actionViewRoles(){
-        
+        $authManager = Yii::$app->authManager;
+        $roles = $authManager->getRoles();
+        $provider = new ArrayDataProvider([
+                'allModels' => $roles,
+            ]);
+        return $this->render(
+            'view-roles',
+            ['model' => $provider]
+        );
     }
 
     /**

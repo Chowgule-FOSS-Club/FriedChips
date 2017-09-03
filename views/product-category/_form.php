@@ -13,7 +13,8 @@ use app\models\Product;
 
 <div class="product-category-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(
+        ); ?>
 
      <?= $form->field($model,'pid')->dropDownList(
         ArrayHelper::map(Product::find()->all(), 'pid','name'),

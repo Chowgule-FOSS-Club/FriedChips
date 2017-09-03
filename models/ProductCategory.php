@@ -31,6 +31,7 @@ class ProductCategory extends \yii\db\ActiveRecord
         return [
             [['pid', 'cid'], 'required'],
             [['pid', 'cid'], 'integer'],
+            [['pid', 'cid'], 'unique', 'targetAttribute' => ['pid', 'cid']],
             [['cid'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cid' => 'cid']],
             [['pid'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['pid' => 'pid']],
         ];

@@ -5,23 +5,25 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "product_question".
+ * This is the model class for table "user_ans_questions".
  *
- * @property integer $pid
+ * @property integer $userid
  * @property integer $qid
- * @property string $status
+ * @property integer $pid
+ * @property string $answer
  *
  * @property Product $p
  * @property Questions $q
+ * @property Users $user
  */
-class ProductQuestion extends \yii\db\ActiveRecord
+class UserAnsQuestions extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'product_question';
+        return 'user_ans_questions';
     }
 
     /**
@@ -30,12 +32,12 @@ class ProductQuestion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pid', 'qid', 'status'], 'required'],
-            [['pid', 'qid'], 'integer'],
-            [['status'], 'string'],
-            [['pid', 'qid'], 'unique', 'targetAttribute' => ['pid', 'qid']],
+            [['userid', 'qid', 'pid', 'answer'], 'required'],
+            [['userid', 'qid', 'pid'], 'integer'],
+            [['answer'], 'string'],
             [['pid'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['pid' => 'pid']],
             [['qid'], 'exist', 'skipOnError' => true, 'targetClass' => Questions::className(), 'targetAttribute' => ['qid' => 'qid']],
+            [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['userid' => 'userid']],
         ];
     }
 
@@ -45,9 +47,10 @@ class ProductQuestion extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'pid' => 'Product',
+            'userid' => 'User',
             'qid' => 'Question',
-            'status' => 'Status',
+            'pid' => 'Product',
+            'answer' => 'Answer',
         ];
     }
 
@@ -65,5 +68,13 @@ class ProductQuestion extends \yii\db\ActiveRecord
     public function getQ()
     {
         return $this->hasOne(Questions::className(), ['qid' => 'qid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(Users::className(), ['userid' => 'userid']);
     }
 }
