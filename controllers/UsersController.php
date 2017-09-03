@@ -114,7 +114,7 @@ class UsersController extends Controller
      */
     public function actionUpdate($id)
     {
-        //if(Yii::$app->user->can("update-user")){
+        if(Yii::$app->user->can("update-user")){
             $model = $this->findModel($id);
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -140,9 +140,9 @@ class UsersController extends Controller
                     'model' => $model,
                 ]);
             }
-        //}else{
-        //    throw new ForbiddenHttpException;
-        //}
+        }else{
+            throw new ForbiddenHttpException;
+        }
         
     }
 
@@ -222,4 +222,32 @@ class UsersController extends Controller
             ]
         );
     }
+
+    public function actionAssign(){
+        $authManager = Yii::$app->authManager;
+        $authManager->assign()
+    }
+
+    public function actionRule(){
+        $authManager = Yii::$app->authManager;
+
+        $editor = $authManager->createPermission("editor");
+        $authManager->add($editor);
+
+        $display_permission = $authManager->createPermission("display-details");
+        $display_permission->description = "display details of users";
+        $authManager->add($display_permission);
+
+        $rule = new \app\models\rules\DisplayLoggedUser;
+        $authManager->add($rule);
+
+        $viewOwnDetails = $authManager->createPermission("display-logged-user");
+        $viewOwnDetails->description = "Displaying details of the user logged in";
+        $viewOwnDetails->ruleName = $rule->name;
+        $authManager->add($viewOwnDetails);
+
+        $authManager->addChild($viewOwnDetails, $display_permission);
+        $authManager->addChild($editor, $viewOwnDetails);
+    }
+
 }
