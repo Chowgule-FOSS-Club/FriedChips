@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 03, 2017 at 03:53 AM
+-- Generation Time: Sep 03, 2017 at 03:50 PM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -331,10 +331,11 @@ CREATE TABLE `user_admin` (
 --
 
 CREATE TABLE `user_ans_questions` (
-  `time_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `pid` int(11) DEFAULT NULL,
   `qid` int(11) DEFAULT NULL,
   `uid` int(11) DEFAULT NULL,
+  `answer` text,
   `isRead` enum('true','false') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -456,10 +457,10 @@ ALTER TABLE `user_admin`
 -- Indexes for table `user_ans_questions`
 --
 ALTER TABLE `user_ans_questions`
-  ADD PRIMARY KEY (`time_created`),
-  ADD KEY `user_ans_question_pid` (`pid`),
-  ADD KEY `user_ans_question_qid` (`qid`),
-  ADD KEY `user_ans_question_uid` (`uid`);
+  ADD PRIMARY KEY (`created_time`),
+  ADD KEY `user_ans_questions_pid` (`pid`),
+  ADD KEY `user_ans_questions_qid` (`qid`),
+  ADD KEY `user_ans_questions_uid` (`uid`);
 
 --
 -- Indexes for table `user_customer`
@@ -557,9 +558,9 @@ ALTER TABLE `user_admin`
 -- Constraints for table `user_ans_questions`
 --
 ALTER TABLE `user_ans_questions`
-  ADD CONSTRAINT `user_ans_question_pid` FOREIGN KEY (`pid`) REFERENCES `product` (`pid`),
-  ADD CONSTRAINT `user_ans_question_qid` FOREIGN KEY (`qid`) REFERENCES `questions` (`qid`),
-  ADD CONSTRAINT `user_ans_question_uid` FOREIGN KEY (`uid`) REFERENCES `users` (`userid`);
+  ADD CONSTRAINT `user_ans_questions_pid` FOREIGN KEY (`pid`) REFERENCES `product` (`pid`),
+  ADD CONSTRAINT `user_ans_questions_qid` FOREIGN KEY (`qid`) REFERENCES `questions` (`qid`),
+  ADD CONSTRAINT `user_ans_questions_uid` FOREIGN KEY (`uid`) REFERENCES `users` (`userid`);
 
 --
 -- Constraints for table `user_customer`
