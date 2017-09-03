@@ -225,7 +225,7 @@ class UsersController extends Controller
 
     public function actionAssign(){
         $authManager = Yii::$app->authManager;
-        $authManager->assign()
+        $authManager->assign();
     }
 
     public function actionRule(){
