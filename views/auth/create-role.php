@@ -22,12 +22,19 @@ $this->title = 'Create Role';
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
+    <?php 
+    ?>
+
     <?= $form->field($model, 'permissions')->checkboxList(ArrayHelper::map(AuthItem::find()->all(), 'name', 'name')) ?>
 
+    
     <div class="form-group">
         <?= Html::submitButton('Create', ['class' =>'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
+
+
 </div>
+

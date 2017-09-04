@@ -97,14 +97,31 @@ class AuthController extends Controller
      */
     public function actionUpdate($id)
     {
+        $authManager = Yii::$app->authManager;
         $model = $this->findModel($id);
-        
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->name]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $model->my_id = $model->name;
+        $model->permissions = $authManager->getPermissionsByRole($id);
+        $model->scenario = "create-role";
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        if($model->load(Yii::$app->request->post())){
+            $authManager = Yii::$app->authManager;
+            $authManager->remove($authManager->getRole($model->my_id));
+            $newRole = $authManager->createRole($model->name);
+            $authManager->add($newRole);
+            foreach($model->permissions as $permission){
+                $fetchedPermission = $authManager->getPermission($permission);
+                $authManager->addChild($newRole, $fetchedPermission);
+            }
+        }else{
+            return $this->render(
+                'update-role',
+                [
+                    'model' => $model,
+                ]
+            );
         }
     }
 
@@ -122,7 +139,11 @@ class AuthController extends Controller
     }
 
     public function actionCreateRole(){
+        
+        $authManager = Yii::$app->authManager;
+        
         $model = new AuthItem();
+        // $this->layout = "product";
         $model->scenario = "create-role";
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -134,7 +155,12 @@ class AuthController extends Controller
             $authManager->add($newRole);
             foreach($model->permissions as $permission){
                 $fetchedPermission = $authManager->getPermission($permission);
-                $authManager->addChild($newRole, $fetchedPermission);
+                if($fetchedPermission == null){
+                    $fetchedRole = $authManager->getRole($permission);
+                    $authManager->addChild($newRole, $fetchedRole);
+                }else{
+                    $authManager->addChild($newRole, $fetchedPermission);
+                }
             }
             
         }else{
@@ -145,6 +171,10 @@ class AuthController extends Controller
                 ]
             );
         }
+    }
+
+    public function actionUpdateRole($id){
+        
     }
 
     public function actionViewRoles(){
