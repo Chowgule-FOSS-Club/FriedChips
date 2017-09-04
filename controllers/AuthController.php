@@ -99,7 +99,6 @@ class AuthController extends Controller
     {
         $authManager = Yii::$app->authManager;
         $model = $this->findModel($id);
-        $model->my_id = $model->name;
         $model->permissions = $authManager->getPermissionsByRole($id);
         $model->scenario = "create-role";
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
@@ -108,13 +107,19 @@ class AuthController extends Controller
         }
         if($model->load(Yii::$app->request->post())){
             $authManager = Yii::$app->authManager;
-            $authManager->remove($authManager->getRole($model->my_id));
+            $authManager->remove($authManager->getRole($model->name));
             $newRole = $authManager->createRole($model->name);
             $authManager->add($newRole);
             foreach($model->permissions as $permission){
                 $fetchedPermission = $authManager->getPermission($permission);
                 $authManager->addChild($newRole, $fetchedPermission);
             }
+            return $this->render(
+                'view',
+                [
+                    'model' => $model,
+                ]
+            );
         }else{
             return $this->render(
                 'update-role',
@@ -162,6 +167,12 @@ class AuthController extends Controller
                     $authManager->addChild($newRole, $fetchedPermission);
                 }
             }
+            return $this->render(
+                'view',
+                [
+                    'model' => $model,
+                ]
+            );
             
         }else{
             return $this->render(

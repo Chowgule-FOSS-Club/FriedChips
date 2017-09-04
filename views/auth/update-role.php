@@ -20,7 +20,6 @@ $this->title = 'Update Role: ' . $model->name;
         'enableAjaxValidation' => true,
     ]); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'permissions')
                 ->checkboxList(ArrayHelper::map(AuthItem::find()->where(['!=','name', $model->name])->all(), 'name', 'name')) ?>
 
