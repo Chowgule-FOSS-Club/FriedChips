@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 30, 2017 at 04:55 PM
+-- Generation Time: Sep 03, 2017 at 03:50 PM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -55,10 +55,10 @@ CREATE TABLE `auth_item` (
 --
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-('Admin', 1, NULL, NULL, NULL, 1504089287, 1504089287),
-('create-user', 2, 'a new user can be added to the database', NULL, NULL, 1504085233, 1504085233),
-('delete-user', 2, 'a user can be deleted', NULL, NULL, 1504085258, 1504085258),
-('update-user', 2, 'user can be updated', NULL, NULL, 1504085276, 1504085276);
+('admin', 1, NULL, NULL, NULL, 1504319391, 1504319391),
+('display-details', 2, 'display details of users', NULL, NULL, 1504319285, 1504319285),
+('display-logged-user', 2, 'Displaying details of the user logged in', 'isAuthor', NULL, 1504319285, 1504319285),
+('editor', 2, NULL, NULL, NULL, 1504319285, 1504319285);
 
 -- --------------------------------------------------------
 
@@ -76,9 +76,11 @@ CREATE TABLE `auth_item_child` (
 --
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-('Admin', 'create-user'),
-('Admin', 'delete-user'),
-('Admin', 'update-user');
+('admin', 'display-details'),
+('admin', 'display-logged-user'),
+('admin', 'editor'),
+('display-logged-user', 'display-details'),
+('editor', 'display-logged-user');
 
 -- --------------------------------------------------------
 
@@ -92,6 +94,13 @@ CREATE TABLE `auth_rule` (
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `auth_rule`
+--
+
+INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
+('isAuthor', 'O:34:\"app\\models\\rules\\DisplayLoggedUser\":3:{s:4:\"name\";s:8:\"isAuthor\";s:9:\"createdAt\";i:1504319285;s:9:\"updatedAt\";i:1504319285;}', 1504319285, 1504319285);
 
 -- --------------------------------------------------------
 
@@ -322,10 +331,12 @@ CREATE TABLE `user_admin` (
 --
 
 CREATE TABLE `user_ans_questions` (
-  `userid` int(11) NOT NULL,
-  `qid` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `answer` text NOT NULL
+  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `pid` int(11) DEFAULT NULL,
+  `qid` int(11) DEFAULT NULL,
+  `uid` int(11) DEFAULT NULL,
+  `answer` text,
+  `isRead` enum('true','false') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -446,9 +457,10 @@ ALTER TABLE `user_admin`
 -- Indexes for table `user_ans_questions`
 --
 ALTER TABLE `user_ans_questions`
-  ADD PRIMARY KEY (`userid`,`qid`,`pid`),
-  ADD KEY `user_ans_ques_qid` (`qid`),
-  ADD KEY `user_ans_ques_pid` (`pid`);
+  ADD PRIMARY KEY (`created_time`),
+  ADD KEY `user_ans_questions_pid` (`pid`),
+  ADD KEY `user_ans_questions_qid` (`qid`),
+  ADD KEY `user_ans_questions_uid` (`uid`);
 
 --
 -- Indexes for table `user_customer`
@@ -546,9 +558,9 @@ ALTER TABLE `user_admin`
 -- Constraints for table `user_ans_questions`
 --
 ALTER TABLE `user_ans_questions`
-  ADD CONSTRAINT `user_ans_ques_pid` FOREIGN KEY (`pid`) REFERENCES `product` (`pid`),
-  ADD CONSTRAINT `user_ans_ques_qid` FOREIGN KEY (`qid`) REFERENCES `questions` (`qid`),
-  ADD CONSTRAINT `user_ans_ques_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`);
+  ADD CONSTRAINT `user_ans_questions_pid` FOREIGN KEY (`pid`) REFERENCES `product` (`pid`),
+  ADD CONSTRAINT `user_ans_questions_qid` FOREIGN KEY (`qid`) REFERENCES `questions` (`qid`),
+  ADD CONSTRAINT `user_ans_questions_uid` FOREIGN KEY (`uid`) REFERENCES `users` (`userid`);
 
 --
 -- Constraints for table `user_customer`

@@ -107,7 +107,9 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                             ["label" => "Create Permission", "url" => ["auth/create"]],
                                             ["label" => "All Permissions", "url" => ["auth/index"]],
                                             ["label" => "Create Roles", "url" => ["auth/create-role"]],
-                                            ["label" => "View Roles", "url" => ["auth/view-roles"]]
+                                            ["label" => "View Roles", "url" => ["auth/view-roles"]],
+                                            ["label" => "Assign Roles", "url" => ["auth-assignment/create"]],
+                                            ["label" => "User Roles", "url" => ["auth-assignment/index"]]
                                         ]
                                     ],
                                     /*[

@@ -5,7 +5,7 @@
     <div class="image-overlay"></div>
     <div class="text">
     <h1>SALGAOCAR ENGINEERS PVT. LTD</h1>
-    <a target="_blank" href="?r=product/view-products" class="btn btn-outlined btn-theme btn-lg" data-wow-delay="0.7s">See Our Products</a>
+    <a  href="?r=product/view-products" class="btn btn-outlined btn-theme btn-lg" data-wow-delay="0.7s">See Our Products</a>
     </div>
   </div>
   <!-- <div class="back-img jumbotron text-center">

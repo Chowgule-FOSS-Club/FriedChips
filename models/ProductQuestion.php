@@ -33,6 +33,7 @@ class ProductQuestion extends \yii\db\ActiveRecord
             [['pid', 'qid', 'status'], 'required'],
             [['pid', 'qid'], 'integer'],
             [['status'], 'string'],
+            [['pid', 'qid'], 'unique', 'targetAttribute' => ['pid', 'qid']],
             [['pid'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['pid' => 'pid']],
             [['qid'], 'exist', 'skipOnError' => true, 'targetClass' => Questions::className(), 'targetAttribute' => ['qid' => 'qid']],
         ];

@@ -4,19 +4,18 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ProductCategory */
+/* @var $model app\models\roles\AuthAssignment */
 
-$this->title = 'Create Product Category';
-$this->params['breadcrumbs'][] = ['label' => 'Product Categories', 'url' => ['index']];
+$this->title = 'Assign roles to users';
+$this->params['breadcrumbs'][] = ['label' => 'Auth Assignments', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-category-create">
+<div class="auth-assignment-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 
 </div>
