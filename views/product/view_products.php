@@ -298,7 +298,7 @@ use app\models\UserCustomer;
                 };
             data = $('[name="all-questions"]').val();
             data = $.parseJSON(data);
-            $('#finalize-div').html(name + '<br>' + email + '<br>' + cno + '<br>');
+            $('#finalize-div').html(fname + '<br>' + lname + '<br>' + email + '<br>' + cno + '<br>');
             for(i=0 ; i<Object.keys(data).length ; i++){
                     var answer = $('[name="' + data[i].qid + '"]').val();
                     $('#finalize-div').append(data[i].name + ' : ' + answer + '<br/>');
