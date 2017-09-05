@@ -142,16 +142,16 @@ class ProductController extends Controller
             if(!$user){
                 $user_table = Yii::$app->db->createCommand()->insert('users', [
                     'fname' => $mydata[0]['fname'],
-                    'lname' => $mydata[0]['lname'],
+                    'lname' => $mydata[0]['lname'],                    
                     'password' => Yii::$app->getSecurity()->generatePasswordHash("asd"),
                     'email' => $mydata[0]['email'],
-                    'image' => 'uploads/photo.png',
+                    'image' => 'uploads/default.png',
                 ])->execute();
 
                 $user = Users::findByUsername($mydata[0]['email']);
 
                 $user_customer_table = Yii::$app->db->createCommand()->insert('user_customer' , [
-                    'userid' => $user->userid,
+                    'userid' => $user->userid,                    
                     'phone' => $mydata[0]['cno']
                 ])->execute();
 
@@ -167,21 +167,23 @@ class ProductController extends Controller
             $userId = $user->userid;
             for($i=1 ; $i< sizeof($mydata); $i++){
             $ins = Yii::$app->db->createCommand()->insert('user_ans_questions' , [
-                'userid' => $userId,
+                'uid' => $userId,
                 'qid' => $mydata[$i]['qid'],
                 'pid' => $mydata[$i]['pid'],
+                'created_time' => strtotime("now"),
                 'answer' => $mydata[$i]['answer']
             ])->execute();
             if(!$ins) { $status = 4; break;}
             else $status = 5;
             }
         }
-        if($status == 2) echo "user insertion error";
-        elseif($status == 4) echo "user_ans_questions error";
-        elseif($status == 5) echo "your data has been submitted";
-        else echo "error";
+        if($status == 2) echo "Error during User insertion";
+        elseif($status == 4) echo "Error during answer insertion";
+        elseif($status == 5) echo "Your data has been submitted";
+        else echo "Error during insertion! Please try again.";
 
     }
+
 
     /**
      * Creates a new Product model.
