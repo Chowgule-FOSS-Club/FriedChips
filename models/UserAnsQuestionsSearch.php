@@ -18,7 +18,7 @@ class UserAnsQuestionsSearch extends UserAnsQuestions
     public function rules()
     {
         return [
-            [['userid', 'qid', 'pid'], 'string'],
+            [['uid', 'qid', 'pid'], 'string'],
             [['answer'], 'safe'],
         ];
     }
@@ -63,7 +63,7 @@ class UserAnsQuestionsSearch extends UserAnsQuestions
 
        $query->andFilterWhere(['like', 'product.name', $this->pid])
        ->andFilterWhere(['like', 'questions.name', $this->qid])
-       ->andFilterWhere(['like', 'users.email', $this->userid])
+       ->andFilterWhere(['like', 'users.email', $this->uid])
        ->andFilterWhere(['like', 'answer', $this->answer]);
 
         return $dataProvider;

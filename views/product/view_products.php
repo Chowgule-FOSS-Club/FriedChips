@@ -264,6 +264,9 @@ use app\models\UserCustomer;
 <?php
    $script = <<< JS
     $('document').ready(function(){
+        validate();
+        $('[name="InputFname"] , [name="InputLname"], [name="InputEmail"] , [name="InputCno"]').change(validate);
+    
         var contactDetails;
         var data;
         var pid;
@@ -328,6 +331,28 @@ use app\models\UserCustomer;
                         })            
                 });
 });
+
+function validate(){
+    var numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
+    var emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var cno = $('[name="InputCno"]').val();
+    var email = $('[name="InputEmail"]').val();
+    if ($('[name="InputFname"]').val().length   >   0   &&
+        $('[name="InputLname"]').val().length  >   0   &&
+        email.length    >   0 &&
+        cno.length    ==   10  &&
+        numberRegex.test(cno) &&
+        emailRegex.test(email) ){
+        $('[name="contact-form-btn"]').html("Next");
+        $('[name="contact-form-btn"]').prop("disabled", false);
+    }
+    else {
+        if(email!="" && !emailRegex.test(email))  $('[name="contact-form-btn"]').html("Please enter proper email id");
+        else if(cno!="" && (cno.length!=10 || !numberRegex.test(cno)))  $('[name="contact-form-btn"]').html("Please enter proper phone number");
+        else $('[name="contact-form-btn"]').html("Please enter all the details properly before proceeding");
+        $('[name="contact-form-btn"]').prop("disabled", true);
+    }
+}
     
     
 JS;

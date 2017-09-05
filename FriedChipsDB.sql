@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 03, 2017 at 03:50 PM
+-- Generation Time: Sep 05, 2017 at 04:24 PM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -34,6 +34,15 @@ CREATE TABLE `auth_assignment` (
   `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `auth_assignment`
+--
+
+INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
+('admin', '5', NULL),
+('cas', '5', NULL),
+('show', '5', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -56,9 +65,12 @@ CREATE TABLE `auth_item` (
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 ('admin', 1, NULL, NULL, NULL, 1504319391, 1504319391),
+('cas', 1, NULL, NULL, NULL, 1504539295, 1504539295),
 ('display-details', 2, 'display details of users', NULL, NULL, 1504319285, 1504319285),
 ('display-logged-user', 2, 'Displaying details of the user logged in', 'isAuthor', NULL, 1504319285, 1504319285),
-('editor', 2, NULL, NULL, NULL, 1504319285, 1504319285);
+('editor', 2, NULL, NULL, NULL, 1504319285, 1504319285),
+('hopeitworkstes', 2, 'dasdasd', NULL, NULL, 1504537878, 1504537878),
+('show', 1, NULL, NULL, NULL, 1504537742, 1504537742);
 
 -- --------------------------------------------------------
 
@@ -79,8 +91,13 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'display-details'),
 ('admin', 'display-logged-user'),
 ('admin', 'editor'),
+('cas', 'display-details'),
+('cas', 'display-logged-user'),
 ('display-logged-user', 'display-details'),
-('editor', 'display-logged-user');
+('editor', 'display-logged-user'),
+('show', 'display-details'),
+('show', 'display-logged-user'),
+('show', 'editor');
 
 -- --------------------------------------------------------
 
@@ -331,12 +348,12 @@ CREATE TABLE `user_admin` (
 --
 
 CREATE TABLE `user_ans_questions` (
-  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `pid` int(11) DEFAULT NULL,
-  `qid` int(11) DEFAULT NULL,
-  `uid` int(11) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `pid` int(11) NOT NULL,
+  `qid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
   `answer` text,
-  `isRead` enum('true','false') DEFAULT NULL
+  `isRead` enum('true','false') DEFAULT 'false'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -457,7 +474,7 @@ ALTER TABLE `user_admin`
 -- Indexes for table `user_ans_questions`
 --
 ALTER TABLE `user_ans_questions`
-  ADD PRIMARY KEY (`created_time`),
+  ADD PRIMARY KEY (`created_time`,`pid`,`qid`,`uid`),
   ADD KEY `user_ans_questions_pid` (`pid`),
   ADD KEY `user_ans_questions_qid` (`qid`),
   ADD KEY `user_ans_questions_uid` (`uid`);

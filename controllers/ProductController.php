@@ -170,7 +170,6 @@ class ProductController extends Controller
                 'uid' => $userId,
                 'qid' => $mydata[$i]['qid'],
                 'pid' => $mydata[$i]['pid'],
-                'created_time' => strtotime("now"),
                 'answer' => $mydata[$i]['answer']
             ])->execute();
             if(!$ins) { $status = 4; break;}
