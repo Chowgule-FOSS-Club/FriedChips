@@ -3,16 +3,12 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\widgets\LinkPager;
 use app\models\UserCustomer;
+use app\models\Users;
 ?>
-<script>
-      
-</script>  
-
-                                                                                               
+                                                              
  <!-- modal form -->
     <div class="modal fade "  id="modal-1" >
-
-                            <div class="modal-dialog ">
+                           <div class="modal-dialog ">
                                 <div class="modal-content">
 
                                     <div class="modal-body" style="height:400px">
@@ -32,6 +28,8 @@ use app\models\UserCustomer;
                                             <div class=" form-line">
                                                 <div class="form-group">
                                                     <div class="input-group">
+                                                    
+                                                    
                                                         <?php 
                                                             /*
                                                                 getting the customer from the cutomer table based on the user logged in.
@@ -93,11 +91,16 @@ use app\models\UserCustomer;
                                                             ?>
                                                         
                                                     </div>
+                                                    
+                                                </div>
+                                                <div style="text-align:center">
+                                                    <span name="validation-msg" ></span> 
                                                 </div>
                                             </div>
 
                                         
-                                            </div>                                    
+                                            </div>  
+                                                                      
                                      <button name="contact-form-btn" type="submit" class="btinqr btn-block text-center" data-dismiss="modal" data-target="#modal-2" data-toggle="modal">NEXT</button>
                                       </form>        
                                 </div>
@@ -265,8 +268,7 @@ use app\models\UserCustomer;
    $script = <<< JS
     $('document').ready(function(){
         validate();
-        $('[name="InputFname"] , [name="InputLname"], [name="InputEmail"] , [name="InputCno"]').change(validate);
-    
+        $('[name="InputFname"] , [name="InputLname"], [name="InputEmail"] , [name="InputCno"]').bind('input propertychane' ,validate);
         var contactDetails;
         var data;
         var pid;
@@ -279,7 +281,7 @@ use app\models\UserCustomer;
             data = $.parseJSON(data);
             for(i=0 ; i<Object.keys(data).length ; i++){
                 $('#prod-question').append(data[i].name + '<br/>' +
-                    '<input type="text" name="' + data[i].qid + '" /> <br/><br/>' 
+                    '<input type="text" name="' + data[i].qid + '" class="form-control" /> <br/><br/>' 
                 );
             }
             $('#prod-question').append('<br/>' +
@@ -335,26 +337,47 @@ use app\models\UserCustomer;
 function validate(){
     var numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
     var emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var nameRegex = /^[a-zA-Z]+$/;
     var cno = $('[name="InputCno"]').val();
     var email = $('[name="InputEmail"]').val();
-    if ($('[name="InputFname"]').val().length   >   0   &&
-        $('[name="InputLname"]').val().length  >   0   &&
-        email.length    >   0 &&
-        cno.length    ==   10  &&
-        numberRegex.test(cno) &&
-        emailRegex.test(email) ){
-        $('[name="contact-form-btn"]').html("Next");
-        $('[name="contact-form-btn"]').prop("disabled", false);
-    }
-    else {
-        if(email!="" && !emailRegex.test(email))  $('[name="contact-form-btn"]').html("Please enter proper email id");
-        else if(cno!="" && (cno.length!=10 || !numberRegex.test(cno)))  $('[name="contact-form-btn"]').html("Please enter proper phone number");
-        else $('[name="contact-form-btn"]').html("Please enter all the details properly before proceeding");
-        $('[name="contact-form-btn"]').prop("disabled", true);
-    }
+    var fname = $('[name="InputFname"]').val();
+    var lname = $('[name="InputLname"]').val();
+    var emailcheck;
+    $.post("index.php?r=product/validate-email" ,
+                    {
+                        data : email,
+                        _csrf: yii.getCsrfToken(),
+                    } , function(data){
+                           emailcheck = data;
+                           window.setTimeout(500);
+                        })
+                                
+                    .done(function(){
+                        if (fname.length   >   0   &&
+                            lname.length  >   0   &&
+                            email.length    >   0 &&
+                            cno.length    ==   10  &&
+                            numberRegex.test(cno) &&
+                            nameRegex.test(fname) &&
+                            nameRegex.test(lname) &&
+                            emailcheck == 0 &&
+                            emailRegex.test(email) ){
+                            $('[name="validation-msg"]').html("You can now proceed!");
+                            $('[name="validation-msg"]').css('color' , 'green');
+                            $('[name="contact-form-btn"]').prop("disabled", false);
+                        }
+                        else {
+                            $('[name="validation-msg"]').css('color' , 'red');                            
+                            if(email!="" && !emailRegex.test(email))  $('[name="validation-msg"]').html("Please enter proper email id");
+                            else if(cno!="" && (cno.length!=10 || !numberRegex.test(cno)))  $('[name="validation-msg"]').html("Please enter proper phone number");
+                            else if(emailcheck==1) $('[name="validation-msg"]').html("Email is already taken");
+                            else if(fname!="" && !nameRegex.test(fname)) $('[name="validation-msg"]').html("Enter a valid Firstname");
+                            else if(lname!="" && !nameRegex.test(lname)) $('[name="validation-msg"]').html("Enter a valid Lastname");
+                            else $('[name="validation-msg"]').html("Please enter all the details properly before proceeding");
+                            $('[name="contact-form-btn"]').prop("disabled", true);
+                        } 
+                    })
 }
-    
-    
 JS;
 $this->registerJS($script);
 ?>

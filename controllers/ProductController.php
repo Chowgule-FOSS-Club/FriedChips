@@ -120,6 +120,17 @@ class ProductController extends Controller
         ]);
     }
 
+    public function actionValidateEmail()
+    {
+        $this->enableCsrfValidation = false;
+        $email = Yii::$app->request->post('data');
+        if(Yii::$app->user->isGuest){
+            if(Users::find()->where(['email' => $email])->exists())
+            echo 1;
+            else echo 0;
+        }
+        else echo 0;
+    }
 
     public function actionDisplayQuestions($id)
     {
