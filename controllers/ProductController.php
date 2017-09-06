@@ -15,6 +15,7 @@ use yii\data\Pagination;
 use app\models\Category;
 use app\models\ProductQuestion;
 use app\models\Questions;
+use app\models\Users;
 use yii\web\Response;
 use yii\helpers\Json;
 use yii\widgets\ActiveForm;
@@ -133,12 +134,55 @@ class ProductController extends Controller
         $this->enableCsrfValidation = false;
         $data = Yii::$app->request->post('data');
         $mydata = json_decode($data , true);
-        // for ($i=0; $i < sizeof($mydata) ; $i++) {
-        //     echo $mydata[$i]['pid'] . "-->" . $mydata[$i]['qid'] . "-->" . $mydata[$i]['answer'] . "<br/><br/>";
-        // }
-        echo "Your data has been submitted";
+
+        $status = 0;
+        $user = Users::findByUsername($mydata[0]['email']);
+        if(Yii::$app->user->isGuest){
+            
+            if(!$user){
+                $user_table = Yii::$app->db->createCommand()->insert('users', [
+                    'fname' => $mydata[0]['fname'],
+                    'lname' => $mydata[0]['lname'],                    
+                    'password' => Yii::$app->getSecurity()->generatePasswordHash("asd"),
+                    'email' => $mydata[0]['email'],
+                    'image' => 'uploads/default.png',
+                ])->execute();
+
+                $user = Users::findByUsername($mydata[0]['email']);
+
+                $user_customer_table = Yii::$app->db->createCommand()->insert('user_customer' , [
+                    'userid' => $user->userid,                    
+                    'phone' => $mydata[0]['cno']
+                ])->execute();
+
+                if($user_table && $user_customer_table) $status = 1;
+                else $status = 2;
+            }
+            else{
+                $status = 3;
+            }    
+        }
+
+        if($status==0 || $status==1 || $status==3 ){
+            $userId = $user->userid;
+            for($i=1 ; $i< sizeof($mydata); $i++){
+            $ins = Yii::$app->db->createCommand()->insert('user_ans_questions' , [
+                'uid' => $userId,
+                'qid' => $mydata[$i]['qid'],
+                'pid' => $mydata[$i]['pid'],
+                'answer' => $mydata[$i]['answer']
+            ])->execute();
+            if(!$ins) { $status = 4; break;}
+            else $status = 5;
+            }
+        }
+        if($status == 2) echo "Error during User insertion";
+        elseif($status == 4) echo "Error during answer insertion";
+        elseif($status == 5) echo "Your data has been submitted";
+        else echo "Error during insertion! Please try again.";
 
     }
+
 
     /**
      * Creates a new Product model.
@@ -213,8 +257,5 @@ class ProductController extends Controller
         }
     }
 
-    public function actionHello(){
-        echo "ameer";
-    }
 
 }

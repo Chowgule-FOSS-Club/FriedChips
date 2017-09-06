@@ -4,24 +4,22 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\UserAnsQuestionsSearch */
+/* @var $model app\models\AuthAssignmentSearchModel */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="user-ans-questions-search">
+<div class="auth-assignment-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'uid') ?>
+    <?= $form->field($model, 'item_name') ?>
 
-    <?= $form->field($model, 'qid') ?>
+    <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'pid') ?>
-
-    <?= $form->field($model, 'answer') ?>
+    <?= $form->field($model, 'created_at') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -25,10 +25,24 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+    <?php 
+        $permission_string = "";
+        $authManager = Yii::$app->authManager;
+        $permissions = $authManager->getPermissionsByRole($model->name);
+        foreach($permissions as $permission){
+            $permission_string = $permission_string . " ".$permission->name;
+        }
+    ?>
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            
             'name',
+            [
+                'label' => "Permissions",
+                'value' => $permission_string,
+            ],
             'description:ntext',
             'created_at',
             'updated_at',

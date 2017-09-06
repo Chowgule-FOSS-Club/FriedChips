@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "user_ans_questions".
  *
- * @property integer $userid
+ * @property integer $uid
  * @property integer $qid
  * @property integer $pid
  * @property string $answer
@@ -32,12 +32,12 @@ class UserAnsQuestions extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['userid', 'qid', 'pid', 'answer'], 'required'],
-            [['userid', 'qid', 'pid'], 'integer'],
+            [['uid', 'qid', 'pid', 'answer'], 'required'],
+            [['uid', 'qid', 'pid'], 'integer'],
             [['answer'], 'string'],
             [['pid'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['pid' => 'pid']],
             [['qid'], 'exist', 'skipOnError' => true, 'targetClass' => Questions::className(), 'targetAttribute' => ['qid' => 'qid']],
-            [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['userid' => 'userid']],
+            [['uid'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['uid' => 'uid']],
         ];
     }
 
@@ -47,7 +47,7 @@ class UserAnsQuestions extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'userid' => 'User',
+            'uid' => 'User',
             'qid' => 'Question',
             'pid' => 'Product',
             'answer' => 'Answer',
@@ -75,6 +75,6 @@ class UserAnsQuestions extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['userid' => 'userid']);
+        return $this->hasOne(Users::className(), ['userid' => 'uid']);
     }
 }
