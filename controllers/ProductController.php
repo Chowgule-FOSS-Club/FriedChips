@@ -149,11 +149,6 @@ class ProductController extends Controller
     {
         $model = new Product();
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = 'json';
-            return ActiveForm::validate($model);
-        }
-
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'image');
             $model->file->saveAs('uploads/'.$model->name.'.'.$model->file->extension);
