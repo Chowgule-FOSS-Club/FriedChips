@@ -79,4 +79,9 @@ class Questions extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Product::className(), ['pid' => 'pid'])->viaTable('product_question', ['qid' => 'qid']);
     }
+
+    public function getUserAnsQuestions()
+    {
+        return $this->hasMany(UserAnsQuestions::className(), ['qid' => 'qid']);
+    }
 }
