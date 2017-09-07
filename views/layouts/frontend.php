@@ -22,8 +22,8 @@ HomeAsset::register($this);
   <link href='https://fonts.googleapis.com/css?family=Khula' rel='stylesheet'>
   <link href='https://fonts.googleapis.com/css?family=Cambay' rel='stylesheet'>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <meta charset="<?= Yii::$app->charset ?>">
+   
+        <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
@@ -60,10 +60,54 @@ HomeAsset::register($this);
           <?php 
             if(Yii::$app->user->isGuest){
                 echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
-            }else{
-                echo "<li><a data-method='POST' href=\"index.php?r=site/logout\">(". Yii::$app->user->identity->getName() .") LOGOUT</a></li>";
             }
+            else{
+                ?>
+                 <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn-default" data-toggle="dropdown">
+                        <?php
+                echo " <img class='img-round' src='uploads/Paul Pogba.jpg' >&nbsp;". Yii::$app->user->identity->getName() ."";
+                ?>
+                 </a>
+                    <ul class="dropdown-menu menu1">
+                        <li>
+                            <div class="navbar-login">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                          <img src="uploads/Paul Pogba.jpg" class="icon-size">
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p class="text-left"><strong>Castor Godinho</strong></p>
+                                        <p class="text-left small">castorgodinho@yahoo.in</p>
+                                        <p class="text-left">
+                                            <a href="#" class="btn btn-outlined btn-theme btn-block btn-sm">View Profile</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                            <!-- <a href="#" class="btn btn-primary btn-block">LOGOUT</a> -->
+                                            <?php echo "<a class='btn btn-outlined btn-theme btn-block' data-method='POST' href=\"index.php?r=site/logout\">  LOGOUT</a>" ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <?php
+            }
+            /* <li><a data-method='POST' href=\"index.php?r=site/logout\">(". Yii::$app->user->identity->getName() .") LOGOUT</a></li> */
           ?>
+        
         </ul>
       </div>
     </div>
