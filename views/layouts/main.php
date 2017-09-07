@@ -291,8 +291,10 @@ $query->select(['product.name As pname','product.description As description','pr
         ->join('INNER JOIN','users','user_ans_questions.uid =users.userid')
         ->where('isRead!=true')
         ->orderBy('user_ans_questions.created_time')
-        ->LIMIT(4);
+        ->groupBy(['user_ans_questions.uid','user_ans_questions.pid']);
+        //->LIMIT(4);
         $command=$query->createCommand();
+        echo $command->getRawSql();
         $data=$command->queryAll();
         $result=array_values($data);
         $json=JSON::encode($result);
