@@ -120,6 +120,17 @@ class ProductController extends Controller
         ]);
     }
 
+    public function actionValidateEmail()
+    {
+        $this->enableCsrfValidation = false;
+        $email = Yii::$app->request->post('data');
+        if(Yii::$app->user->isGuest){
+            if(Users::find()->where(['email' => $email])->exists())
+            echo 1;
+            else echo 0;
+        }
+        else echo 0;
+    }
 
     public function actionDisplayQuestions($id)
     {
@@ -192,10 +203,6 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = 'json';
-            return ActiveForm::validate($model);
-        }
 
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'image');
