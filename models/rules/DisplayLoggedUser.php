@@ -2,14 +2,14 @@
 namespace app\models\rules;
 
 use yii\rbac\Rule;
-use app\models\Post;
+use app\models\Users;
 
 /**
  * Checks if authorID matches user passed via params
  */
 class DisplayLoggedUser extends Rule
 {
-    public $name = 'isAuthor';
+    public $name = 'isUser';
 
     /**
      * @param string|int $user the user ID.
@@ -19,7 +19,7 @@ class DisplayLoggedUser extends Rule
      */
     public function execute($user, $item, $params)
     {
-        return isset($params['post']) ? $params['post']->createdBy == $user : false;
+        return isset($params['Users']) ? $params['Users']->userid == $user : false;
     }
 } 
 

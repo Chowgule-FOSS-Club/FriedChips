@@ -59,9 +59,13 @@ class UsersController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can("view-user-details")){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new \yii\web\HttpException(404, 'The requested Item could not be found.');    
+        }
     }
 
     /**
@@ -71,6 +75,7 @@ class UsersController extends Controller
      */
     public function actionCreate()
     {
+        if(Yii::$app->user->can("create-user")){
             $model = new Users();
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -103,6 +108,9 @@ class UsersController extends Controller
                     'model' => $model,
                 ]);
             }
+        }else{
+            throw new \yii\web\HttpException(404, 'The requested Item could not be found.');    
+        }
         
     }
 
@@ -114,21 +122,14 @@ class UsersController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can("update-user")){
+        if(Yii::$app->user->can("update-user-details")){
             $model = $this->findModel($id);
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
             }
             if ($model->load(Yii::$app->request->post())) {
-                /*$model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
-                $model->imageFile = UploadedFile::getInstance($model,'imageFile');
-                $model->imageFile->saveAs('uploads/'. $model->imageFile->baseName.'.'.$model->imageFile->extension);
-                $model->image = 'uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension;*/
                 if ($model->save()) {
-                    /*Image::frame('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension)
-                    ->thumbnail(new box(400, 400))
-                    ->save('uploads/'.$model->imageFile->baseName.'.'.$model->imageFile->extension, ['quality' => 50]);*/
                     return $this->redirect(['view', 'id' => $model->userid]);
                 } else {
                     return $this->render('create', [
@@ -141,7 +142,7 @@ class UsersController extends Controller
                 ]);
             }
         }else{
-            throw new ForbiddenHttpException;
+            throw new \yii\web\HttpException(404, 'The requested Item could not be found.');    
         }
         
     }
@@ -154,9 +155,10 @@ class UsersController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if(Yii::$app->user->can("delete-user")){
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        }
     }
     
 
@@ -178,28 +180,31 @@ class UsersController extends Controller
 
     public function actionChangePassword($id)
     {
-        
-        $model = $this->findModel($id);
-        $model->scenario = 'update-password';
-        if ($model->load(Yii::$app->request->post())) {
-            if($model->password_repeat === $model->password){
-                $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
-                $model->password_repeat = $model->password;
+        if(Yii::$app->user->can("update-password")){
+            $model = $this->findModel($id);
+            $model->scenario = 'update-password';
+            if ($model->load(Yii::$app->request->post())) {
+                if($model->password_repeat === $model->password){
+                    $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                    $model->password_repeat = $model->password;
+                }
+                if ($model->save()) {
+                    return $this->redirect(['users/view', 'id' => $model->userid]);
+                }
             }
-            if ($model->save()) {
-                return $this->redirect(['users/view', 'id' => $model->userid]);
-            }
-        }
-        
-        $model->password = "";
-        $model->password_repeat = "";
-        $model->old_password = "";
+            
+            $model->password = "";
+            $model->password_repeat = "";
+            $model->old_password = "";
 
-        return $this->render(
-            'update_password', [
-                'model' => $model,
-            ]
-        );
+            return $this->render(
+                'update_password', [
+                    'model' => $model,
+                ]
+            );
+        }else{
+            throw new \yii\web\HttpException(404, 'The requested Item could not be found.');    
+        }
     }
 
     public function actionUpdateDp($id){
@@ -231,23 +236,21 @@ class UsersController extends Controller
     public function actionRule(){
         $authManager = Yii::$app->authManager;
 
-        $editor = $authManager->createPermission("editor");
-        $authManager->add($editor);
-
-        $display_permission = $authManager->createPermission("display-details");
-        $display_permission->description = "display details of users";
-        $authManager->add($display_permission);
-
+        // add the rule
         $rule = new \app\models\rules\DisplayLoggedUser;
         $authManager->add($rule);
 
-        $viewOwnDetails = $authManager->createPermission("display-logged-user");
-        $viewOwnDetails->description = "Displaying details of the user logged in";
-        $viewOwnDetails->ruleName = $rule->name;
-        $authManager->add($viewOwnDetails);
+        // add the "updateOwnPost" permission and associate the rule with it.
+        $updateOwnPost = $authManager->createPermission('check-details');
+        $updateOwnPost->description = 'check only his details';
+        $updateOwnPost->ruleName = $rule->name;
+        $authManager->add($updateOwnPost);
 
-        $authManager->addChild($viewOwnDetails, $display_permission);
-        $authManager->addChild($editor, $viewOwnDetails);
+        // "updateOwnPost" will be used from "updatePost"
+        $authManager->addChild($updateOwnPost, $authManager->getPermission('update-user-details'));
+
+        // allow "author" to update their own posts
+        $authManager->addChild($authManager->getRole('update-role'), $updateOwnPost);
     }
 
 }
