@@ -47,8 +47,8 @@ ProductAsset::register($this);
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-collapse-3">
-                <ul class="nav navbar-nav navbar-right">
-                     <li><a href="index.php">HOME</a></li>
+           <ul class="nav navbar-nav navbar-right">
+           <li><a href="index.php">HOME</a></li>
            <li><a href="index.php">ABOUT</a></li>
           <li><a href="index.php">SERVICES</a></li>
           <li><a href="index.php">CLIENTS</a></li>
@@ -56,8 +56,49 @@ ProductAsset::register($this);
             <?php
             if (Yii::$app->user->isGuest) {
                 echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
-            } else {
-                echo "<li><a data-method='POST' href=\"index.php?r=site/logout\">(". Yii::$app->user->identity->getName() .") LOGOUT</a></li>";
+            }else{
+                ?>
+                 <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn-default" data-toggle="dropdown">
+                        <?php
+                echo " <img class='img-round' src='uploads/Paul Pogba.jpg' >&nbsp;". Yii::$app->user->identity->getName() ."";
+                ?>
+                 </a>
+                    <ul class="dropdown-menu menu1">
+                        <li>
+                            <div class="navbar-login">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                          <img src="uploads/Paul Pogba.jpg" class="icon-size">
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p class="text-left"><strong>Castor Godinho</strong></p>
+                                        <p class="text-left small">castorgodinho@yahoo.in</p>
+                                        <p class="text-left">
+                                            <a href="#" class="btn btn-drop  btn-block btn-sm">View Profile</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                            <!-- <a href="#" class="btn btn-primary btn-block">LOGOUT</a> -->
+                                            <?php echo "<a class='btn btn-drop  btn-block' data-method='POST' href=\"index.php?r=site/logout\">  LOGOUT</a>" ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <?php
             }
             ?>
 
