@@ -5,7 +5,11 @@
  * @var \yii\web\View $this
  */
 
-use yii\helpers\Html;
+ use yii\helpers\Html;
+ use yii\helpers\Json;
+ use app\models\Questions;
+ use yii\db\Query;
+ date_default_timezone_set('Asia/Calcutta');
 
 $bundle = yiister\gentelella\assets\Asset::register($this);
 
@@ -273,77 +277,110 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                 </li>
                             </ul>
                         </li>
-
+                        <? 
+$count= Questions::find()
+->innerjoinWith('userAnsQuestions')
+->where('isRead!=true')
+->orderBy('date_created')
+->count();
+$query= new Query();
+$query->select(['product.name As pname','product.description As description','product.pid As product','users.fname As fname','users.userid As user','users.lname As lname','user_ans_questions.created_time as date'])
+        ->from('user_ans_questions' )
+        ->join('INNER JOIN', 'questions','user_ans_questions.qid =questions.qid')
+        ->join('INNER JOIN','product','user_ans_questions.pid =product.pid')
+        ->join('INNER JOIN','users','user_ans_questions.uid =users.userid')
+        ->where('isRead!=true')
+        ->orderBy('user_ans_questions.created_time')
+        ->groupBy(['user_ans_questions.uid','user_ans_questions.pid']);
+        //->LIMIT(4);
+        $command=$query->createCommand();
+        //echo $command->getRawSql();
+        $data=$command->queryAll();
+        $result=array_values($data);
+        $json=JSON::encode($result);
+        
+        $djson=JSON::decode($json);
+?>
                         <li role="presentation" class="dropdown">
                             <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
-                                <span class="badge bg-green">6</span>
+                                <span class="badge bg-green"><?=$count;?></span>
                             </a>
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+
+
+                            <?php  foreach($djson as $details){
+                                        
+                                
+                                ?>
+                                        
                                 <li>
+                                    <div>
                                     <a>
-                      <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
-                                    </span>
-                      <span>
-                                        <span>John Smith</span>
-                      <span class="time">3 mins ago</span>
+                                        <span><?=$details['fname']." ".$details['lname'];?></span>
+                                        <span>                
+                      <span class="time"><?php 
+                       $date1 = new DateTime($details['date']);
+                       $date = date('m/d/Y h:i:s a', time());
+                       $date2=new DateTime($date);
+                       $diff=$date2->diff($date1);
+                       $hours=$diff->format('%h');
+                       $mins= $diff->format('%i');
+                       $secs=$diff->format('%s');
+                       $hours = $hours + ($diff->days*24);
+                       if($hours===0){
+                            if($mins===0) echo $secs." seconds ago ";
+                            else if($mins===1) echo $mins." minute ago ";
+                            else if($mins>1) echo $mins." mins ago ";
+                                     }
+                      
+                           else      if($hours===1){
+                        if($mins===0) echo $hours." hour ago ";
+                        else if($mins===1) echo $hours." hour and ".$mins." min ago ";
+                        else if($mins>1) echo $hours." hour and ".$mins." mins ago ";
+                                        }
+                       else if($hours>1){
+                        if($mins===0) echo $hours." hours ago ";
+                        else if($mins===1) echo $hours." hours and ".$mins." min ago ";
+                        else if($mins>1) echo $hours." hours and ".$mins." mins ago ";
+                                         }
+                                        
+                    else  echo"few secs ago";           
+                      
+                      
+                      ?></span> 
                       </span>
                       <span class="message">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where...
+                      <?= $details['pname'];?>
                                     </span>
                                     </a>
-                                </li>
-                                <li>
-                                    <a>
-                      <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
-                                    </span>
-                      <span>
-                                        <span>John Smith</span>
-                      <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                      <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
-                                    </span>
-                      <span>
-                                        <span>John Smith</span>
-                      <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                      <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
-                                    </span>
-                      <span>
-                                        <span>John Smith</span>
-                      <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="text-center">
-                                        <a href="/">
-                                            <strong>See All Alerts</strong>
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
+
                                     </div>
                                 </li>
+                            
+                            
+                                                      
+                               
+                                
+                                        <?php }
+                                        if($count!=0){
+                                        ?>
+
+                                <li>
+                                    <div class="text-center">
+                                    <?php 
+                                        if(!Yii::$app->user->isGuest){
+                                            echo HTML::a(
+                                                'See All Issues',
+                                                ['user-ans-questions/', 'id' => Yii::$app->user->identity->userid]
+                                            ) ; 
+                                        }
+                                    ?>
+                                
+                                        
+                                    </div>
+                                </li>
+                                    <?} ?>
                             </ul>
                         </li>
 

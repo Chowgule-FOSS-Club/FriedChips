@@ -8,10 +8,7 @@
     <a  href="?r=product/view-products" class="btn btn-outlined btn-theme btn-lg" data-wow-delay="0.7s">See Our Products</a>
     </div>
   </div>
-  <!-- <div class="back-img jumbotron text-center">
-    <h1>SALGAOCAR ENGINEERS PVT. LTD</h1>
-    <a target="_blank" href="product.html" class="btn btn-outlined btn-theme btn-lg" data-wow-delay="0.7s">See Our Products</a>
-  </div> -->
+ 
 
   <!-- Container (About Section) -->
   <div id="about" class="container-fluid">
@@ -139,3 +136,11 @@
       </div>
     </div>
   </div>
+
+   <!-- scroll top -->
+    <div class="scroll-top-wrapper ">
+        <span class="scroll-top-inner">
+    <i class="fa fa-2x fa-arrow-circle-up"></i>
+  </span>
+    </div>
+    </div>

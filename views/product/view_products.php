@@ -180,6 +180,9 @@ use app\models\Users;
                 <div class="navbar-header">
                     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
                 </button>
                     <h2>PRODUCT CATALOGS</h2>
                 </div>
@@ -190,7 +193,7 @@ use app\models\Users;
 
                             <ul class="dropdown-menu dropdown-menu-large row">
                             <?php foreach ($categorys as $category) : ?>
-                                <li class="col-sm-4">
+                                <li class="col-sm-4 cols">
                                     <ul>
                                         <li class="dropdown-header">  <?= $category->name?></li>
                                         <?php foreach ($category->ps as $products) : ?>
