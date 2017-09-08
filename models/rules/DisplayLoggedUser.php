@@ -19,7 +19,7 @@ class DisplayLoggedUser extends Rule
      */
     public function execute($user, $item, $params)
     {
-        return isset($params['Users']) ? $params['Users']->userid == $user : false;
+        return isset($params['users']) ? $params['users']->userid == $user : false;
     }
 } 
 

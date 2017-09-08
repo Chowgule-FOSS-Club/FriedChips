@@ -107,19 +107,13 @@ class AuthController extends Controller
         }
         if($model->load(Yii::$app->request->post())){
             $authManager = Yii::$app->authManager;
-            $authManager->remove($authManager->getRole($model->name));
-            $newRole = $authManager->createRole($model->name);
-            $authManager->add($newRole);
+            $role = $authManager->getRole($model->name);
+            $authManager->removeChildren($role);
+            echo "all permissions revoked!";
             foreach($model->permissions as $permission){
                 $fetchedPermission = $authManager->getPermission($permission);
-                $authManager->addChild($newRole, $fetchedPermission);
-            }
-            return $this->render(
-                'view',
-                [
-                    'model' => $model,
-                ]
-            );
+                $authManager->addChild($role, $fetchedPermission);
+            }    
         }else{
             return $this->render(
                 'update-role',
