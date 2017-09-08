@@ -284,15 +284,17 @@ $count= Questions::find()
 ->orderBy('date_created')
 ->count();
 $query= new Query();
-$query->select(['product.name As pname','product.description As description','users.fname As fname','users.lname As lname','user_ans_questions.created_time as date'])
+$query->select(['product.name As pname','product.description As description','product.pid As product','users.fname As fname','users.userid As user','users.lname As lname','user_ans_questions.created_time as date'])
         ->from('user_ans_questions' )
         ->join('INNER JOIN', 'questions','user_ans_questions.qid =questions.qid')
         ->join('INNER JOIN','product','user_ans_questions.pid =product.pid')
         ->join('INNER JOIN','users','user_ans_questions.uid =users.userid')
         ->where('isRead!=true')
         ->orderBy('user_ans_questions.created_time')
-        ->LIMIT(4);
+        ->groupBy(['user_ans_questions.uid','user_ans_questions.pid']);
+        //->LIMIT(4);
         $command=$query->createCommand();
+        //echo $command->getRawSql();
         $data=$command->queryAll();
         $result=array_values($data);
         $json=JSON::encode($result);
@@ -307,7 +309,10 @@ $query->select(['product.name As pname','product.description As description','us
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
 
 
-                            <?php  foreach($djson as $details){?>
+                            <?php  foreach($djson as $details){
+                                        
+                                
+                                ?>
                                         
                                 <li>
                                     <div>
@@ -327,18 +332,22 @@ $query->select(['product.name As pname','product.description As description','us
                             if($mins===0) echo $secs." seconds ago ";
                             else if($mins===1) echo $mins." minute ago ";
                             else if($mins>1) echo $mins." mins ago ";
-                       }
-                       else if($hours===1){
+                                     }
+                      
+                           else      if($hours===1){
                         if($mins===0) echo $hours." hour ago ";
                         else if($mins===1) echo $hours." hour and ".$mins." min ago ";
                         else if($mins>1) echo $hours." hour and ".$mins." mins ago ";
-                       }
+                                        }
                        else if($hours>1){
                         if($mins===0) echo $hours." hours ago ";
                         else if($mins===1) echo $hours." hours and ".$mins." min ago ";
                         else if($mins>1) echo $hours." hours and ".$mins." mins ago ";
-                       }
-                       else echo "few seconds ago";
+                                         }
+                                        
+                    else  echo"few secs ago";           
+                      
+                      
                       ?></span> 
                       </span>
                       <span class="message">
@@ -353,7 +362,10 @@ $query->select(['product.name As pname','product.description As description','us
                                                       
                                
                                 
-                                        <?php }?>
+                                        <?php }
+                                        if($count!=0){
+                                        ?>
+
                                 <li>
                                     <div class="text-center">
                                     <?php 
@@ -368,6 +380,7 @@ $query->select(['product.name As pname','product.description As description','us
                                         
                                     </div>
                                 </li>
+                                    <?} ?>
                             </ul>
                         </li>
 
