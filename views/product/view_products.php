@@ -5,8 +5,7 @@ use yii\widgets\LinkPager;
 use app\models\UserCustomer;
 use app\models\Users;
 ?>
-<div id="alert-div" class="alert alert-success" align="center" style="display:none;">
-   <!-- <strong>Success!</strong> Indicates a successful or positive action.  -->
+<div id="alert-div" align="center" style="display:none;">
 </div>                                                      
  <!-- modal form -->
     <div class="modal fade "  id="modal-1" >
@@ -341,7 +340,7 @@ use app\models\Users;
                             else alertdiv.attr('class','alert alert-danger');
                             setTimeout(function() {
                                 alertdiv.css('display','none');
-                            }, 3000);
+                            }, 4000);
                             contactDetails = [];
                         })            
                 });
