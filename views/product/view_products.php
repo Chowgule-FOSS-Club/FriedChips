@@ -332,15 +332,17 @@ use app\models\Users;
                         dataType: 'json',
                         _csrf: yii.getCsrfToken(),
                     } , function(data){
-                            window.scrollTo(0,0);
-                            var alertdiv = $('#alert-div');
-                            alertdiv.html(data);
-                            alertdiv.css('display','block');
-                            if(data == "Your data has been submitted" ) alertdiv.attr('class','alert alert-success');
-                            else alertdiv.attr('class','alert alert-danger');
-                            setTimeout(function() {
-                                alertdiv.css('display','none');
-                            }, 4000);
+                            if(data != ""){
+                                window.scrollTo(0,0);
+                                var alertdiv = $('#alert-div');
+                                alertdiv.html(data);
+                                alertdiv.css('display','block');
+                                if(data == "Your data has been submitted" ) alertdiv.attr('class','alert alert-success');
+                                else alertdiv.attr('class','alert alert-danger');
+                                setTimeout(function() {
+                                    alertdiv.css('display','none');
+                                }, 4000);
+                            }
                             contactDetails = [];
                         })            
                 });

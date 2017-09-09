@@ -129,7 +129,11 @@ class ProductController extends Controller
             echo 1;
             else echo 0;
         }
-        else echo 0;
+        else{
+            if(Yii::$app->user->identity->email == $email)
+            echo 0;
+            else echo 1;
+        }
     }
 
     public function actionDisplayQuestions($id)
@@ -174,26 +178,32 @@ class ProductController extends Controller
             }    
         }
 
-        if($status==0 || $status==1 || $status==3 ){
-            $userId = $user->userid;
-            for($i=1 ; $i< sizeof($mydata); $i++){
-            $ins = Yii::$app->db->createCommand()->insert('user_ans_questions' , [
-                'uid' => $userId,
-                'qid' => $mydata[$i]['qid'],
-                'pid' => $mydata[$i]['pid'],
-                'answer' => $mydata[$i]['answer']
-            ])->execute();
-            if(!$ins) { $status = 4; break;}
-            else $status = 5;
-            }
+        if(sizeof($mydata) == 1){
+            //echo "This product has no questions related to it!";
         }
-        if($status == 2) echo "Error during User insertion";
-        elseif($status == 4) echo "Error during answer insertion";
-        elseif($status == 5) echo "Your data has been submitted";
-        else echo "Error during insertion! Please try again.";
-
+        else{
+            if($status==0 || $status==1 || $status==3 ){
+                $userId = $user->userid;
+                for($i=1 ; $i< sizeof($mydata); $i++){
+                $ins = Yii::$app->db->createCommand()->insert('user_ans_questions' , [
+                    'uid' => $userId,
+                    'qid' => $mydata[$i]['qid'],
+                    'pid' => $mydata[$i]['pid'],
+                    'answer' => $mydata[$i]['answer']
+                ])->execute();
+                if(!$ins) { $status = 4; break;}
+                else $status = 5;
+                }
+            }
+            if($status == 2) echo "Error during User insertion";
+            elseif($status == 4) echo "Error during answer insertion";
+            elseif($status == 5) {
+                $this->SendEmail($mydata);
+                echo "Your data has been submitted";
+            }
+            else echo "Error during insertion! Please try again.";
+            }
     }
-
 
     /**
      * Creates a new Product model.
@@ -266,6 +276,26 @@ class ProductController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    protected function SendEmail($mydata)
+    {
+        $data = "";
+        $product = Product::findOne($mydata[1]['pid']);
+        for($i=1; $i<sizeOf($mydata); $i++){
+            if($mydata[$i]['answer'] != ""){
+            $question = Questions::findOne($mydata[$i]['qid']);
+            $data .= "<strong>" . $question->name . "</strong>" . " : " . $mydata[$i]['answer'] . "<br/>"; 
+            }             
+        }   
+        $body = "<h2> You have successfully enquired about " . $product->name  . " </h2> 
+                <h3>Following were your submitted answers :</h3> 
+                " . $data . "<br> We would reply to you as soon as possible";
+
+        $to = "sss029@chowgules.ac.in";
+        $subject = "Thank you for enquiring about our Product";
+        $headers = "From: Salgaonkar Engineers";
+        mail($to,$subject,$body,$headers);
     }
 
 
