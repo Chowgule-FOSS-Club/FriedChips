@@ -41,13 +41,23 @@ class AuthController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new AuthSearchModel();
+        /*$searchModel = new AuthSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);*/
+        $authManager = Yii::$app->authManager;
+        $permissions = $authManager->getPermissions();
+        $model = new ArrayDataProvider([
+            'allModels' => $permissions,
         ]);
+        return $this->render(
+            'index',
+            ['dataProvider' => $model]
+        );
+
     }
 
     /**
@@ -57,8 +67,10 @@ class AuthController extends Controller
      */
     public function actionView($id)
     {
+        $authManager = Yii::$app->authManager;
+        
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $authManager->getPermission($id),
         ]);
     }
 
@@ -97,30 +109,24 @@ class AuthController extends Controller
      */
     public function actionUpdate($id)
     {
-        $authManager = Yii::$app->authManager;
-        $model = $this->findModel($id);
-        $model->permissions = $authManager->getPermissionsByRole($id);
-        $model->scenario = "create-role";
+        $model = AuthItem::findOne($id);
+        $model->temp_name = $model->name;
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
-        if($model->load(Yii::$app->request->post())){
+        
+        if ($model->load(Yii::$app->request->post())) {
             $authManager = Yii::$app->authManager;
-            $role = $authManager->getRole($model->name);
-            $authManager->removeChildren($role);
-            echo "all permissions revoked!";
-            foreach($model->permissions as $permission){
-                $fetchedPermission = $authManager->getPermission($permission);
-                $authManager->addChild($role, $fetchedPermission);
-            }    
-        }else{
-            return $this->render(
-                'update-role',
-                [
-                    'model' => $model,
-                ]
-            );
+            $permission = $authManager->getPermission($model->temp_name);
+            $permission->name = $model->name;
+            $permission->description = $model->description;
+            $authManager->update($model->temp_name, $permission);
+            return $this->redirect(['view', 'id' => $model->name]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
     }
 
@@ -132,7 +138,7 @@ class AuthController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        AuthItem::findOne($id)->delete();
 
         return $this->redirect(['index']);
     }

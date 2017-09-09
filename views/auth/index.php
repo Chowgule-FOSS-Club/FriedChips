@@ -14,11 +14,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+    <p>
+        <?= Html::a('Create Permission', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
     
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -27,7 +28,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
             // 'created_at',
             // 'updated_at',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttons' => [
+                    'leadView' => function ($url, $model) {
+                        $url = Url::to(['controller/lead-view', 'id' => $model->whatever_id]);
+                       return Html::a('<span class="fa fa-eye"></span>', $url, ['title' => 'view']);
+                    },
+                    'leadUpdate' => function ($url, $model) {
+                        $url = Url::to(['controller/lead-update', 'id' => $model->whatever_id]);
+                        return Html::a('<span class="fa fa-pencil"></span>', $url, ['title' => 'update']);
+                    },
+                 ]
+            
+            ],
         ],
     ]); ?>
 </div>
