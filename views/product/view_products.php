@@ -5,7 +5,8 @@ use yii\widgets\LinkPager;
 use app\models\UserCustomer;
 use app\models\Users;
 ?>
-                                                              
+<div id="alert-div" align="center" style="display:none;">
+</div>                                                      
  <!-- modal form -->
     <div class="modal fade "  id="modal-1" >
                            <div class="modal-dialog ">
@@ -331,7 +332,15 @@ use app\models\Users;
                         dataType: 'json',
                         _csrf: yii.getCsrfToken(),
                     } , function(data){
-                            alert(data);
+                            window.scrollTo(0,0);
+                            var alertdiv = $('#alert-div');
+                            alertdiv.html(data);
+                            alertdiv.css('display','block');
+                            if(data == "Your data has been submitted" ) alertdiv.attr('class','alert alert-success');
+                            else alertdiv.attr('class','alert alert-danger');
+                            setTimeout(function() {
+                                alertdiv.css('display','none');
+                            }, 4000);
                             contactDetails = [];
                         })            
                 });
