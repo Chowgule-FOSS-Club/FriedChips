@@ -71,8 +71,7 @@ class ProductController extends Controller
         'totalCount'=> $product_query->count(),
         ]);
 
-        $product = $product_query->orderBy('name')
-        ->offset($pagination->offset)
+        $product = $product_query->offset($pagination->offset)
         ->limit($pagination->limit)
         ->all();
 
