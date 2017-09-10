@@ -49,11 +49,11 @@ ProductAsset::register($this);
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-collapse-3">
            <ul class="nav navbar-nav navbar-right">
-           <li><a href="?r=product/view-products">Products</a></li>
-           <li><a href="index.php">About</a></li>
-           <li><a href="index.php">Services</a></li>
-           <li><a href="index.php">Clients</a></li>
-           <li><a href="index.php">Contact Us</a></li>
+           <li><a href="index.php">HOME</a></li>
+           <li><a href="index.php">ABOUT</a></li>
+           <li><a href="index.php">SERVICES</a></li>
+           <li><a href="index.php">CLIENTS</a></li>
+           <li><a href="index.php">CONTACT</a></li>
             <?php
             if (Yii::$app->user->isGuest) {
                 echo "<li><a href=\"index.php?r=site/login\">Login</a></li>";
@@ -66,7 +66,7 @@ ProductAsset::register($this);
                     ); ?>
                 </li>
                 <li><?= HTML::a(
-                    "Logout",
+                    "LOGOUT",
                     ['site/logout'],
                     ['data-method' => 'POST']
                 );?></li>

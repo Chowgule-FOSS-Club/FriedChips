@@ -48,14 +48,14 @@ HomeAsset::register($this);
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="?r=product/view-products">Products</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#clients">Clients</a></li>
-          <li><a href="#contact">Contact Us</a></li>
+        <li><a href="?r=product/view-products">PRODUCTS</a></li>
+          <li><a href="#about">ABOUT</a></li>
+          <li><a href="#services">SERVICES</a></li>
+          <li><a href="#clients">CLIENTS</a></li>
+          <li><a href="#contact">CONTACT</a></li>
           <?php 
             if(!Yii::$app->user->isGuest){
-                echo "<li><a href=\"index.php?r=users/view&id=".Yii::$app->user->identity->userid."\">Control Panel</a></li>";
+                echo "<li><a href=\"index.php?r=users/view&id=".Yii::$app->user->identity->userid."\">CONTROL</a></li>";
             }
           ?>  
           <?php 
@@ -71,7 +71,7 @@ HomeAsset::register($this);
                     ); ?>
                 </li>
                  <li><?= HTML::a(
-                    "Logout",
+                    "LOGOUT",
                     ['site/logout'],
                     ['data-method' => 'POST']
                 );?></li>

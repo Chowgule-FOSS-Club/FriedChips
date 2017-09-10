@@ -26,11 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description:ntext',
              [
-            'attribute'=>'image',   
-            'format' => 'image',
+            'format' => 'html',      
+            'attribute' => 'image',    
             'value' => function ($model) {
-             return $model->image; 
+             return Html::img($model->image,['class'=>'col-md-10']);
             },
+            'options' => ['class' => 'col-md-3'],
             ],
             'status',
             
