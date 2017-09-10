@@ -124,7 +124,7 @@ class UsersController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if(Yii::$app->user->can("update-user-details", ['users' => $model])){
+        if(Yii::$app->user->can("update-user", ['users' => $model])){
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
