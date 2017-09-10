@@ -14,6 +14,7 @@ use yii\web\UploadedFile;
 use yii\data\Pagination;
 use app\models\Category;
 use app\models\ProductQuestion;
+use app\models\UserCustomer;
 use app\models\Questions;
 use app\models\Users;
 use yii\web\Response;
@@ -176,7 +177,7 @@ class ProductController extends Controller
                 $status = 3;
             }    
         }
-
+        
         if(sizeof($mydata) == 1){
             //echo "This product has no questions related to it!";
         }
@@ -197,7 +198,7 @@ class ProductController extends Controller
             if($status == 2) echo "Error during User insertion";
             elseif($status == 4) echo "Error during answer insertion";
             elseif($status == 5) {
-                $this->SendEmail($mydata);
+                $this->SendEmail($mydata,$user);
                 echo "Your data has been submitted";
             }
             else echo "Error during insertion! Please try again.";
@@ -277,24 +278,41 @@ class ProductController extends Controller
         }
     }
 
-    protected function SendEmail($mydata)
+
+    protected function SendEmail($mydata,$user)
     {
         $data = "";
         $product = Product::findOne($mydata[1]['pid']);
+
         for($i=1; $i<sizeOf($mydata); $i++){
             if($mydata[$i]['answer'] != ""){
             $question = Questions::findOne($mydata[$i]['qid']);
             $data .= "<strong>" . $question->name . "</strong>" . " : " . $mydata[$i]['answer'] . "<br/>"; 
             }             
-        }   
+        } 
+
+        //message to be sent to he user 
         $body = "<h2> You have successfully enquired about " . $product->name  . " </h2> 
                 <h3>Following were your submitted answers :</h3> 
                 " . $data . "<br> We would reply to you as soon as possible";
 
-        $to = "sss029@chowgules.ac.in";
+
+        //message to be sent to he technical team 
+        $msg = "<h3>" . $user->fname . " " . $user->lname . " enquired about " . $product->name . "</h3><br>";
+        $msg .= "<strong>Following are the user details</strong><br/>";
+        $msg .= "Email id : " . $user->email . "<br/>";
+        $msg .= "Phone number : " . UserCustomer::findOne($user->id)->phone . "<br/>";
+        $msg .= "<strong>Following are the questions answered</strong><br/>";
+        $msg .= $data;
+
+        $to = $user->email;
         $subject = "Thank you for enquiring about our Product";
         $headers = "From: Salgaonkar Engineers";
         mail($to,$subject,$body,$headers);
+
+        $to = /* technical team's email id */
+        $subject = "New Product Enquiry";
+        mail($to,$subject,$msg);
     }
 
 
