@@ -192,7 +192,7 @@ use app\models\Users;
 
                             <ul class="dropdown-menu dropdown-menu-large row">
                             <?php foreach ($categorys as $category) : ?>
-                                <li class="col-sm-4 cols">
+                                <li class="col-sm-3 cols">
                                     <ul>
                                         <li class="dropdown-header">  <?= $category->name?></li>
                                         <?php foreach ($category->ps as $products) : ?>
@@ -254,7 +254,7 @@ use app\models\Users;
                
             </div>
            
-            <center> <h2>  <?= LinkPager::widget(['pagination' => $pagination]) ?> <h2> </center>
+            <center> <h4>  <?= LinkPager::widget(['pagination' => $pagination]) ?> <h4> </center>
     </div>
 
 
@@ -332,15 +332,17 @@ use app\models\Users;
                         dataType: 'json',
                         _csrf: yii.getCsrfToken(),
                     } , function(data){
-                            window.scrollTo(0,0);
-                            var alertdiv = $('#alert-div');
-                            alertdiv.html(data);
-                            alertdiv.css('display','block');
-                            if(data == "Your data has been submitted" ) alertdiv.attr('class','alert alert-success');
-                            else alertdiv.attr('class','alert alert-danger');
-                            setTimeout(function() {
-                                alertdiv.css('display','none');
-                            }, 4000);
+                            if(data != ""){
+                                window.scrollTo(0,0);
+                                var alertdiv = $('#alert-div');
+                                alertdiv.html(data);
+                                alertdiv.css('display','block');
+                                if(data == "Your data has been submitted" ) alertdiv.attr('class','alert alert-success');
+                                else alertdiv.attr('class','alert alert-danger');
+                                setTimeout(function() {
+                                    alertdiv.css('display','none');
+                                }, 4000);
+                            }
                             contactDetails = [];
                         })            
                 });
