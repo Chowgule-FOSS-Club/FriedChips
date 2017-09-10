@@ -94,13 +94,10 @@ class ProductController extends Controller
     {
         $product_query = ProductSpecs::find();
 
-        //$product_query->joinWith('productCategories');
         $product_query->joinWith('s');
         $product_query->joinWith('p');
 
-        $product=$product_query->where(['product.pid' => $id])->all();
-
-        
+        $product=$product_query->where(['product.pid' => $id])->all();        
         
         if ($product!=null) {
             $this->layout = 'product';

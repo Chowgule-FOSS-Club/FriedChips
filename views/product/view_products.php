@@ -192,7 +192,7 @@ use app\models\Users;
 
                             <ul class="dropdown-menu dropdown-menu-large row">
                             <?php foreach ($categorys as $category) : ?>
-                                <li class="col-sm-4 cols">
+                                <li class="col-sm-3 cols">
                                     <ul>
                                         <li class="dropdown-header">  <?= $category->name?></li>
                                         <?php foreach ($category->ps as $products) : ?>
@@ -254,7 +254,7 @@ use app\models\Users;
                
             </div>
            
-            <center> <h2>  <?= LinkPager::widget(['pagination' => $pagination]) ?> <h2> </center>
+            <center> <h4>  <?= LinkPager::widget(['pagination' => $pagination]) ?> <h4> </center>
     </div>
 
 
