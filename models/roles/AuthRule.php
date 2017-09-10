@@ -34,6 +34,7 @@ class AuthRule extends \yii\db\ActiveRecord
             [['data'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 64],
+            [['name'], 'unique']
         ];
     }
 

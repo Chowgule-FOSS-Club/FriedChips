@@ -138,11 +138,13 @@ class AuthController extends Controller
      */
     public function actionDelete($id)
     {
-        AuthItem::findOne($id)->delete();
+        $authManager = Yii::$app->authManager;
+
+        $authManager->remove($authManager->getPermission($id));
 
         return $this->redirect(['index']);
     }
-
+    /*
     public function actionCreateRole(){
         
         $authManager = Yii::$app->authManager;
@@ -182,24 +184,7 @@ class AuthController extends Controller
                 ]
             );
         }
-    }
-
-    public function actionUpdateRole($id){
-        
-    }
-
-    public function actionViewRoles(){
-        $authManager = Yii::$app->authManager;
-        $roles = $authManager->getRoles();
-        $provider = new ArrayDataProvider([
-                'allModels' => $roles,
-            ]);
-        return $this->render(
-            'view-roles',
-            ['model' => $provider]
-        );
-    }
-
+    }*/
     /**
      * Finds the AuthItem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
