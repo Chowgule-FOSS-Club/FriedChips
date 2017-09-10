@@ -5,60 +5,38 @@
 /* @var $model app\models\LoginForm */
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-use yii\assets\LoginAsset;
+use yii\widgets\ActiveForm;
+use app\assets\LoginAsset;
+
+
+LoginAsset::register($this);
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-    
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
-<div class="login-container">
-    
-    <div class="row">
-        
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            
-        </div>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <h1 ><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
-    
+<div class="login-align">
+<div class="login-container">
+
+    <section class="login" id="login">
+     <header>
+                <h2>Salgaocar Engineers</h2>
+                <h4>Please fill out the following fields to login:</h4>
+    </header>
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
+        'class' => 'login-form',
     ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true ]) ?>
+        <?= $form->field($model, 'username')->textInput(['autofocus' => true , 'class' => 'login-input' , 'placeholder' => 'Username' ])->label(false) ?>
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
+        <?= $form->field($model, 'password')->passwordInput(['class' => 'login-input' , 'placeholder' => 'Password'])->label(false) ?>
 
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
+        <?= $form->field($model, 'rememberMe')->checkbox([]) ?>
 
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
-        </div>
-
+            <div class="submit-container">
+                <?= Html::submitButton('Login', ['class' => 'login-button', 'name' => 'login-button']) ?>
+                </div>
     <?php ActiveForm::end(); ?>
-
-    
-        </div>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            
-        </div>
-        
-    </div>
-    
-    
+    </section>
 </div>
-<br>
-<br>
-<br>
+</div>
