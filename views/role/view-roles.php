@@ -14,7 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+    <p>
+        <?= Html::a('Create new role', ['create-role'], ['class' => 'btn btn-success']) ?>
+    </p>
     
     <?= GridView::widget([
         'dataProvider' => $model,
