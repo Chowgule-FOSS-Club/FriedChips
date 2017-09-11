@@ -29,10 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'password',
             'email:email',
             [
-                'attribute'=>'image',
-                'format' => 'image',
+                'format' => 'html',      
+                'attribute' => 'image',    
                 'value' => function ($model) {
-                    return $model->image; 
+                return Html::img($model->image,['class'=>'col-md-10']);
                 },
             ],
             // 'authKey',
