@@ -1,3 +1,6 @@
+
+
+
 <?php
 
 /**
@@ -22,6 +25,15 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
     <meta charset="<?= Yii::$app->charset ?>" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <!-- Latest compiled and minified CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Khula' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Cambay' rel='stylesheet'>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -290,8 +302,8 @@ $query->select(['product.name As pname','product.description As description','pr
         ->join('INNER JOIN','users','user_ans_questions.uid =users.userid')
         ->where('isRead!=true')
         ->orderBy('user_ans_questions.created_time')
-        ->groupBy(['user_ans_questions.uid','user_ans_questions.pid']);
-        //->LIMIT(4);
+        ->groupBy(['user_ans_questions.uid','user_ans_questions.pid'])
+        ->LIMIT(4);
         $command=$query->createCommand();
         //echo $command->getRawSql();
         $data=$command->queryAll();

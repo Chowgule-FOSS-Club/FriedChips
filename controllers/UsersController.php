@@ -124,7 +124,7 @@ class UsersController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if(Yii::$app->user->can("update-user", ['users' => $model])){
+        if(Yii::$app->user->can("update-user-details", ['users' => $model])){
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
@@ -145,6 +145,7 @@ class UsersController extends Controller
         }else{
             throw new \yii\web\HttpException(404, 'The requested Item could not be found.');    
         }
+        
     }
 
     /**
@@ -242,17 +243,20 @@ class UsersController extends Controller
         $rule = new \app\models\rules\DisplayLoggedUser;
         $authManager->add($rule);
 
-        // add the "checkDetailPermission$checkDetailPermission" permission and associate the rule with it.
-        $checkDetailPermission = $authManager->createPermission('check-details');
-        $checkDetailPermission->description = 'check only his details';
-        $checkDetailPermission->ruleName = $rule->name;
-        $authManager->add($checkDetailPermission);
+        // add the "updateOwnPost" permission and associate the rule with it.
+        $updateOwnPost = $authManager->createPermission('check-details');
+        $updateOwnPost->description = 'check only his details';
+        $updateOwnPost->ruleName = $rule->name;
+        $authManager->add($updateOwnPost);
 
-        // "checkDetailPermission$checkDetailPermission" will be used from "updatePost"
-        $authManager->addChild($checkDetailPermission, $authManager->getPermission('update-user-details'));
-        
+        // "updateOwnPost" will be used from "updatePost"
+        $authManager->addChild($updateOwnPost, $authManager->getPermission('update-user-details'));
+        $authManager->addChild($updateOwnPost, $authManager->getPermission('view-user-details'));
+        $authManager->addChild($updateOwnPost, $authManager->getPermission('update-dp'));
+
+ 
         // allow "author" to update their own posts
-        $authManager->addChild($authManager->getRole('tech-support'), $checkDetailPermission);
+        $authManager->addChild($authManager->getRole('update-role'), $updateOwnPost);
     }
 
 }
