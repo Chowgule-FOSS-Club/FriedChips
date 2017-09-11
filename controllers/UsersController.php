@@ -253,7 +253,7 @@ class UsersController extends Controller
         $authManager->addChild($updateOwnPost, $authManager->getPermission('update-user-details'));
         $authManager->addChild($updateOwnPost, $authManager->getPermission('view-user-details'));
         $authManager->addChild($updateOwnPost, $authManager->getPermission('update-dp'));
-        
+
         // allow "author" to update their own posts
         $authManager->addChild($authManager->getRole('update-role'), $updateOwnPost);
     }
