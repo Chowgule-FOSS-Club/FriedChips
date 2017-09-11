@@ -68,7 +68,7 @@ class ProductController extends Controller
         $category_query = Category::find();
 
         $pagination = new Pagination([
-        'defaultPageSize' => 12,
+        'defaultPageSize' => 9,
         'totalCount'=> $product_query->count(),
         ]);
 
