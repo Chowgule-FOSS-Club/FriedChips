@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\roles\AuthItem */
+/* @var $model app\models\roles\AuthRule */
 
-$this->title = $model->name.' Permission';
-$this->params['breadcrumbs'][] = ['label' => 'Auth Items', 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Auth Rules', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="auth-item-view">
+<div class="auth-rule-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,7 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'name',
-            'description:ntext',
+            'data:ntext',
+            'created_at',
+            'updated_at',
         ],
     ]) ?>
 

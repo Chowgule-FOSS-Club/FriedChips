@@ -28,6 +28,7 @@ class AuthItem extends \yii\db\ActiveRecord
      * @inheritdoc
      */
     public $permissions;
+    public $temp_name;
 
     public static function tableName()
     {

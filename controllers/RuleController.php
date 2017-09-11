@@ -3,19 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\roles\AuthAssignment;
-use app\models\AuthAssignmentSearchModel;
-use yii\data\ArrayDataProvider;
+use app\models\roles\AuthRule;
+use app\models\RuleSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\widgets\ActiveForm;
-use yii\web\Response;
 
 /**
- * AuthAssignmentController implements the CRUD actions for AuthAssignment model.
+ * RuleController implements the CRUD actions for AuthRule model.
  */
-class AuthAssignmentController extends Controller
+class RuleController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,12 +30,12 @@ class AuthAssignmentController extends Controller
     }
 
     /**
-     * Lists all AuthAssignment models.
+     * Lists all AuthRule models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new AuthAssignmentSearchModel();
+        $searchModel = new RuleSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -48,34 +45,35 @@ class AuthAssignmentController extends Controller
     }
 
     /**
-     * Displays a single AuthAssignment model.
-     * @param string $item_name
-     * @param string $user_id
+     * Displays a single AuthRule model.
+     * @param string $id
      * @return mixed
      */
-    public function actionView($item_name, $user_id)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($item_name, $user_id),
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new AuthAssignment model.
+     * Creates a new AuthRule model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new AuthAssignment();
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
+        $model = new AuthRule();
+
+
         if ($model->load(Yii::$app->request->post())) {
             $authManager = Yii::$app->authManager;
-            $authManager->assign($authManager->getRole($model->item_name), $model->user_id);
-            return $this->redirect(['view', 'item_name' => $model->item_name, 'user_id' => $model->user_id]);
+            try{
+                $authManager->add(new $model->name);
+            }catch(yii\db\IntegrityException $e){
+                return $this->render('create', ['flag' => 0, 'model' => $model]);
+            }
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -83,24 +81,31 @@ class AuthAssignmentController extends Controller
         }
     }
 
-    public function actionDelete($item_name, $user_id)
-    {
-        $this->findModel($item_name, $user_id)->delete();
+ 
 
+    /**
+     * Deletes an existing AuthRule model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $authManager = Yii::$app->authManager;
+        $authManager->remove($authManager->getRule($id));
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the AuthAssignment model based on its primary key value.
+     * Finds the AuthRule model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $item_name
-     * @param string $user_id
-     * @return AuthAssignment the loaded model
+     * @param string $id
+     * @return AuthRule the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($item_name, $user_id)
+    protected function findModel($id)
     {
-        if (($model = AuthAssignment::findOne(['item_name' => $item_name, 'user_id' => $user_id])) !== null) {
+        if (($model = AuthRule::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

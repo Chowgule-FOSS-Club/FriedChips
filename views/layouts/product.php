@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\ProductAsset;
+use yii\helpers\Url;
 
 ProductAsset::register($this);
 ?>
@@ -42,7 +43,7 @@ ProductAsset::register($this);
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-                <a class="navbar-brand" href="home.html">Salgaocar Engineers</a>
+                <a class="navbar-brand" href="index.php">Salgaocar Engineers</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -50,59 +51,31 @@ ProductAsset::register($this);
            <ul class="nav navbar-nav navbar-right">
            <li><a href="index.php">HOME</a></li>
            <li><a href="index.php">ABOUT</a></li>
-          <li><a href="index.php">SERVICES</a></li>
-          <li><a href="index.php">CLIENTS</a></li>
-          <li><a href="index.php">CONTACT</a></li>
+           <li><a href="index.php">SERVICES</a></li>
+           <li><a href="index.php">CLIENTS</a></li>
+           <li><a href="index.php">CONTACT</a></li>
             <?php
             if (Yii::$app->user->isGuest) {
-                echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
+                echo "<li><a href=\"index.php?r=site/login\">Login</a></li>";
             }else{
                 ?>
-                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle btn-default" data-toggle="dropdown">
-                        <?php
-                echo " <img class='img-round' src='uploads/Paul Pogba.jpg' >&nbsp;". Yii::$app->user->identity->getName() ."";
-                ?>
-                 </a>
-                    <ul class="dropdown-menu menu1">
-                        <li>
-                            <div class="navbar-login">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p class="text-center">
-                                          <img src="uploads/Paul Pogba.jpg" class="icon-size">
-                                        </p>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <p class="text-left"><strong>Castor Godinho</strong></p>
-                                        <p class="text-left small">castorgodinho@yahoo.in</p>
-                                        <p class="text-left">
-                                            <a href="#" class="btn btn-drop  btn-block btn-sm">View Profile</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="navbar-login navbar-login-session">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <p>
-                                            <!-- <a href="#" class="btn btn-primary btn-block">LOGOUT</a> -->
-                                            <?php echo "<a class='btn btn-drop  btn-block' data-method='POST' href=\"index.php?r=site/logout\">  LOGOUT</a>" ?>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                <li>
+                    <?=HTML::a(
+                        Yii::$app->user->identity->name,
+                        ['product/index']
+                    ); ?>
                 </li>
+                <li><?= HTML::a(
+                    "LOGOUT",
+                    ['site/logout'],
+                    ['data-method' => 'POST']
+                );?></li>
+                
                 <?php
             }
             ?>
 
-                </ul>
+            </ul>
                 <div class="collapse nav navbar-nav nav-collapse slide-down" id="nav-collapse3">
                     <form class="navbar-form navbar-right" role="search">
                         <div class="form-group">

@@ -124,7 +124,7 @@ class UsersController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if(\Yii::$app->user->can("update-user-details", ['users' => $model])){
+        if(Yii::$app->user->can("update-user-details", ['users' => $model])){
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
@@ -254,6 +254,7 @@ class UsersController extends Controller
         $authManager->addChild($updateOwnPost, $authManager->getPermission('view-user-details'));
         $authManager->addChild($updateOwnPost, $authManager->getPermission('update-dp'));
 
+ 
         // allow "author" to update their own posts
         $authManager->addChild($authManager->getRole('update-role'), $updateOwnPost);
     }

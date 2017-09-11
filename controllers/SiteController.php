@@ -81,7 +81,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
-        $this->layout = 'main-login';
+        $this->layout = 'product';
         return $this->render('login', [
             'model' => $model,
         ]);

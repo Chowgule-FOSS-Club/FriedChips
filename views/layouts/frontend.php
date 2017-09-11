@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\HomeAsset;
+use yii\helpers\Url;
 
 HomeAsset::register($this);
 ?>
@@ -47,62 +48,34 @@ HomeAsset::register($this);
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="?r=product/view-products">Products</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#clients">Clientel</a></li>
-          <li><a href="#contact">Contact Info</a></li>
+        <li><a href="?r=product/view-products">PRODUCTS</a></li>
+          <li><a href="#about">ABOUT</a></li>
+          <li><a href="#services">SERVICES</a></li>
+          <li><a href="#clients">CLIENTS</a></li>
+          <li><a href="#contact">CONTACT</a></li>
           <?php 
             if(!Yii::$app->user->isGuest){
-                echo "<li><a href=\"index.php?r=users/view&id=".Yii::$app->user->identity->userid."\">Control Panel</a></li>";
+                echo "<li><a href=\"index.php?r=users/view&id=".Yii::$app->user->identity->userid."\">CONTROL</a></li>";
             }
           ?>  
           <?php 
             if(Yii::$app->user->isGuest){
-                echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
+                echo "<li><a href=\"index.php?r=site/login\">Login</a></li>";
             }
             else{
                 ?>
-                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle btn-default" data-toggle="dropdown">
-                        <?php
-                echo " <img class='img-round' src='uploads/Paul Pogba.jpg' >&nbsp;". Yii::$app->user->identity->getName() ."";
-                ?>
-                 </a>
-                    <ul class="dropdown-menu menu1">
-                        <li>
-                            <div class="navbar-login">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p class="text-center">
-                                          <img src="uploads/Paul Pogba.jpg" class="icon-size">
-                                        </p>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <p class="text-left"><strong>Castor Godinho</strong></p>
-                                        <p class="text-left small">castorgodinho@yahoo.in</p>
-                                        <p class="text-left">
-                                            <a href="#" class="btn btn-outlined btn-theme btn-block btn-sm">View Profile</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="navbar-login navbar-login-session">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <p>
-                                            <!-- <a href="#" class="btn btn-primary btn-block">LOGOUT</a> -->
-                                            <?php echo "<a class='btn btn-outlined btn-theme btn-block' data-method='POST' href=\"index.php?r=site/logout\">  LOGOUT</a>" ?>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                <li>
+                    <?=HTML::a(
+                        Yii::$app->user->identity->name,
+                        ['product/index']
+                    ); ?>
                 </li>
+                 <li><?= HTML::a(
+                    "LOGOUT",
+                    ['site/logout'],
+                    ['data-method' => 'POST']
+                );?></li>
+                
                 <?php
             }
             /* <li><a data-method='POST' href=\"index.php?r=site/logout\">(". Yii::$app->user->identity->getName() .") LOGOUT</a></li> */
