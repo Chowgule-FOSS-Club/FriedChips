@@ -68,7 +68,7 @@ class ProductController extends Controller
         $category_query = Category::find();
 
         $pagination = new Pagination([
-        'defaultPageSize' => 6,
+        'defaultPageSize' => 12,
         'totalCount'=> $product_query->count(),
         ]);
 
@@ -307,7 +307,7 @@ class ProductController extends Controller
         $headers = "From: Salgaonkar Engineers";
         mail($to,$subject,$body,$headers);
 
-        $to = /* technical team's email id */
+        $to = 'wendhamgray@gmail.com';
         $subject = "New Product Enquiry";
         mail($to,$subject,$msg);
     }

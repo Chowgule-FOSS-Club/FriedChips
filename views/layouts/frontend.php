@@ -60,7 +60,7 @@ HomeAsset::register($this);
           ?>  
           <?php 
             if(Yii::$app->user->isGuest){
-                echo "<li><a href=\"index.php?r=site/login\">Login</a></li>";
+                echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
             }
             else{
                 ?>
