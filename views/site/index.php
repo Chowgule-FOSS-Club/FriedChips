@@ -109,7 +109,7 @@
     </div>
   </div>
   <!-- Container (Contact Section) -->
-  <div id="contact" class="container-fluid bg-grey">
+  <div id="contact" class="container-fluid bg-grey" >
     <h2 class="text-center">CONTACT</h2>
     <div class="row">
       <div class="col-sm-5 ">
@@ -151,6 +151,7 @@
 $script = <<<JS
     $('document').ready(function(){
         $('#contact-send').click(function(){
+          $('#contact-validation').css('display','block');
           var data = validate();
           if(data == 1 ){
             var name = $('#name').val();
@@ -174,12 +175,17 @@ $script = <<<JS
                             if(data == "Your data has been submitted") $('#contact-validation').attr('class','alert alert-success');
                             else $('#contact-validation').attr('class','alert alert-danger');
                             $('#contact-validation').html(data);
+                            
                             contactDetails = [];
                         }) 
           }
           else if(data == 0){
             $('#contact-validation').html("Please enter all the details");
           }
+
+          setTimeout(function() {
+                 $('#contact-validation').css('display','none');
+              }, 4000);
         });
 
         function validate()
