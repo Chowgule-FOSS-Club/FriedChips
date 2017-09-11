@@ -129,8 +129,9 @@
         </div>
         <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="10"></textarea><br>
         <div class="row">
+        <div id="contact-validation"></div>
           <div class="col-sm-12 form-group">
-            <button class="btn btn-default pull-right" type="submit">Send</button>
+            <button class="btn btn-default pull-right" type="submit" id="contact-send">Send</button>
           </div>
         </div>
       </div>
@@ -144,3 +145,64 @@
   </span>
     </div>
     </div>
+
+  <?php
+
+$script = <<<JS
+    $('document').ready(function(){
+        $('#contact-send').click(function(){
+          var data = validate();
+          if(data == 1 ){
+            var name = $('#name').val();
+            var email = $('#email').val();
+            var comments = $('#comments').val();
+            var answerJson = [];
+
+            answerJson.push({
+               name : name,
+               email : email,
+               comments : comments
+            });
+                           
+            $.post("index.php?r=site/contact" ,
+                    {
+                        data : JSON.stringify(answerJson),
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        _csrf: yii.getCsrfToken(),
+                    } , function(data){
+                            if(data == "Your data has been submitted") $('#contact-validation').attr('class','alert alert-success');
+                            else $('#contact-validation').attr('class','alert alert-danger');
+                            $('#contact-validation').html(data);
+                            contactDetails = [];
+                        }) 
+          }
+          else if(data == 0){
+            $('#contact-validation').html("Please enter all the details");
+          }
+        });
+
+        function validate()
+        {
+          var name = $('#name').val();
+          var email = $('#email').val();
+          var comments = $('#comments').val();
+          var emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+          var nameRegex = /^[a-zA-Z]+$/;
+
+          if(name!="" && nameRegex.test(name) && emailRegex.test(email) && email!="" && comments!="") {
+              $('#contact-validation').attr('class' , 'alert alert-success');
+              return 1;
+            }
+          else{
+              $('#contact-validation').attr('class' , 'alert alert-danger');
+              if(name!="" && !nameRegex.test(name)) $('#contact-validation').html("Please enter a valid name");
+              else if (email!="" && !emailRegex.test(email)) $('#contact-validation').html("Please enter a valid email");
+              else return 0;
+          } 
+        }
+    });
+JS;
+
+$this->registerJS($script);
+?>

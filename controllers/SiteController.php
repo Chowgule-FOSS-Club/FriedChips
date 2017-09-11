@@ -105,15 +105,20 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
+        $this->enableCsrfValidation = false;
+        $data = Yii::$app->request->post('data');
+        $mydata = json_decode($data , true);
+        
+        $to = $mydata[0]['email'];
+        $subject = "Salgaoncar enquiry";
+        $body = "From : " . $mydata[0]['name'] . "<br>";
+        $body .= "Email id: " . $mydata[0]['email'] . "<br>";
+        $body .= "Comments : " . $mydata[0]['comments'] . "<br>";
+        
+        if(mail($to,$subject,$body)){
+            echo "Your data has been submitted";
         }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
+        else echo "Sorry! Your Data could not be sent";
     }
 
     /**
