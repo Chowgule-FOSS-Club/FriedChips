@@ -45,7 +45,7 @@ $productslist->select(['product.name As pname','product.pid As pid','product.ima
         ->orderBy('user_ans_questions.created_time')
 ->groupBy('user_ans_questions.pid');
         $command=$productslist->createCommand();
-       $command->getRawSql();
+       //$command->getRawSql();
         $data=$command->queryAll();
         $result=array_values($data);
         $json=JSON::encode($result);
@@ -83,10 +83,10 @@ $productslist->select(['product.name As pname','product.pid As pid','product.ima
             <div class=" card [ is-collapsed ] ">
                 <div class="card__inner [ js-expander ]">
                     <div class="container-fluid">
-                        <img class="img-thumbnail" id="img" src=<?= $details['pimg'];?> >
+                        <img class="img-thumbnail" id="pimg" src="<?= $details['pimg'] ?>" >
                         <h3>Product: <small><?= $details['pname'];?></small></h3>
                         <div class="inline2">
-                            <img class="img-thumbnail" id="img" src=<?= $details['uimg'];?> >
+                            <img class="img-thumbnail" id="uimg" src=<?= $details['uimg'];?> >
                             <h3>User Name: <small><?= $details['fname']." ".$details['lname']; ?></small></h3>
                         </div>
                     </div>
