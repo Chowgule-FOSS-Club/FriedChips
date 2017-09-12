@@ -22,7 +22,31 @@
 form {
   position: relative;
 }
+#prod-question{
+  font-size: 18px;
+  font-family: 'Khula' !important;
+  font-weight: bolder;
+}
+.q{
+  font-family: 'Roboto' !important;
+  font-weight: normal !important;
+}
+#finalize-div{
+  margin: 20px 0 0 0;
+  font-size: 18px;
+  font-family: 'Khula';
+}
 
+section{
+  font-family: 'Roboto' !important;
+  font-weight: bold;
+  display: inline;
+}
+#a{
+  font-family: 'Roboto' !important;
+  font-weight: bold;
+  display: inline;
+}
 .breadcrumb {
   padding: 0px;
   background: transparent;
@@ -40,7 +64,8 @@ form {
 }
 
 .form-control:focus {
-  border-color: #009788;
+ 
+  border-bottom-color: #009788;
   box-shadow: none;
   -webkit-box-shadow: none;
 }
@@ -161,7 +186,7 @@ h2 {
     margin-top: 20px;
 }
 
-hr {
+/* hr {
     height: 3px;
     margin-left: 15px;
     margin-bottom: 14px;
@@ -172,7 +197,7 @@ hr {
 .hr-primary {
     background-image: -webkit-linear-gradient(left, rgba(16, 176, 125, 0.80), rgba(23, 216, 155, .6), rgba(255, 255, 255, 0));
 }
-
+ */
 
   .info{
     text-align: justify;
