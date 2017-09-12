@@ -223,11 +223,11 @@ use app\models\Users;
             <div id='<?= $products->pid ?>' class="col-xs-12 col-sm-4 zoom col-centered">
                     <div class="card">
                         <h4 class="card-title text-center">
-                            <a class="product" href="#">
+                            <a class="product" href="index.php?r=product/view-specs&id=<?=$products->pid?>">
                             <?= $products->name ?>
                         </a>
                         </h4>
-                        <a class="img-card" href="#">
+                        <a class="img-card" href="index.php?r=product/view-specs&id=<?=$products->pid?>">
                     <img class="img-responsive" src="<?= $products->image ?>"/>
                 </a>
                         <br />
@@ -235,9 +235,7 @@ use app\models\Users;
                             
                          
                             <div class=" text-center">
-                                <a href="index.php?r=product/view-specs&id=<?=$products->pid?>" class="btn">
-                                    <h4>View More info</h4>
-                                </a>
+                               
                             </div>
 
                         </div>

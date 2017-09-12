@@ -107,8 +107,9 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $model->status = 'false';
+        $model->save();
         return $this->redirect(['index']);
     }
 

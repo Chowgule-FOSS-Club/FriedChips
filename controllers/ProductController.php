@@ -74,6 +74,7 @@ class ProductController extends Controller
 
         $product = $product_query->offset($pagination->offset)
         ->limit($pagination->limit)
+        ->where(['status' => true])
         ->all();
 
         $category_query->joinWith('ps');
@@ -255,8 +256,10 @@ class ProductController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        $model->status = 'false';
+        $model->save();
+        return $this->redirect(['view', 'id' => $model->pid]);
     }
 
     /**
