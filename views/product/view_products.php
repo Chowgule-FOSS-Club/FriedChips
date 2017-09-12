@@ -283,7 +283,7 @@ use app\models\Users;
             data = $.parseJSON(data);
             for(i=0 ; i<Object.keys(data).length ; i++){
                 $('#prod-question').append("<div class='q'>Q.No: "+(i+1)+"</div> "+data[i].name + '<br/>' +
-                    '<input type="text" name="' + data[i].qid + '" class="form-control " placeholder="Fill out your answer"> <br/>' 
+                    '<input type="text" name="' + data[i].qid + '" class="form-control "> <br/>' 
                 );
             }
             $('#prod-question').append('<br/>' +
