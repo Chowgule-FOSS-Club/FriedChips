@@ -106,9 +106,10 @@ class ProductQuestionController extends Controller
      */
     public function actionDelete($pid, $qid)
     {
-        $this->findModel($pid, $qid)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($pid, $qid);
+        $model->status = 'false';
+        $model->save();
+        return $this->redirect(['view', 'pid' => $model->pid, 'qid' => $model->qid]);
     }
 
     /**

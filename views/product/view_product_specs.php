@@ -173,7 +173,7 @@ use app\models\Users;
                         </div>
                         <!-- modal form end -->
 
-            <div class="row">
+            <div class="row" style="margin: 0px">
                 <div class=" col-md-4">
 
                     <div>

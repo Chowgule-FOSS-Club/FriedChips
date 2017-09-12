@@ -43,20 +43,15 @@ ProductAsset::register($this);
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-                <a class="navbar-brand" href="index.php">Salgaocar Engineers</a>
+                <a class="navbar-brand" href="index.php">SALGAOCAR ENGENEERING</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-collapse-3">
            <ul class="nav navbar-nav navbar-right">
-           <li><a href="index.php">HOME</a></li>
-           <li><a href="index.php">ABOUT</a></li>
-           <li><a href="index.php">SERVICES</a></li>
-           <li><a href="index.php">CLIENTS</a></li>
-           <li><a href="index.php">CONTACT</a></li>
             <?php
             if (Yii::$app->user->isGuest) {
-                echo "<li><a href=\"index.php?r=site/login\">Login</a></li>";
+                echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
             }else{
                 ?>
                 <li>
