@@ -48,7 +48,7 @@ HomeAsset::register($this);
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="?r=product/view-products">PRODUCTS</a></li>
+          <li><a href="?r=product/view-products">PRODUCTS</a></li>
           <li><a href="#about">ABOUT</a></li>
           <li><a href="#services">SERVICES</a></li>
           <li><a href="#clients">CLIENTS</a></li>
