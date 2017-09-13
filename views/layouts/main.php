@@ -11,10 +11,10 @@
  use yii\helpers\Html;
  use yii\helpers\Json;
  use app\models\Questions;
- use app\assets\ProductAsset;
+ use app\assets\UserAnsQuestionsAsset;
  use yii\db\Query;
  date_default_timezone_set('Asia/Calcutta');
- ProductAsset::register($this);
+ UserAnsQuestionsAsset::register($this);
 
 $bundle = yiister\gentelella\assets\Asset::register($this);
 
