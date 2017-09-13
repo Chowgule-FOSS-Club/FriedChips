@@ -44,7 +44,7 @@ HomeAsset::register($this);
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-        <a class="navbar-brand" href="#myPage">Salgaocar Engineers</a>
+        <a class="navbar-brand" href="#myPage">SALGAOCAR ENGINEERS</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
@@ -60,7 +60,7 @@ HomeAsset::register($this);
           ?>  
           <?php 
             if(Yii::$app->user->isGuest){
-                echo "<li><a href=\"index.php?r=site/login\">Login</a></li>";
+                echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
             }
             else{
                 ?>

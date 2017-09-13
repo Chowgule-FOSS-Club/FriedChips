@@ -68,12 +68,13 @@ class ProductController extends Controller
         $category_query = Category::find();
 
         $pagination = new Pagination([
-        'defaultPageSize' => 6,
+        'defaultPageSize' => 9,
         'totalCount'=> $product_query->count(),
         ]);
 
         $product = $product_query->offset($pagination->offset)
         ->limit($pagination->limit)
+        ->where(['status' => true])
         ->all();
 
         $category_query->joinWith('ps');
@@ -255,8 +256,10 @@ class ProductController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        $model->status = 'false';
+        $model->save();
+        return $this->redirect(['view', 'id' => $model->pid]);
     }
 
     /**
@@ -307,7 +310,7 @@ class ProductController extends Controller
         $headers = "From: Salgaonkar Engineers";
         mail($to,$subject,$body,$headers);
 
-        $to = /* technical team's email id */
+        $to = 'wendhamgray@gmail.com';
         $subject = "New Product Enquiry";
         mail($to,$subject,$msg);
     }

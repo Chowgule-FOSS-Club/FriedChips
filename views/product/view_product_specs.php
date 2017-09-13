@@ -129,7 +129,7 @@ use app\models\Users;
                                          <form class="product-info" id="prod-info" name="prod-question-form"> 
                                             <div class="row">
                                                 <div class="form-group">
-                                                    <div class="col-xs-5" id="prod-question">
+                                                    <div class="col-xs-12" id="prod-question">
                                                     </div>
                                                 </div>
                                             </div>
@@ -159,7 +159,7 @@ use app\models\Users;
                                         <hr class="hr-primary">
                                             <div class="row">
                                                 <div class="form-group">
-                                                    <div class="col-xs-5" id="finalize-div">
+                                                    <div class="col-xs-12" id="finalize-div">
                                                     </div>
                                                 </div>
                                             </div>
@@ -173,7 +173,7 @@ use app\models\Users;
                         </div>
                         <!-- modal form end -->
 
-            <div class="row">
+            <div class="row" style="margin: 0px">
                 <div class=" col-md-4">
 
                     <div>
@@ -241,7 +241,7 @@ use app\models\Users;
             var raw = data;
             data = $.parseJSON(data);
             for(i=0 ; i<Object.keys(data).length ; i++){
-                $('#prod-question').append(data[i].name + '<br/>' +
+                $('#prod-question').append("<div class='q'>Q.No: "+(i+1)+"</div> "+data[i].name + '<br/>' +
                     '<input type="text" name="' + data[i].qid + '" class="form-control" /> <br/><br/>' 
                 );
             }
@@ -264,10 +264,10 @@ use app\models\Users;
                 };
             data = $('[name="all-questions"]').val();
             data = $.parseJSON(data);
-            $('#finalize-div').html(fname + '<br>' + lname + '<br>' + email + '<br>' + cno + '<br>');
+            $('#finalize-div').html('<section>First Name:</section> '+fname + '<br>' +'<section>Last Name:</section> '+ lname + '<br>' + '<section>Email:</section> '+email + '<br>' +'<section>Contact No:</section> '+cno + '<br>');
             for(i=0 ; i<Object.keys(data).length ; i++){
                     var answer = $('[name="' + data[i].qid + '"]').val();
-                    $('#finalize-div').append(data[i].name + ' : ' + answer + '<br/>');
+                    $('#finalize-div').append("<section id='a'>"+data[i].name + '</section> : '  + answer + '<br/>');
                 } 
         });
 
