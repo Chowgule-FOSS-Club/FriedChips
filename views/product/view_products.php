@@ -83,6 +83,22 @@ use app\models\Users;
                                                         ?>
                                                     </div>
                                                 </div>
+                                                
+                                                <?php 
+                                                            if(!empty($customer)){
+                                                                echo "<input value=\"null\" type=\"hidden\" name=\"InputPass\" placeholder=\"Enter Email\" class=\"form-control\" required>";
+                                                            }else{
+                                                                echo "<div class=\"form-group\">
+                                                                        <div class=\"input-group\">
+                                                                            <span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-lock green\"></i></span>
+                                                                                <input type=\"text\" name=\"InputPass\" placeholder=\"Enter Password\" class=\"form-control\" required>
+                                                                        </div>
+                                                                     </div>";
+
+                                                            }
+                                                        ?>
+                                                    
+
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-phone green"></i></span>
@@ -97,6 +113,7 @@ use app\models\Users;
                                                     </div>
                                                     
                                                 </div>
+                                                
                                                 <div style="text-align:center">
                                                     <span name="validation-msg" ></span> 
                                                 </div>
@@ -275,7 +292,7 @@ use app\models\Users;
    $script = <<< JS
     $('document').ready(function(){
         validate();
-        $('[name="InputFname"] , [name="InputLname"], [name="InputEmail"] , [name="InputCno"]').bind('input propertychane' ,validate);
+        $('[name="InputFname"] , [name="InputLname"], [name="InputEmail"] , [name="InputCno"] , [name="InputPass"]').bind('input propertychane' ,validate);
         var contactDetails;
         var data;
         var pid;
@@ -311,15 +328,17 @@ use app\models\Users;
             var lname = $('[name="InputLname"]').val();        
             var email = $('[name="InputEmail"]').val();
             var cno = $('[name="InputCno"]').val();
+            var password = $('[name="InputPass"]').val();
             contactDetails = {
                 "fname" : fname,
                 "lname" : lname,
                 "email" : email,
-                "cno" : cno
+                "cno" : cno,
+                "password" : password
                 };
             data = $('[name="all-questions"]').val();
             data = $.parseJSON(data);
-            $('#finalize-div').html('<section>First Name:</section> '+fname + '<br>' +'<section>Last Name:</section> '+ lname + '<br>' + '<section>Email:</section> '+email + '<br>' +'<section>Contact No:</section> '+cno + '<br>');
+            $('#finalize-div').html('<section>First Name:</section> '+fname + '<br>' +'<section>Last Name:</section> '+ lname + '<br>' + '<section>Email:</section> '+email + '<br>' + '<section>Password:</section> '+password + '<br>' +'<section>Contact No:</section> '+cno + '<br>');
             for(i=0 ; i<Object.keys(data).length ; i++){
                     var answer = $('[name="' + data[i].qid + '"]').val();
                     $('#finalize-div').append("<section id='a'>"+data[i].name + '</section> : ' + answer + '<br/>');
@@ -368,6 +387,7 @@ function validate(){
     var email = $('[name="InputEmail"]').val();
     var fname = $('[name="InputFname"]').val();
     var lname = $('[name="InputLname"]').val();
+    var password = $('[name="InputPass"]').val();
     var emailcheck;
     $.post("index.php?r=product/validate-email" ,
                     {
@@ -383,6 +403,7 @@ function validate(){
                             lname.length  >   0   &&
                             email.length    >   0 &&
                             cno.length    ==   10  &&
+                            password.length > 0 &&
                             numberRegex.test(cno) &&
                             nameRegex.test(fname) &&
                             nameRegex.test(lname) &&

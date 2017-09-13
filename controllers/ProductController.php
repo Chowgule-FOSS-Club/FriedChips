@@ -156,7 +156,7 @@ class ProductController extends Controller
                 $user_table = Yii::$app->db->createCommand()->insert('users', [
                     'fname' => $mydata[0]['fname'],
                     'lname' => $mydata[0]['lname'],                    
-                    'password' => Yii::$app->getSecurity()->generatePasswordHash("test123"),
+                    'password' => Yii::$app->getSecurity()->generatePasswordHash($mydata[0]['password']),
                     'email' => $mydata[0]['email'],
                     'image' => 'uploads/default.png',
                 ])->execute();
