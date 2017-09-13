@@ -84,6 +84,7 @@ ProductAsset::register($this);
         </div>
         <!-- /.container -->
     </nav>
+    
 <?= $content?>
 
 

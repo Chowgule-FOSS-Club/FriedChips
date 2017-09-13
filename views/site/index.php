@@ -110,6 +110,7 @@
   </div>
   <!-- Container (Contact Section) -->
   <div id="contact" class="container-fluid bg-grey" >
+
     <h2 class="text-center">CONTACT</h2>
     <div class="row">
       <div class="col-sm-5 ">
@@ -135,6 +136,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div id="loading-img" style="display:block;width:300;height:400;position:fixed;top:40%;left:40%;padding:2px;z-index:1051">
+    <img src='images/images.jpg'/>
     </div>
   </div>
 
