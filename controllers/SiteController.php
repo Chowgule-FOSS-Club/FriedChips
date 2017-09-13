@@ -53,7 +53,6 @@ class SiteController extends Controller
             ],
         ];
     }
-
     /**
      * Displays homepage.
      *
@@ -129,5 +128,18 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionError1()
+    {
+        $this->layout = "frontend";
+
+        return $this->render(
+            'error',
+            [
+                'name' => 'ACCESS DENIED!',
+                'message' => ' You do not have permission to access this resource!',
+            ]
+        );
     }
 }

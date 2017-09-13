@@ -110,8 +110,8 @@ class UsersController extends Controller
                 ]);
             }
         }else{
-            $this->render('@app\\views\\eror-page');
-            throw new \yii\web\HttpException(404, 'The requested Item could not be found.');    
+            $this->layout = "black";
+            Yii::$app->response->redirect(Url::to(['site/error'], true));
         }
         
     }

@@ -51,17 +51,17 @@ ProductAsset::register($this);
            <ul class="nav navbar-nav navbar-right">
             <?php
             if (Yii::$app->user->isGuest) {
-                echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
+                echo "<li><a href=\"index.php?r=site/login\"><span class='glyphicon glyphicon-pencil'> </span>  LOGIN</a></li>";
             }else{
                 ?>
-                <li>
+                 <li>
                     <?=HTML::a(
-                        Yii::$app->user->identity->name,
+                        "<span class=\"glyphicon glyphicon-user\"></span> ".strtoupper(Yii::$app->user->identity->name),
                         ['product/index']
                     ); ?>
                 </li>
-                <li><?= HTML::a(
-                    "LOGOUT",
+                  <li><?= HTML::a(
+                    "<span class='glyphicon glyphicon-off'></span>",
                     ['site/logout'],
                     ['data-method' => 'POST']
                 );?></li>

@@ -48,30 +48,26 @@ HomeAsset::register($this);
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="?r=product/view-products">PRODUCTS</a></li>
-          <li><a href="#about">ABOUT</a></li>
-          <li><a href="#services">SERVICES</a></li>
-          <li><a href="#clients">CLIENTS</a></li>
-          <li><a href="#contact">CONTACT</a></li>
-          <?php 
-            if(!Yii::$app->user->isGuest){
-                echo "<li><a href=\"index.php?r=users/view&id=".Yii::$app->user->identity->userid."\">CONTROL</a></li>";
-            }
-          ?>  
+          <li><a href="?r=product/view-products"><span class="glyphicon glyphicon-shopping-cart"></span> PRODUCTS</a></li>
+          <li><a href="#about"><span class="glyphicon glyphicon-align-justify"></span> ABOUT</a></li>
+          <li><a href="#services"><span class="glyphicon glyphicon-briefcase"></span> SERVICES</a></li>
+          <li><a href="#clients"><span class="glyphicon glyphicon-list-alt"></span> CLIENTS</a></li>
+          <li><a href="#contact"><span class="glyphicon glyphicon-phone-alt"></span> CONTACT</a></li>
+          
           <?php 
             if(Yii::$app->user->isGuest){
-                echo "<li><a href=\"index.php?r=site/login\">LOGIN</a></li>";
+                echo "<li><a href=\"index.php?r=site/login\"><span class='glyphicon glyphicon-pencil'> </span> LOGIN</a></li>";
             }
             else{
                 ?>
                 <li>
                     <?=HTML::a(
-                        Yii::$app->user->identity->name,
+                        "<span class=\"glyphicon glyphicon-user\"></span> ".strtoupper(Yii::$app->user->identity->name),
                         ['product/index']
                     ); ?>
                 </li>
                  <li><?= HTML::a(
-                    "LOGOUT",
+                    "<span class='glyphicon glyphicon-off'></span>",
                     ['site/logout'],
                     ['data-method' => 'POST']
                 );?></li>
