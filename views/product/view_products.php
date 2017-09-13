@@ -6,7 +6,10 @@ use app\models\UserCustomer;
 use app\models\Users;
 ?>
 <div id="alert-div" align="center" style="display:none;">
-</div>                                                      
+</div> 
+<div id="loading-img" style="display:none;width:50%;height:40%;position:fixed;top:30%;left:45%;padding:2px;z-index:105">
+        <img src='images/loading.gif'/>
+</div>                                                     
  <!-- modal form -->
     <div class="modal fade "  id="modal-1" >
                            <div class="modal-dialog ">
@@ -165,13 +168,12 @@ use app\models\Users;
                                     </div>
                                     
                                         <button name="finalize-btn" data-dismiss="modal" class="btinqr btn-block text-center" ><span >DONE</span></button>
-                                       <!--  <div id="loading-img" style="display:block;width:300;height:400;position:fixed;top:40%;left:40%;padding:2px;z-index:1051">
-    <img src='images/images.jpg'/>
-    </div> -->
+                                        
                                    </div>
                                 </div>
                             </div>
                         </div>
+                         
                         <!-- modal form end -->
     <!-- Second navbar for search -->
 
@@ -281,6 +283,15 @@ use app\models\Users;
         $('#prod-question').html("");
         var id = $(this).val();
         pid = id;
+
+        $(document).ajaxStart(function(){
+            $("#loading-img").css("display", "block");
+        });
+
+        $(document).ajaxComplete(function(){
+            $("#loading-img").css("display", "none");
+        });
+
         $.get('index.php?r=product/display-questions' , { id : id} , function(data){
             var raw = data;
             data = $.parseJSON(data);

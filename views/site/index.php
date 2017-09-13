@@ -137,8 +137,8 @@
         </div>
       </div>
     </div>
-    <div id="loading-img" style="display:block;width:300;height:400;position:fixed;top:40%;left:40%;padding:2px;z-index:1051">
-    <img src='images/images.jpg'/>
+    <div id="loading-img" style="display:none;width:50%;height:40%;position:fixed;top:30%;left:45%;padding:2px;z-index:105">
+    <img src='images/loading.gif'/>
     </div>
   </div>
 
@@ -168,7 +168,15 @@ $script = <<<JS
                email : email,
                comments : comments
             });
-                           
+
+            $(document).ajaxStart(function(){
+              $("#loading-img").css("display", "block");
+            });
+
+            $(document).ajaxComplete(function(){
+              $("#loading-img").css("display", "none");
+            });        
+
             $.post("index.php?r=site/contact" ,
                     {
                         data : JSON.stringify(answerJson),
