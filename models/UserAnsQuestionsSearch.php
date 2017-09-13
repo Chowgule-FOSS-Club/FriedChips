@@ -18,8 +18,8 @@ class UserAnsQuestionsSearch extends UserAnsQuestions
     public function rules()
     {
         return [
-            [['uid', 'qid', 'pid'], 'string'],
-            [['answer'], 'safe'],
+            [['created_time', 'answer', 'isRead'], 'safe'],
+            [['pid', 'qid', 'uid'], 'integer'],
         ];
     }
 
@@ -56,15 +56,17 @@ class UserAnsQuestionsSearch extends UserAnsQuestions
             // $query->where('0=1');
             return $dataProvider;
         }
-          // grid filtering conditions
-       $query->joinWith('p');
-       $query->joinWith('q');
-       $query->joinWith('user');
 
-       $query->andFilterWhere(['like', 'product.name', $this->pid])
-       ->andFilterWhere(['like', 'questions.name', $this->qid])
-       ->andFilterWhere(['like', 'users.email', $this->uid])
-       ->andFilterWhere(['like', 'answer', $this->answer]);
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'created_time' => $this->created_time,
+            'pid' => $this->pid,
+            'qid' => $this->qid,
+            'uid' => $this->uid,
+        ]);
+
+        $query->andFilterWhere(['like', 'answer', $this->answer])
+            ->andFilterWhere(['like', 'isRead', $this->isRead]);
 
         return $dataProvider;
     }

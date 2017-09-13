@@ -1,117 +1,101 @@
-
 <?php
-
-
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\db\Query;
-use app\models\UserAnsQuestions;
-use app\models\Questions;
 use app\assets\UserAnsQuestionsAsset;
-use yii\helpers\Json;
+use yii\db\Query;
 
 
-UserAnsQuestionsAsset::register($this);
-
-// $model= UserAnsQuestions::find()
-// ->where('isRead!=false')->all();
-// foreach($model as $m){
-// $m->isRead=true;
-// $m->update(false); }
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UserAnsQuestionsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+UserAnsQuestionsAsset::register($this);
 $this->title = 'User Ans Questions';
 $this->params['breadcrumbs'][] = $this->title;
-?>
-<body>
-<div class="user-ans-questions-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+
+
+?>
+<div class="user-ans-questions-index" >
+
+    <h1 align="center"><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-<?
 
-
-$productslist= new Query();
-$productslist->select(['product.name As pname','product.pid As pid','product.image As pimg','users.fname As fname','users.lname As lname',
-                    'users.image As uimg'])
-        ->from('user_ans_questions' )
-        ->join('INNER JOIN','product','user_ans_questions.pid =product.pid')
-        ->join('INNER JOIN','users','user_ans_questions.uid =users.userid')
-        ->where('isRead!=true')
-        ->orderBy('user_ans_questions.created_time')
-->groupBy('user_ans_questions.pid');
-        $command=$productslist->createCommand();
-       //$command->getRawSql();
-        $data=$command->queryAll();
-        $result=array_values($data);
-        $json=JSON::encode($result);
-        $djson=JSON::decode($json);
-
-
-
-?>
-    
-    <div class="wrapper">
-
-    <? foreach($djson as $details){ 
-        $details['pname'];
-        $pid=$details['pid'];
-
-        $questionslist= new Query();
-        $questionslist->select(['questions.name As questions','user_ans_questions.answer As answer'])
-        ->from('user_ans_questions')
-        ->join('INNER JOIN','questions','user_ans_questions.qid =questions.qid')
-        ->where('pid='.$pid)
-        ->andWhere('isRead!=true');
-
-        $command1=$questionslist->createCommand();
-        $command1->getRawSql();
-        $data1=$command1->queryAll();
-        $result1=array_values($data1);
-        $json1=JSON::encode($result1);
-        $djson1=JSON::decode($json1);
-            
+    <p>
+        <?= Html::a('Create User Ans Questions', ['view'], ['class' => 'btn btn-success']) ;
         
-    ?>
+      
+        ?>
+    </p>
 
-        <div class="cards" id=<?= $details['pid']?>>
 
+    <div class="wrapper">
+        <div class="cards">
+                <?
+                $query = new Query();
+                $query->select('uid')
+                        ->from('user_ans_questions')
+                        ->all();
+
+
+                        $command=$query->createCommand();
+                        echo $command->getRawSql();
+                        $data=$command->queryAll();
+                        foreach($data as $d) echo $d->uid;
+                
+                ?>
             <div class=" card [ is-collapsed ] ">
                 <div class="card__inner [ js-expander ]">
                     <div class="container-fluid">
-                        <img class="img-thumbnail" id="pimg" src="<?= $details['pimg'] ?>" >
-                        <h3>Product: <small><?= $details['pname'];?></small></h3>
-                        <div class="inline2">
-                            <img class="img-thumbnail" id="uimg" src=<?= $details['uimg'];?> >
-                            <h3>User Name: <small><?= $details['fname']." ".$details['lname']; ?></small></h3>
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <h3>Product: <small>Bull-dozers</small></h3>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>User Name: <small>Bull-dozers</small></h3>
+                            </div>
+                            <div class="col-md-4">
+                                <h3> <small>dd/mm/yyyy</small></h3>
+
+                            </div>
+
                         </div>
+
                     </div>
 
                 </div>
                 <div class="card__expander">
-                    <div class="ques-ans">
-                    <h2>Questions and Answers</h2>
-                       <? foreach($djson1 as $details1){ ?>
-                        
-                        <div align="left"><?= $details1['questions']." : ".$details1['answer'];?></div>
-                        <? } ?>
-                       
+                    <div class="row  text-center">
+                        <div class="col-sm-6 row1">
+                            <div class="row ">
+                                <div class="col-xs-12">UserName</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">Product Name</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">rishikam97@gmail.com</div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-6">
+                            <h2>Questions and Answers</h2>
+                            <div class="ques">Q1 What is his top speed ? </div>
+                            <div class="ans"> 90</div>
+                            <div class="ques">Q2 What is his shot speed ? </div>
+                            <div class="ans"> 150</div>
+                            <div class="ques">Q3 Is he fit to play 90mins?</div>
+                            <div class="ans">34</div>
+                        </div>
+
                     </div>
+
+
                 </div>
             </div>
-
-           
         </div>
-        <? } ?>
-
     </div>
 
-
-
+    </div>
 </div>
-</body>
-</html>

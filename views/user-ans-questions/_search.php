@@ -15,13 +15,17 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'uid') ?>
-
-    <?= $form->field($model, 'qid') ?>
+    <?= $form->field($model, 'created_time') ?>
 
     <?= $form->field($model, 'pid') ?>
 
+    <?= $form->field($model, 'qid') ?>
+
+    <?= $form->field($model, 'uid') ?>
+
     <?= $form->field($model, 'answer') ?>
+
+    <?php // echo $form->field($model, 'isRead') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

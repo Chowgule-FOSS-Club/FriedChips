@@ -326,24 +326,24 @@ $query->select(['product.name As pname','product.description As description','pr
                                 ?>
                                         
                                 <li>
-                                    <div>
+                                    <div id=<?= $details['product']; ?> onclick="klik(this);">
                                     <a>
                                         <span><?=$details['fname']." ".$details['lname'];?></span>
                                         <span>                
-                      <span class="time"><?php 
-                       $date1 = new DateTime($details['date']);
-                       $date = date('m/d/Y h:i:s a', time());
-                       $date2=new DateTime($date);
-                       $diff=$date2->diff($date1);
-                       $hours=$diff->format('%h');
-                       $mins= $diff->format('%i');
-                       $secs=$diff->format('%s');
-                       $hours = $hours + ($diff->days*24);
-                       if($hours===0){
-                            if($mins===0) echo $secs." seconds ago ";
-                            else if($mins===1) echo $mins." minute ago ";
-                            else if($mins>1) echo $mins." mins ago ";
-                                     }
+                                <span class="time"><?php 
+                                        $date1 = new DateTime($details['date']);
+                                        $date = date('m/d/Y h:i:s a', time());
+                                        $date2=new DateTime($date);
+                                        $diff=$date2->diff($date1);
+                                        $hours=$diff->format('%h');
+                                        $mins= $diff->format('%i');
+                                        $secs=$diff->format('%s');
+                                        $hours = $hours + ($diff->days*24);
+                                        if($hours===0){
+                                                if($mins===0) echo $secs." seconds ago ";
+                                                else if($mins===1) echo $mins." minute ago ";
+                                                else if($mins>1) echo $mins." mins ago ";
+                                                        }
                       
                            else      if($hours===1){
                         if($mins===0) echo $hours." hour ago ";
