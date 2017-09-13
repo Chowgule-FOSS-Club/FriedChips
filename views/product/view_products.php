@@ -136,7 +136,7 @@ use app\models\Users;
 
                                     </form>
                                     <button name="prod-question-btn" type="submit" class="btinqr btn-block text-center" data-dismiss="modal" data-target="#modal-3" data-toggle="modal">NEXT</button>
-                                     
+                                   
                                 </div>
                             </div>
                         </div>
@@ -165,6 +165,9 @@ use app\models\Users;
                                     </div>
                                     
                                         <button name="finalize-btn" data-dismiss="modal" class="btinqr btn-block text-center" ><span >DONE</span></button>
+                                       <!--  <div id="loading-img" style="display:block;width:300;height:400;position:fixed;top:40%;left:40%;padding:2px;z-index:1051">
+    <img src='images/images.jpg'/>
+    </div> -->
                                    </div>
                                 </div>
                             </div>
@@ -192,7 +195,7 @@ use app\models\Users;
 
                             <ul class="dropdown-menu dropdown-menu-large row">
                             <?php foreach ($categorys as $category) : ?>
-                                <li class="col-sm-3 cols">
+                                <li class="col-sm-4 cols">
                                     <ul>
                                         <li class="dropdown-header">  <?= $category->name?></li>
                                         <?php foreach ($category->ps as $products) : ?>
