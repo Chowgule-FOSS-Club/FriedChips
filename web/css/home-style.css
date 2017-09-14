@@ -1,5 +1,5 @@
  body {
-     font: 'Khula';
+     font-family: 'Khula';
      line-height: 1.8;
      color: #818181;
  }
@@ -194,10 +194,7 @@
       width: 100px;
       height: 100px;
   }
- .navbar-nav li a:active{
-    color: #009688 !important;
-    background-color: #fff !important;
- }
+
  .navbar-nav li a:hover,
  .navbar-nav li.active a {
      color: #009688 !important;

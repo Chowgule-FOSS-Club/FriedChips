@@ -591,6 +591,7 @@ li.dropdown.dropdown-large>a {
 /*nav bar styling*/
 
 .navbar {
+  font-family: 'Khula' !important;
   padding-left: 10px;
   border: none !important;
   border-radius: 0px !important;
