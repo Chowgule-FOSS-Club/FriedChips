@@ -294,7 +294,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
 $count= Questions::find()
 ->innerjoinWith('userAnsQuestions')
 ->where('isRead!=true')
-->orderBy('date_created')
+->groupBy('created_time')
 ->count();
 $query= new Query();
 $query->select(['product.name As pname','product.description As description','product.pid As product','users.fname As fname','users.userid As user','users.lname As lname','user_ans_questions.created_time as date'])
@@ -303,8 +303,8 @@ $query->select(['product.name As pname','product.description As description','pr
         ->join('INNER JOIN','product','user_ans_questions.pid =product.pid')
         ->join('INNER JOIN','users','user_ans_questions.uid =users.userid')
         ->where('isRead!=true')
-        ->orderBy('user_ans_questions.created_time')
-        ->groupBy(['user_ans_questions.uid','user_ans_questions.pid'])
+        ->orderBy('user_ans_questions.created_time DESC')
+        ->groupBy('user_ans_questions.created_time')
         ->LIMIT(4);
         $command=$query->createCommand();
         //echo $command->getRawSql();
