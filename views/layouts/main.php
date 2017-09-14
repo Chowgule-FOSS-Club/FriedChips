@@ -291,11 +291,15 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                             </ul>
                         </li>
                         <? 
+                        
+                        
+
 $count= Questions::find()
 ->innerjoinWith('userAnsQuestions')
 ->where('isRead!=true')
 ->groupBy('created_time')
 ->count();
+                                 
 $query= new Query();
 $query->select(['product.name As pname','product.description As description','product.pid As product','users.fname As fname','users.userid As user','users.lname As lname','user_ans_questions.created_time as date'])
         ->from('user_ans_questions' )
@@ -303,7 +307,7 @@ $query->select(['product.name As pname','product.description As description','pr
         ->join('INNER JOIN','product','user_ans_questions.pid =product.pid')
         ->join('INNER JOIN','users','user_ans_questions.uid =users.userid')
         ->where('isRead!=true')
-        ->orderBy('user_ans_questions.created_time DESC')
+        ->orderBy('user_ans_questions.created_time')
         ->groupBy('user_ans_questions.created_time')
         ->LIMIT(4);
         $command=$query->createCommand();
@@ -313,8 +317,26 @@ $query->select(['product.name As pname','product.description As description','pr
         $json=JSON::encode($result);
         
         $djson=JSON::decode($json);
+
+
 ?>
-                        <li role="presentation" class="dropdown">
+
+<?php 
+function format_interval(DateInterval $interval) {
+    $result = "";
+    if ($interval->y) { $result .= $interval->format("%y years "); }
+    if ($interval->m) { $result .= $interval->format("%m months "); }
+    if ($interval->d) { $result .= $interval->format("%d days "); }
+    if ($interval->h) { $result .= $interval->format("%h hours "); }
+    if ($interval->i) { $result .= $interval->format("%i minutes "); }
+    if ($interval->s) { $result .= $interval->format("%s seconds "); }
+
+    return $result;
+}
+
+
+?>
+                        <li role="presentation" class="dropdown" onclick="update();">
                             <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="badge bg-green"><?=$count;?></span>
@@ -332,34 +354,29 @@ $query->select(['product.name As pname','product.description As description','pr
                                     <a>
                                         <span><?=$details['fname']." ".$details['lname'];?></span>
                                         <span>                
-                                <span class="time"><?php 
-                                        $date1 = new DateTime($details['date']);
-                                        $date = date('m/d/Y h:i:s a', time());
-                                        $date2=new DateTime($date);
-                                        $diff=$date2->diff($date1);
-                                        $hours=$diff->format('%h');
-                                        $mins= $diff->format('%i');
-                                        $secs=$diff->format('%s');
-                                        $hours = $hours + ($diff->days*24);
-                                        if($hours===0){
-                                                if($mins===0) echo $secs." seconds ago ";
-                                                else if($mins===1) echo $mins." minute ago ";
-                                                else if($mins>1) echo $mins." mins ago ";
-                                                        }
-                      
-                           else      if($hours===1){
-                        if($mins===0) echo $hours." hour ago ";
-                        else if($mins===1) echo $hours." hour and ".$mins." min ago ";
-                        else if($mins>1) echo $hours." hour and ".$mins." mins ago ";
-                                        }
-                       else if($hours>1){
-                        if($mins===0) echo $hours." hours ago ";
-                        else if($mins===1) echo $hours." hours and ".$mins." min ago ";
-                        else if($mins>1) echo $hours." hours and ".$mins." mins ago ";
-                                         }
-                                        
-                    else  echo"few secs ago";           
-                      
+                                <span class="time">
+                                
+                                <?php 
+                                $first_date = new DateTime();
+                                $second_date = new DateTime($details['date']);
+                                 
+                                $difference = $first_date->diff($second_date);
+                                $result = "";
+                                if ($difference->y) { $result .= $difference->format("%y years "); }
+                                if ($difference->m) { $result .= $difference->format("%m months "); }
+                                if ($difference->d) { $result .= $difference->format("%d days "); }
+                                if ($difference->h) { $result .= $difference->format("%h hours "); }
+                                if ($difference->i) { $result .= $difference->format("%i minutes "); }
+                                if ($difference->s) { $result .= $difference->format("%s seconds "); }
+
+
+                                echo $result;
+                           
+                            
+                                
+                                
+                                
+                                
                       
                       ?></span> 
                       </span>
