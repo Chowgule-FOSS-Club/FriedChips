@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\assets\UserAnsQuestionsAsset;
 use yii\db\Query;
+use app\models\UserAnsQuestions;
 
 
 
@@ -14,6 +15,11 @@ UserAnsQuestionsAsset::register($this);
 $this->title = 'User Ans Questions';
 $this->params['breadcrumbs'][] = $this->title;
 
+$model= UserAnsQuestions::find()
+->where('isRead!=false')->all();
+foreach($model as $m){
+$m->isRead=true;
+$m->update(false); }
 
 
 ?>
@@ -22,16 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 align="center"><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create User Ans Questions', ['view'], ['class' => 'btn btn-success']) ;
+    <p><?
         $query = new Query();
         $query->select(['product.name As pname','users.userid As uid','product.pid As product','users.email As email','users.fname As fname','users.lname As lname','user_ans_questions.created_time as date'])
         ->from('user_ans_questions' )
         ->join('INNER JOIN', 'questions','user_ans_questions.qid =questions.qid')
         ->join('INNER JOIN','product','user_ans_questions.pid =product.pid')
         ->join('INNER JOIN','users','user_ans_questions.uid =users.userid')
-        ->where('isRead!=true')
-        ->orderBy('user_ans_questions.created_time')
+        // ->where('isRead!=true')
+        ->orderBy('user_ans_questions.created_time Desc')
         ->groupBy('user_ans_questions.created_time');
 
                 $command=$query->createCommand();
@@ -63,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ->from('user_ans_questions' )
                             ->join('INNER JOIN', 'questions','user_ans_questions.qid =questions.qid')
                             
-                            ->where('isRead!=true')
+                            // ->where('isRead!=true')
                            ->andwhere('pid='.$p)
                             ->andwhere('uid='.$r['uid']);
                             
