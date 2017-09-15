@@ -8,6 +8,7 @@ use app\models\RuleSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 
 /**
  * RuleController implements the CRUD actions for AuthRule model.

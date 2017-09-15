@@ -91,7 +91,7 @@ use app\models\Users;
                                                                 echo "<div class=\"form-group\">
                                                                         <div class=\"input-group\">
                                                                             <span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-lock green\"></i></span>
-                                                                                <input type=\"text\" name=\"InputPass\" placeholder=\"Enter Password\" class=\"form-control\" required>
+                                                                                <input type=\"password\" name=\"InputPass\" placeholder=\"Enter Password\" class=\"form-control\" required>
                                                                         </div>
                                                                      </div>";
 

@@ -7,6 +7,7 @@ use app\models\roles\AuthItem;
 use yii\data\ArrayDataProvider;
 use yii\widgets\ActiveForm;
 use yii\web\Response;
+use yii\helpers\Url;
 
 class RoleController extends \yii\web\Controller
 {

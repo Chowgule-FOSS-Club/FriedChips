@@ -12,6 +12,7 @@
  use yii\helpers\Json;
  use app\models\Questions;
  use yii\db\Query;
+ use app\models\UserAnsQuestions;
  date_default_timezone_set('Asia/Calcutta');
 
 $bundle = yiister\gentelella\assets\Asset::register($this);
@@ -74,6 +75,17 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
 
                     <div class="menu_section">
                         <h3>General</h3>
+                        <?php 
+                            $count= 0;
+                            $queries = UserAnsQuestions::find()->select('created_time')->distinct()->all();
+                            foreach($queries as $query){
+                                //echo $query->isRead;
+                                //UserAnsQuestions::findOne()->select('created_time')->distinct()->all();
+                                if(UserAnsQuestions::findOne(['created_time' => $query->created_time])->isRead == "false"){
+                                    $count++;
+                                }
+                            }
+                        ?>
                         <?=
                         \yiister\gentelella\widgets\Menu::widget(
                             [
@@ -98,7 +110,9 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                     ],
                                     [
                                         'label' => 'Queries',
+                                        'class' => 'query', 
                                         'icon' => 'list-alt',
+                                        "badge" => "(".$count.")",
                                         'url' => ["query/index"],
                                     ],
                                     [
@@ -266,9 +280,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                     </a>
                                 </li>
                                 -->
-                                <li>
-                                    <a href="javascript:;">Help</a>
-                                </li>
+                               
                                 <li>
                                     <?=
                                         HTML::a(
@@ -285,7 +297,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                         </li>
                         <? 
                         
-                        
+                       /* 
 
 $count= Questions::find()
 ->innerjoinWith('userAnsQuestions')
@@ -311,10 +323,11 @@ $query->select(['product.name As pname','product.description As description','pr
         
         $djson=JSON::decode($json);
 
-
+*/
 ?>
 
 <?php 
+/*
 function format_interval(DateInterval $interval) {
     $result = "";
     if ($interval->y) { $result .= $interval->format("%y years "); }
@@ -326,86 +339,10 @@ function format_interval(DateInterval $interval) {
 
     return $result;
 }
-
+*/
 
 ?>
-                        <li role="presentation" class="dropdown" onclick="update();">
-                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-envelope-o"></i>
-                                <span class="badge bg-green"><?=$count;?></span>
-                            </a>
-                            <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-
-
-                            <?php  foreach($djson as $details){
-                                        
-                                
-                                ?>
-                                        
-                                <li>
-                                    <div id=<?= $details['product']; ?> onclick="klik(this);">
-                                    <a>
-                                        <span><?=$details['fname']." ".$details['lname'];?></span>
-                                        <span>                
-                                <span class="time">
-                                
-                                <?php 
-                                $first_date = new DateTime();
-                                $second_date = new DateTime($details['date']);
-                                 
-                                $difference = $first_date->diff($second_date);
-                                $result = "";
-                                if ($difference->y) { $result .= $difference->format("%y years "); }
-                                if ($difference->m) { $result .= $difference->format("%m months "); }
-                                if ($difference->d) { $result .= $difference->format("%d days "); }
-                                if ($difference->h) { $result .= $difference->format("%h hours "); }
-                                if ($difference->i) { $result .= $difference->format("%i minutes "); }
-                                if ($difference->s) { $result .= $difference->format("%s seconds "); }
-
-
-                                echo $result;
-                           
-                            
-                                
-                                
-                                
-                                
-                      
-                      ?></span> 
-                      </span>
-                      <span class="message">
-                      <?= $details['pname'];?>
-                                    </span>
-                                    </a>
-
-                                    </div>
-                                </li>
-                            
-                            
-                                                      
-                               
-                                
-                                        <?php }
-                                        if($count!=0){
-                                        ?>
-
-                                <li>
-                                    <div class="text-center">
-                                    <?php 
-                                        if(!Yii::$app->user->isGuest){
-                                            echo HTML::a(
-                                                'See All Issues',
-                                                ['user-ans-questions/', 'id' => Yii::$app->user->identity->userid]
-                                            ) ; 
-                                        }
-                                    ?>
-                                
-                                        
-                                    </div>
-                                </li>
-                                    <?} ?>
-                            </ul>
-                        </li>
+                       
 
                     </ul>
                 </nav>
