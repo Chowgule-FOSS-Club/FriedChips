@@ -5,6 +5,7 @@
 namespace app\controllers;
 
 use app\models\UserAnsQuestions;
+use yii\helpers\Url;
 
 class QueryController extends \yii\web\Controller
 {
