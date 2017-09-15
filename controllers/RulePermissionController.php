@@ -6,6 +6,7 @@ namespace app\controllers;
 use Yii;
 use yii\data\ArrayDataProvider;
 use app\models\roles\RulePermission;
+use yii\helpers\Url;
 
 class RulePermissionController extends \yii\web\Controller
 {

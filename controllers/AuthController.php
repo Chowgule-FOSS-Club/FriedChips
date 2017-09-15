@@ -14,6 +14,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
 use yii\web\Response;
+use yii\helpers\Url;
 
 /**
  * AuthController implements the CRUD actions for AuthItem model.
