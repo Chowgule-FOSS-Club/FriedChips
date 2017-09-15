@@ -35,13 +35,17 @@ class RuleController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new RuleSearchModel();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->can('RBAC')){
+            $searchModel = new RuleSearchModel();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
+        }
     }
 
     /**
@@ -51,9 +55,13 @@ class RuleController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can('RBAC')){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
+        }
     }
 
     /**
@@ -63,21 +71,23 @@ class RuleController extends Controller
      */
     public function actionCreate()
     {
-        $model = new AuthRule();
-
-
-        if ($model->load(Yii::$app->request->post())) {
-            $authManager = Yii::$app->authManager;
-            try{
-                $authManager->add(new $model->name);
-            }catch(yii\db\IntegrityException $e){
-                return $this->render('create', ['flag' => 0, 'model' => $model]);
+        if(Yii::$app->user->can('RBAC')){
+            $model = new AuthRule();
+            if ($model->load(Yii::$app->request->post())) {
+                $authManager = Yii::$app->authManager;
+                try{
+                    $authManager->add(new $model->name);
+                }catch(yii\db\IntegrityException $e){
+                    return $this->render('create', ['flag' => 0, 'model' => $model]);
+                }
+                return $this->redirect(['index']);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
             }
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
         }
     }
 
@@ -91,9 +101,13 @@ class RuleController extends Controller
      */
     public function actionDelete($id)
     {
-        $authManager = Yii::$app->authManager;
-        $authManager->remove($authManager->getRule($id));
-        return $this->redirect(['index']);
+        if(Yii::$app->user->can('RBAC')){
+            $authManager = Yii::$app->authManager;
+            $authManager->remove($authManager->getRule($id));
+            return $this->redirect(['index']);
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
+        }
     }
 
     /**

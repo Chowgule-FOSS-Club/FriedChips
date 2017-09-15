@@ -28,3 +28,11 @@ $this->title = $name;
     </div>
 </div>
 
+<?php 
+    $script = <<< JS
+        $(document).ready(function(){
+            $(".hideDiv").hide();
+        });
+JS;
+    $this->registerJS($script);
+?>

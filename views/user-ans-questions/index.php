@@ -12,7 +12,7 @@ use app\models\UserAnsQuestions;
 /* @var $searchModel app\models\UserAnsQuestionsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 UserAnsQuestionsAsset::register($this);
-$this->title = 'User Ans Questions';
+$this->title = 'Customer Queries';
 $this->params['breadcrumbs'][] = $this->title;
 
 $model= UserAnsQuestions::find()
