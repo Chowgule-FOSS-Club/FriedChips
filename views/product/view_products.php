@@ -214,7 +214,7 @@ use app\models\Users;
 
                             <ul class="dropdown-menu dropdown-menu-large row">
                             <?php foreach ($categorys as $category) : ?>
-                                <li class="col-sm-4 cols">
+                                <li class="col-sm-3 cols">
                                     <ul>
                                         <li class="dropdown-header">  <?= $category->name?></li>
                                         <?php foreach ($category->ps as $products) : ?>
