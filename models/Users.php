@@ -61,7 +61,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             $password_tmp = $user->password;
             if(!Yii::$app->getSecurity()->validatePassword($this->old_password, $password_tmp))
                 $this->addError($attribute,'Old password is incorrect');
-        }
+    }
 
     public function scenarios()
     {

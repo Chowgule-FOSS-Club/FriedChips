@@ -12,6 +12,7 @@
  use yii\helpers\Json;
  use app\models\Questions;
  use yii\db\Query;
+ use app\models\UserAnsQuestions;
  date_default_timezone_set('Asia/Calcutta');
 
 $bundle = yiister\gentelella\assets\Asset::register($this);
@@ -74,6 +75,17 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
 
                     <div class="menu_section">
                         <h3>General</h3>
+                        <?php 
+                            $count= 0;
+                            $queries = UserAnsQuestions::find()->select('created_time')->distinct()->all();
+                            foreach($queries as $query){
+                                //echo $query->isRead;
+                                //UserAnsQuestions::findOne()->select('created_time')->distinct()->all();
+                                if(UserAnsQuestions::findOne(['created_time' => $query->created_time])->isRead == "false"){
+                                    $count++;
+                                }
+                            }
+                        ?>
                         <?=
                         \yiister\gentelella\widgets\Menu::widget(
                             [
@@ -98,7 +110,9 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                     ],
                                     [
                                         'label' => 'Queries',
+                                        'class' => 'query', 
                                         'icon' => 'list-alt',
+                                        "badge" => "(".$count.")",
                                         'url' => ["query/index"],
                                     ],
                                     [
@@ -266,9 +280,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                     </a>
                                 </li>
                                 -->
-                                <li>
-                                    <a href="javascript:;">Help</a>
-                                </li>
+                               
                                 <li>
                                     <?=
                                         HTML::a(
