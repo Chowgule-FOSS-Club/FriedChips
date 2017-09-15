@@ -99,7 +99,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                     [
                                         'label' => 'Queries',
                                         'icon' => 'list-alt',
-                                        'url' => ["user-ans-questions/index"],
+                                        'url' => ["query/index"],
                                     ],
                                     [
                                         "label" => "Profiles",

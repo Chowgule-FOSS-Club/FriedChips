@@ -3,6 +3,7 @@
   use app\models\Users;
   use app\models\Product;
   use app\models\Questions;
+  use app\models\UserCustomer;
 ?>
 
 <?php 
@@ -15,8 +16,8 @@
     <div class="col-md-12">
       <div class="panel-group" id="accordion">
       <?php foreach($queries as $query){
-         $queries = UserAnsQuestions::find()->where(['created_time' => $query->created_time])->all();
-         foreach($queries as $singleQuery){
+         $current_queries = UserAnsQuestions::find()->where(['created_time' => $query->created_time])->all();
+         foreach($current_queries as $singleQuery){
             $user = Users::findOne($singleQuery->uid);
             $product = Product::findOne($singleQuery->pid);
             break;
@@ -34,12 +35,26 @@
             </div>
             <div id="<?= $idGen; ?>" class="panel-collapse collapse">
                 <div class="panel-body">
-                <?php
-                    foreach($queries as $questions){
-                        $question = Questions::findOne($questions->qid);
-                        echo $question->name. ": ".$questions->answer;
-                    }
-                ?>
+                    <div class="row">
+                        <div class="col-md-6">
+                        <?php 
+                                echo "<h3>User Details</h3>";
+                                echo "<b>Name:</b> ". $user->getName()."<br>";
+                                echo "<b>Email:</b> ". $user->email."<br>";
+                                echo "<b>Phone Number:</b> ". UserCustomer::findOne($user->userid)->phone."<br>";
+                            ?>
+                        </div>
+                        <div class="col-md-6">
+                        <?php
+                            echo "<h3>Questions</h3>";
+                            foreach($current_queries as $questions){
+                                $question = Questions::findOne($questions->qid);
+                                echo "<b>".$question->name. "</b>: ".$questions->answer. "<br>";
+                            }
+                        ?> 
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
