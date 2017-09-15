@@ -106,6 +106,10 @@
                     $("small[class='label pull-right']").html("("+data+")");
                 });
             });
+            $('.card').hover(function() {
+                $(this).css('cursor','pointer');
+                $(this).css('cursor','hand');
+            });
         });
 JS;
     $this->registerJS($script);

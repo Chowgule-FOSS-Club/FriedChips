@@ -86,6 +86,22 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                 }
                             }
                         ?>
+                        <?php 
+                            $rbac_permission = false;
+                            if(Yii::$app->user->can('RBAC')){
+                                $rbac_permission = true;
+                            }
+
+                            $product_permission = false;
+                            if(Yii::$app->user->can('product')){
+                                $product_permission = true;
+                            }
+
+                            $query_permission = false;
+                            if(Yii::$app->user->can('check_query')){
+                                $query_permission = true;
+                            }
+                        ?>
                         <?=
                         \yiister\gentelella\widgets\Menu::widget(
                             [
@@ -98,6 +114,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                         "label" => "Products",
                                         "icon" => "briefcase",
                                         "url" => "#",
+                                        "visible" => $product_permission,
                                         "items" => [
                                             ["label" => "Product", "url" => ["product/index"]],
                                             ["label" => "Specification", "url" => ["specification/index"]],
@@ -113,6 +130,8 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                         'class' => 'query', 
                                         'icon' => 'list-alt',
                                         "badge" => "(".$count.")",
+                                        "visible" => $query_permission,
+                                        "badgeOptions" => ["class" => "label-success"],
                                         'url' => ["query/index"],
                                     ],
                                     [
@@ -124,10 +143,12 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                             ["label" => "User Profiles", "url" => ["users/index"]]
                                         ]
                                     ],
+                                    
                                     [
                                         "label" => "Access Control",
                                         "icon" => "lock",
                                         "url" => "#",
+                                        'visible' => $rbac_permission,
                                         "items" => [
                                             ["label" => "Permission", "url" => ["auth/index"]],
                                             ["label" => "Roles", "url" => ["role/index"]],
@@ -136,6 +157,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                             ["label" => "Permission and rules", "url" => ["rule-permission/index"]]
                                         ]
                                     ],
+
                                     /*[
                                         "label" => "Badges",
                                         "url" => "#",
