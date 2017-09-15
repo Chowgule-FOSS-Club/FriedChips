@@ -41,22 +41,19 @@ class AuthController extends Controller
      */
     public function actionIndex()
     {
-        /*$searchModel = new AuthSearchModel();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);*/
-        $authManager = Yii::$app->authManager;
-        $permissions = $authManager->getPermissions();
-        $model = new ArrayDataProvider([
-            'allModels' => $permissions,
-        ]);
-        return $this->render(
-            'index',
-            ['dataProvider' => $model]
-        );
+        if(Yii::$app->user->can('RBAC')){
+            $authManager = Yii::$app->authManager;
+            $permissions = $authManager->getPermissions();
+            $model = new ArrayDataProvider([
+                'allModels' => $permissions,
+            ]);
+            return $this->render(
+                'index',
+                ['dataProvider' => $model]
+            );
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
+        }
 
     }
 
@@ -67,11 +64,14 @@ class AuthController extends Controller
      */
     public function actionView($id)
     {
-        $authManager = Yii::$app->authManager;
-        
-        return $this->render('view', [
-            'model' => $authManager->getPermission($id),
-        ]);
+        if(Yii::$app->user->can('RBAC')){
+            $authManager = Yii::$app->authManager;
+            return $this->render('view', [
+                'model' => $authManager->getPermission($id),
+            ]);
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
+        }
     }
 
     /**
@@ -81,23 +81,25 @@ class AuthController extends Controller
      */
     public function actionCreate()
     {
-        $model = new AuthItem();
-
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-
-        if ($model->load(Yii::$app->request->post())) {
-            $authManager = Yii::$app->authManager;
-            $newPermission = $authManager->createPermission($model->name);
-            $newPermission->description = $model->description;
-            $authManager->add($newPermission);
-            return $this->redirect(['view', 'id' => $model->name]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if(Yii::$app->user->can('RBAC')){
+            $model = new AuthItem();
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
+            if ($model->load(Yii::$app->request->post())) {
+                $authManager = Yii::$app->authManager;
+                $newPermission = $authManager->createPermission($model->name);
+                $newPermission->description = $model->description;
+                $authManager->add($newPermission);
+                return $this->redirect(['view', 'id' => $model->name]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
         }
     }
 
@@ -109,24 +111,28 @@ class AuthController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = AuthItem::findOne($id);
-        $model->temp_name = $model->name;
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-        
-        if ($model->load(Yii::$app->request->post())) {
-            $authManager = Yii::$app->authManager;
-            $permission = $authManager->getPermission($model->temp_name);
-            $permission->name = $model->name;
-            $permission->description = $model->description;
-            $authManager->update($model->temp_name, $permission);
-            return $this->redirect(['view', 'id' => $model->name]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if(Yii::$app->user->can('RBAC')){
+            $model = AuthItem::findOne($id);
+            $model->temp_name = $model->name;
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
+            
+            if ($model->load(Yii::$app->request->post())) {
+                $authManager = Yii::$app->authManager;
+                $permission = $authManager->getPermission($model->temp_name);
+                $permission->name = $model->name;
+                $permission->description = $model->description;
+                $authManager->update($model->temp_name, $permission);
+                return $this->redirect(['view', 'id' => $model->name]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
         }
     }
 
@@ -138,53 +144,15 @@ class AuthController extends Controller
      */
     public function actionDelete($id)
     {
-        $authManager = Yii::$app->authManager;
-
-        $authManager->remove($authManager->getPermission($id));
-
-        return $this->redirect(['index']);
-    }
-    /*
-    public function actionCreateRole(){
-        
-        $authManager = Yii::$app->authManager;
-        
-        $model = new AuthItem();
-        // $this->layout = "product";
-        $model->scenario = "create-role";
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-        if($model->load(Yii::$app->request->post())){
+        if(Yii::$app->user->can('RBAC')){
             $authManager = Yii::$app->authManager;
-            $newRole = $authManager->createRole($model->name);
-            $authManager->add($newRole);
-            foreach($model->permissions as $permission){
-                $fetchedPermission = $authManager->getPermission($permission);
-                if($fetchedPermission == null){
-                    $fetchedRole = $authManager->getRole($permission);
-                    $authManager->addChild($newRole, $fetchedRole);
-                }else{
-                    $authManager->addChild($newRole, $fetchedPermission);
-                }
-            }
-            return $this->render(
-                'view',
-                [
-                    'model' => $model,
-                ]
-            );
-            
+            $authManager->remove($authManager->getPermission($id));
+            return $this->redirect(['index']);
         }else{
-            return $this->render(
-                'create-role',
-                [
-                    'model' => $model,
-                ]
-            );
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
         }
-    }*/
+    }
+
     /**
      * Finds the AuthItem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

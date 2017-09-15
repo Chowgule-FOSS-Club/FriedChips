@@ -38,13 +38,17 @@ class AuthAssignmentController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new AuthAssignmentSearchModel();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->can('RBAC')){
+            $searchModel = new AuthAssignmentSearchModel();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
+        }
     }
 
     /**
@@ -55,9 +59,13 @@ class AuthAssignmentController extends Controller
      */
     public function actionView($item_name, $user_id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($item_name, $user_id),
-        ]);
+        if(Yii::$app->user->can('RBAC')){
+            return $this->render('view', [
+                'model' => $this->findModel($item_name, $user_id),
+            ]);
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
+        }
     }
 
     /**
@@ -67,27 +75,34 @@ class AuthAssignmentController extends Controller
      */
     public function actionCreate()
     {
-        $model = new AuthAssignment();
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-        if ($model->load(Yii::$app->request->post())) {
-            $authManager = Yii::$app->authManager;
-            $authManager->assign($authManager->getRole($model->item_name), $model->user_id);
-            return $this->redirect(['view', 'item_name' => $model->item_name, 'user_id' => $model->user_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if(Yii::$app->user->can('RBAC')){
+            $model = new AuthAssignment();
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
+            if ($model->load(Yii::$app->request->post())) {
+                $authManager = Yii::$app->authManager;
+                $authManager->assign($authManager->getRole($model->item_name), $model->user_id);
+                return $this->redirect(['view', 'item_name' => $model->item_name, 'user_id' => $model->user_id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
         }
     }
 
     public function actionDelete($item_name, $user_id)
     {
-        $this->findModel($item_name, $user_id)->delete();
-
-        return $this->redirect(['index']);
+        if(Yii::$app->user->can('RBAC')){
+            $this->findModel($item_name, $user_id)->delete();
+            return $this->redirect(['index']);
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
+        }
     }
 
     /**

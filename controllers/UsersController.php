@@ -15,6 +15,7 @@ use yii\web\UploadedFile;
 use Imagine\Image\Box;
 use yii\imagine\Image;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 
 /**
  * UsersController implements the CRUD actions for Users model.
@@ -43,13 +44,17 @@ class UsersController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UsersSearchController();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->can('view-all-users') || Yii::$app->user->can('users') ){
+            $searchModel = new UsersSearchController();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
+        }
     }
 
     /**
@@ -60,12 +65,12 @@ class UsersController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        if(Yii::$app->user->can("view-user-details",['users' => $model])){
+        if(Yii::$app->user->can("view-user-details",['users' => $model]) || Yii::$app->user->can('users')){
             return $this->render('view', [
                 'model' => $model,
             ]);
         }else{
-            throw new \yii\web\HttpException(404, 'The requested Item could not be found.');    
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
         }
     }
 
@@ -76,7 +81,7 @@ class UsersController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can("create-user")){
+        if(Yii::$app->user->can("create-user") || Yii::$app->user->can('users')){
             $model = new Users();
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -110,8 +115,7 @@ class UsersController extends Controller
                 ]);
             }
         }else{
-            $this->layout = "black";
-            Yii::$app->response->redirect(Url::to(['site/error'], true));
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
         }
         
     }
@@ -125,7 +129,7 @@ class UsersController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if(Yii::$app->user->can("update-user-details", ['users' => $model])){
+        if(Yii::$app->user->can("update-user-details", ['users' => $model]) || Yii::$app->user->can('users') ){
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
@@ -144,7 +148,7 @@ class UsersController extends Controller
                 ]);
             }
         }else{
-            throw new \yii\web\HttpException(404, 'The requested Item could not be found.');    
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
         }
         
     }
@@ -157,9 +161,12 @@ class UsersController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->can("delete-user")){
+        $model = $this->findModel($id);
+        if(Yii::$app->user->can('delete-user' , ['user' => $model]) || Yii::$app->user->can('users') ){
             $this->findModel($id)->delete();
             return $this->redirect(['index']);
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
         }
     }
     
@@ -181,9 +188,10 @@ class UsersController extends Controller
     }
 
     public function actionChangePassword($id)
-    {
-        if(Yii::$app->user->can("update-password")){
-            $model = $this->findModel($id);
+    {   
+        $model = $this->findModel($id);
+        if(Yii::$app->user->can('update-password' , ['user' => $model]) || Yii::$app->user->can('users') ){
+            
             $model->scenario = 'update-password';
             if ($model->load(Yii::$app->request->post())) {
                 if($model->password_repeat === $model->password){
@@ -205,13 +213,13 @@ class UsersController extends Controller
                 ]
             );
         }else{
-            throw new \yii\web\HttpException(404, 'The requested Item could not be found.');    
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
         }
     }
 
     public function actionUpdateDp($id){
         $model = $this->findModel($id);
-        if(Yii::$app->user->can('update-dp' , ['user' => $model])){
+        if(Yii::$app->user->can('update-dp' , ['user' => $model]) || Yii::$app->user->can('users') ){
             $model->scenario = 'update-dp';
             if ($model->load(Yii::$app->request->post())) {
                 $model->imageFile = UploadedFile::getInstance($model,'imageFile');
@@ -229,8 +237,11 @@ class UsersController extends Controller
                     'model' => $model,
                 ]
             );
+        }else{
+            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
         }
     }
+    /*
 
     public function actionAssign(){
         $authManager = Yii::$app->authManager;
@@ -258,6 +269,6 @@ class UsersController extends Controller
  
         // allow "author" to update their own posts
         $authManager->addChild($authManager->getRole('update-role'), $updateOwnPost);
-    }
+    }*/
 
 }

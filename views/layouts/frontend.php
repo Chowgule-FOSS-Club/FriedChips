@@ -85,7 +85,7 @@ HomeAsset::register($this);
 <?= $content?>
 
 
-<footer class="text-center ">
+<footer class="text-center hideDiv">
         <div class="footer-above">
             <div class="container">
                 <div class="row">

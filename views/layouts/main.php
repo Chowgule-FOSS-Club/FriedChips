@@ -104,9 +104,13 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                             ["label" => "Questions", "url" => ["questions/index"]],
                                             ["label" => "Product Questions", "url" => ["product-question/index"]],
                                             ["label" => "Category", "url" => ["category/index"]],
-                                            ["label" => "Product Category", "url" => ["product-category/index"]],
-                                            ["label" => "User Answers Questions", "url" => ["user-ans-questions/index"]]
+                                            ["label" => "Product Category", "url" => ["product-category/index"]]
                                         ],
+                                    ],
+                                    [
+                                        'label' => 'Queries',
+                                        'icon' => 'list-alt',
+                                        'url' => ["user-ans-questions/index"],
                                     ],
                                     [
                                         "label" => "Profiles",

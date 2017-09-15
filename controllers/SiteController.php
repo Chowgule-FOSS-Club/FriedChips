@@ -130,7 +130,7 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionError1()
+    public function actionErrorPage()
     {
         $this->layout = "frontend";
 
@@ -143,3 +143,4 @@ class SiteController extends Controller
         );
     }
 }
+
