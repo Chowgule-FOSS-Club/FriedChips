@@ -7,14 +7,16 @@ use Yii;
 /**
  * This is the model class for table "user_ans_questions".
  *
- * @property integer $uid
- * @property integer $qid
+ * @property string $created_time
  * @property integer $pid
+ * @property integer $qid
+ * @property integer $uid
  * @property string $answer
+ * @property string $isRead
  *
  * @property Product $p
  * @property Questions $q
- * @property Users $user
+ * @property Users $u
  */
 class UserAnsQuestions extends \yii\db\ActiveRecord
 {
@@ -32,12 +34,13 @@ class UserAnsQuestions extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'qid', 'pid', 'answer'], 'required'],
-            [['uid', 'qid', 'pid'], 'integer'],
-            [['answer'], 'string'],
+            [['created_time', 'pid', 'qid', 'uid'], 'required'],
+            [['created_time'], 'safe'],
+            [['pid', 'qid', 'uid'], 'integer'],
+            [['answer', 'isRead'], 'string'],
             [['pid'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['pid' => 'pid']],
             [['qid'], 'exist', 'skipOnError' => true, 'targetClass' => Questions::className(), 'targetAttribute' => ['qid' => 'qid']],
-            [['uid'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['uid' => 'uid']],
+            [['uid'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['uid' => 'userid']],
         ];
     }
 
@@ -47,10 +50,12 @@ class UserAnsQuestions extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'uid' => 'User',
-            'qid' => 'Question',
-            'pid' => 'Product',
+            'created_time' => 'Created Time',
+            'pid' => 'Pid',
+            'qid' => 'Qid',
+            'uid' => 'Uid',
             'answer' => 'Answer',
+            'isRead' => 'Is Read',
         ];
     }
 
@@ -73,7 +78,7 @@ class UserAnsQuestions extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getU()
     {
         return $this->hasOne(Users::className(), ['userid' => 'uid']);
     }
