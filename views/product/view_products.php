@@ -214,7 +214,7 @@ use app\models\Users;
 
                             <ul class="dropdown-menu dropdown-menu-large row">
                             <?php foreach ($categorys as $category) : ?>
-                                <li class="col-sm-4 cols">
+                                <li class="col-sm-3 cols">
                                     <ul>
                                         <li class="dropdown-header">  <?= $category->name?></li>
                                         <?php foreach ($category->ps as $products) : ?>
@@ -338,7 +338,10 @@ use app\models\Users;
                 };
             data = $('[name="all-questions"]').val();
             data = $.parseJSON(data);
-            $('#finalize-div').html('<section>First Name:</section> '+fname + '<br>' +'<section>Last Name:</section> '+ lname + '<br>' + '<section>Email:</section> '+email + '<br>' + '<section>Password:</section> '+password + '<br>' +'<section>Contact No:</section> '+cno + '<br>');
+            finalString = '<section>First Name:</section> '+fname + '<br>' +'<section>Last Name:</section> '+ lname + '<br>' + '<section>Email:</section> '+email + '<br>';
+            if(!($('[name="InputPass"]').attr('type') == 'hidden')) finalString += '<section>Password:</section> '+password + '<br>';
+            finalString += '<section>Contact No:</section> '+cno + '<br>';
+            $('#finalize-div').html(finalString);
             for(i=0 ; i<Object.keys(data).length ; i++){
                     var answer = $('[name="' + data[i].qid + '"]').val();
                     $('#finalize-div').append("<section id='a'>"+data[i].name + '</section> : ' + answer + '<br/>');
