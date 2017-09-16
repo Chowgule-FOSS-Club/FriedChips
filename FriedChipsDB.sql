@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.14
--- http://www.phpmyadmin.net
+-- version 4.7.0
+-- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 15, 2017 at 06:42 PM
--- Server version: 5.6.26
--- PHP Version: 5.6.12
+-- Generation Time: Sep 16, 2017 at 05:17 AM
+-- Server version: 10.1.22-MariaDB
+-- PHP Version: 7.1.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,7 +28,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `auth_assignment`
 --
 
-CREATE TABLE IF NOT EXISTS `auth_assignment` (
+CREATE TABLE `auth_assignment` (
   `item_name` varchar(64) NOT NULL,
   `user_id` varchar(64) NOT NULL,
   `created_at` int(11) DEFAULT NULL
@@ -45,7 +47,7 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 -- Table structure for table `auth_item`
 --
 
-CREATE TABLE IF NOT EXISTS `auth_item` (
+CREATE TABLE `auth_item` (
   `name` varchar(64) NOT NULL,
   `type` int(11) NOT NULL,
   `description` text,
@@ -61,6 +63,7 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 ('admin', 1, NULL, NULL, NULL, 1505439103, 1505439103),
+('check_query', 2, '', NULL, NULL, 1505496377, 1505496377),
 ('create-user', 2, '', NULL, NULL, 1505442397, 1505442397),
 ('delete-user', 2, '', 'isUser', NULL, 1505442795, 1505443296),
 ('RBAC', 2, 'Can create a new permission, add a new role, assign roles to user', NULL, NULL, 1505439093, 1505439093),
@@ -77,7 +80,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 -- Table structure for table `auth_item_child`
 --
 
-CREATE TABLE IF NOT EXISTS `auth_item_child` (
+CREATE TABLE `auth_item_child` (
   `parent` varchar(64) NOT NULL,
   `child` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -87,7 +90,15 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
 --
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-('admin', 'RBAC');
+('admin', 'check_query'),
+('admin', 'create-user'),
+('admin', 'delete-user'),
+('admin', 'RBAC'),
+('admin', 'update-dp'),
+('admin', 'update-password'),
+('admin', 'update-user-details'),
+('admin', 'view-all-users'),
+('admin', 'view-user-details');
 
 -- --------------------------------------------------------
 
@@ -95,7 +106,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 -- Table structure for table `auth_rule`
 --
 
-CREATE TABLE IF NOT EXISTS `auth_rule` (
+CREATE TABLE `auth_rule` (
   `name` varchar(64) NOT NULL,
   `data` text,
   `created_at` int(11) DEFAULT NULL,
@@ -107,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
 --
 
 INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
-('isUser', 'O:34:"app\\models\\rules\\DisplayLoggedUser":3:{s:4:"name";s:6:"isUser";s:9:"createdAt";i:1505443284;s:9:"updatedAt";i:1505443284;}', 1505443284, 1505443284);
+('isUser', 'O:34:\"app\\models\\rules\\DisplayLoggedUser\":3:{s:4:\"name\";s:6:\"isUser\";s:9:\"createdAt\";i:1505443284;s:9:\"updatedAt\";i:1505443284;}', 1505443284, 1505443284);
 
 -- --------------------------------------------------------
 
@@ -115,10 +126,10 @@ INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
 -- Table structure for table `category`
 --
 
-CREATE TABLE IF NOT EXISTS `category` (
+CREATE TABLE `category` (
   `cid` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
@@ -138,7 +149,7 @@ INSERT INTO `category` (`cid`, `name`) VALUES
 -- Table structure for table `customer_questions`
 --
 
-CREATE TABLE IF NOT EXISTS `customer_questions` (
+CREATE TABLE `customer_questions` (
   `userid` int(11) NOT NULL,
   `qid` int(11) NOT NULL,
   `value` varchar(500) NOT NULL,
@@ -151,36 +162,36 @@ CREATE TABLE IF NOT EXISTS `customer_questions` (
 -- Table structure for table `product`
 --
 
-CREATE TABLE IF NOT EXISTS `product` (
+CREATE TABLE `product` (
   `pid` int(11) NOT NULL,
   `name` varchar(25) NOT NULL,
   `description` text NOT NULL,
   `image` varchar(200) NOT NULL,
   `status` enum('true','false') NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`pid`, `name`, `description`, `image`, `status`) VALUES
-(8, 'Tunnel Heading', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Tunnel Heading.jpg', 'true'),
-(9, 'Mucking', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Mucking.jpg', 'true'),
-(11, 'Load Haul Dump (LHD''s)', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Load Haul Dump (LHD''s).jpg', 'true'),
-(12, 'Dump Trucks', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Dump Trucks.jpg', 'true'),
-(14, 'Battery Locomotives', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Battery Locomotives.jpg', 'true'),
-(15, 'Transverse Cutting Units', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Transverse Cutting Units.jpg', 'true'),
-(17, 'Drilling Jumbos', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Drilling Jumbos.jpg', 'true'),
-(19, 'Trolley Locomotives', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Trolley Locomotives.jpg', 'true'),
-(20, 'Underground Trucks ', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Underground Trucks .jpg', 'true'),
-(21, 'Bitumen & Emulsion', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Bitumen & Emulsion.jpg', 'true'),
-(23, 'Pipe Layers', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Pipe Layers.jpg', 'true'),
-(24, 'Micro Surface Pavers', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Micro Surface Pavers.jpg', 'true'),
-(25, 'Raise Climbers', ' It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n', 'uploads/Raise Climbers.jpg', 'true'),
-(26, 'Pinion Hoist', ' It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n', 'uploads/Pinion Hoist.jpg', 'true'),
-(27, 'Crawler Cranes', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Crawler Cranes.png', 'true'),
-(28, 'All Terrain Cranes', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/All Terrain Cranes.jpg', 'true'),
-(29, 'Mobile Cranes', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Mobile Cranes.jpg', 'true');
+(8, 'Tunnel Heading', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Tunnel Heading.jpg', 'true'),
+(9, 'Mucking', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Mucking.jpg', 'true'),
+(11, 'Load Haul Dump (LHD\'s)', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Load Haul Dump (LHD\'s).jpg', 'true'),
+(12, 'Dump Trucks', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Dump Trucks.jpg', 'true'),
+(14, 'Battery Locomotives', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Battery Locomotives.jpg', 'true'),
+(15, 'Transverse Cutting Units', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Transverse Cutting Units.jpg', 'true'),
+(17, 'Drilling Jumbos', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Drilling Jumbos.jpg', 'true'),
+(19, 'Trolley Locomotives', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Trolley Locomotives.jpg', 'true'),
+(20, 'Underground Trucks ', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Underground Trucks .jpg', 'true'),
+(21, 'Bitumen & Emulsion', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Bitumen & Emulsion.jpg', 'true'),
+(23, 'Pipe Layers', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Pipe Layers.jpg', 'true'),
+(24, 'Micro Surface Pavers', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Micro Surface Pavers.jpg', 'true'),
+(25, 'Raise Climbers', ' It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n', 'uploads/Raise Climbers.jpg', 'true'),
+(26, 'Pinion Hoist', ' It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n', 'uploads/Pinion Hoist.jpg', 'true'),
+(27, 'Crawler Cranes', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Crawler Cranes.png', 'true'),
+(28, 'All Terrain Cranes', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/All Terrain Cranes.jpg', 'true'),
+(29, 'Mobile Cranes', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Mobile Cranes.jpg', 'true');
 
 -- --------------------------------------------------------
 
@@ -188,7 +199,7 @@ INSERT INTO `product` (`pid`, `name`, `description`, `image`, `status`) VALUES
 -- Table structure for table `product_category`
 --
 
-CREATE TABLE IF NOT EXISTS `product_category` (
+CREATE TABLE `product_category` (
   `pid` int(11) NOT NULL,
   `cid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -200,26 +211,26 @@ CREATE TABLE IF NOT EXISTS `product_category` (
 INSERT INTO `product_category` (`pid`, `cid`) VALUES
 (8, 7),
 (9, 7),
+(9, 12),
 (11, 7),
+(11, 11),
 (12, 7),
-(25, 7),
-(26, 7),
 (14, 8),
 (15, 8),
 (17, 8),
 (19, 8),
 (20, 8),
 (21, 9),
+(21, 10),
 (23, 9),
 (24, 9),
+(25, 7),
+(25, 12),
+(26, 7),
 (27, 9),
 (28, 9),
-(29, 9),
-(21, 10),
-(11, 11),
 (28, 11),
-(9, 12),
-(25, 12);
+(29, 9);
 
 -- --------------------------------------------------------
 
@@ -227,7 +238,7 @@ INSERT INTO `product_category` (`pid`, `cid`) VALUES
 -- Table structure for table `product_question`
 --
 
-CREATE TABLE IF NOT EXISTS `product_question` (
+CREATE TABLE `product_question` (
   `pid` int(11) NOT NULL,
   `qid` int(11) NOT NULL,
   `status` enum('true','false') NOT NULL
@@ -238,7 +249,87 @@ CREATE TABLE IF NOT EXISTS `product_question` (
 --
 
 INSERT INTO `product_question` (`pid`, `qid`, `status`) VALUES
-(8, 1, 'true');
+(8, 1, 'true'),
+(9, 1, 'true'),
+(9, 2, 'true'),
+(9, 3, 'true'),
+(9, 4, 'true'),
+(9, 5, 'true'),
+(11, 1, 'true'),
+(11, 2, 'true'),
+(11, 3, 'true'),
+(11, 4, 'true'),
+(11, 5, 'true'),
+(12, 1, 'true'),
+(12, 2, 'true'),
+(12, 3, 'true'),
+(12, 4, 'true'),
+(12, 5, 'true'),
+(14, 1, 'true'),
+(14, 2, 'true'),
+(14, 3, 'true'),
+(14, 4, 'true'),
+(14, 5, 'true'),
+(15, 1, 'true'),
+(15, 2, 'true'),
+(15, 3, 'true'),
+(15, 4, 'true'),
+(15, 5, 'true'),
+(17, 1, 'true'),
+(17, 2, 'true'),
+(17, 3, 'true'),
+(17, 4, 'true'),
+(17, 5, 'true'),
+(19, 1, 'true'),
+(19, 2, 'true'),
+(19, 3, 'true'),
+(19, 4, 'true'),
+(19, 5, 'true'),
+(20, 1, 'true'),
+(20, 2, 'true'),
+(20, 3, 'true'),
+(20, 4, 'true'),
+(20, 5, 'true'),
+(21, 1, 'true'),
+(21, 2, 'true'),
+(21, 3, 'true'),
+(21, 4, 'true'),
+(21, 5, 'true'),
+(23, 1, 'true'),
+(23, 2, 'true'),
+(23, 3, 'true'),
+(23, 4, 'true'),
+(23, 5, 'true'),
+(24, 1, 'true'),
+(24, 2, 'true'),
+(24, 3, 'true'),
+(24, 4, 'true'),
+(24, 5, 'true'),
+(25, 1, 'true'),
+(25, 2, 'true'),
+(25, 3, 'true'),
+(25, 4, 'true'),
+(25, 5, 'true'),
+(26, 1, 'true'),
+(26, 2, 'true'),
+(26, 3, 'true'),
+(26, 4, 'true'),
+(26, 5, 'true'),
+(27, 1, 'true'),
+(27, 2, 'true'),
+(27, 3, 'true'),
+(27, 4, 'true'),
+(27, 5, 'true'),
+(28, 1, 'true'),
+(28, 2, 'true'),
+(28, 3, 'true'),
+(28, 4, 'true'),
+(28, 5, 'true'),
+(29, 1, 'true'),
+(29, 2, 'true'),
+(29, 3, 'true'),
+(29, 4, 'true'),
+(29, 5, 'true');
 
 -- --------------------------------------------------------
 
@@ -246,7 +337,7 @@ INSERT INTO `product_question` (`pid`, `qid`, `status`) VALUES
 -- Table structure for table `product_specs`
 --
 
-CREATE TABLE IF NOT EXISTS `product_specs` (
+CREATE TABLE `product_specs` (
   `sid` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   `value` varchar(500) NOT NULL,
@@ -282,17 +373,21 @@ INSERT INTO `product_specs` (`sid`, `pid`, `value`, `status`) VALUES
 -- Table structure for table `questions`
 --
 
-CREATE TABLE IF NOT EXISTS `questions` (
+CREATE TABLE `questions` (
   `qid` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `questions`
 --
 
 INSERT INTO `questions` (`qid`, `name`) VALUES
-(1, 'Quantity');
+(1, 'Quantity'),
+(2, 'Color'),
+(3, 'Usage'),
+(4, 'New/Old'),
+(5, 'Construction area');
 
 -- --------------------------------------------------------
 
@@ -300,10 +395,10 @@ INSERT INTO `questions` (`qid`, `name`) VALUES
 -- Table structure for table `specification`
 --
 
-CREATE TABLE IF NOT EXISTS `specification` (
+CREATE TABLE `specification` (
   `sid` int(11) NOT NULL,
   `name` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `specification`
@@ -318,7 +413,7 @@ INSERT INTO `specification` (`sid`, `name`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE `users` (
   `userid` int(11) NOT NULL,
   `fname` varchar(25) NOT NULL,
   `lname` varchar(25) NOT NULL,
@@ -326,7 +421,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(50) NOT NULL,
   `authKey` varchar(50) DEFAULT NULL,
   `image` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -334,7 +429,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`userid`, `fname`, `lname`, `password`, `email`, `authKey`, `image`) VALUES
 (5, 'Castor', 'Godinho', '$2y$13$OIgCheJl8vwYTIpC0CdiSeCByyD4yCS/SS5KC1BsI/hUSkoK4phii', 'castorgodinho@yahoo.in', '', 'uploads/Jon-Snow-4.jpg'),
-(6, 'Micheal', 'Jackson', '$2y$13$ZijOESonrGEsxDis2w.qROOQuBfVDenjmHR.O9AwJ.AYdzqqQ/QAO', 'micheal@gmail.com', '', 'uploads/photo.png');
+(6, 'Micheal', 'Jackson', '$2y$13$ZijOESonrGEsxDis2w.qROOQuBfVDenjmHR.O9AwJ.AYdzqqQ/QAO', 'micheal@gmail.com', '', 'uploads/photo.png'),
+(7, 'Jane', 'Doe', '$2y$13$q4abQM1T09gAEM6MhRVOdewMi7U3uJNeeYeQkZlzEl0EDFUINKM0C', 'jane@doe.com', NULL, 'uploads/default.png'),
+(8, 'Kane', 'Top', '$2y$13$F/.FqwH1gFq6NMzkXRmDoOqAs/vLUMb2PUXFyrpltGvbDWPT/qVkK', 'kane@top.com', NULL, 'uploads/default.png'),
+(9, 'Karen', 'Lobo', '$2y$13$judq.QLksaOqSUY3plT1/eM1tszFYXjhry/e0ZNQVLtRGkemK6uYW', 'karen@lobo.com', NULL, 'uploads/default.png'),
+(10, 'Deepak', 'Takur', '$2y$13$bbB41lmM5dIo7XOjmZxQ4e.Rg7WHJQ90tnnF8eK4sNP4PWjVH8Tf2', 'deepak@takur.com', NULL, 'uploads/default.png'),
+(11, 'Gaurav', 'Dessai', '$2y$13$EWhvH3vKNRkQBjc7/7Sh1.tjA3RdZVmcv/oOKmxCOt4pCuOkZ9UdK', 'gaurav@dessai.com', NULL, 'uploads/default.png');
 
 -- --------------------------------------------------------
 
@@ -342,7 +442,7 @@ INSERT INTO `users` (`userid`, `fname`, `lname`, `password`, `email`, `authKey`,
 -- Table structure for table `user_admin`
 --
 
-CREATE TABLE IF NOT EXISTS `user_admin` (
+CREATE TABLE `user_admin` (
   `userid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -352,7 +452,7 @@ CREATE TABLE IF NOT EXISTS `user_admin` (
 -- Table structure for table `user_ans_questions`
 --
 
-CREATE TABLE IF NOT EXISTS `user_ans_questions` (
+CREATE TABLE `user_ans_questions` (
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `pid` int(11) NOT NULL,
   `qid` int(11) NOT NULL,
@@ -366,7 +466,32 @@ CREATE TABLE IF NOT EXISTS `user_ans_questions` (
 --
 
 INSERT INTO `user_ans_questions` (`created_time`, `pid`, `qid`, `uid`, `answer`, `isRead`) VALUES
-('2017-09-15 16:38:54', 8, 1, 5, '', 'true');
+('2017-09-15 16:38:54', 8, 1, 5, '', 'true'),
+('2017-09-16 02:10:37', 14, 1, 7, '2 units', 'true'),
+('2017-09-16 02:10:37', 14, 2, 7, 'Yellow', 'true'),
+('2017-09-16 02:10:37', 14, 3, 7, 'Drilling a hole', 'true'),
+('2017-09-16 02:10:37', 14, 4, 7, 'Old', 'true'),
+('2017-09-16 02:10:37', 14, 5, 7, 'Margoa', 'true'),
+('2017-09-16 02:12:42', 17, 1, 8, '5', 'true'),
+('2017-09-16 02:12:42', 17, 2, 8, 'Blue', 'true'),
+('2017-09-16 02:12:42', 17, 3, 8, 'Climbing a building', 'true'),
+('2017-09-16 02:12:42', 17, 4, 8, 'New', 'true'),
+('2017-09-16 02:12:42', 17, 5, 8, 'Mumbai', 'true'),
+('2017-09-16 02:14:04', 27, 1, 9, '2', 'true'),
+('2017-09-16 02:14:04', 27, 2, 9, 'Yellow', 'true'),
+('2017-09-16 02:14:04', 27, 3, 9, 'Need to do some construction work', 'true'),
+('2017-09-16 02:14:04', 27, 4, 9, 'New', 'true'),
+('2017-09-16 02:14:04', 27, 5, 9, 'Canada', 'true'),
+('2017-09-16 02:17:58', 20, 1, 10, '1', 'true'),
+('2017-09-16 02:17:58', 20, 2, 10, 'Yellow', 'true'),
+('2017-09-16 02:17:58', 20, 3, 10, 'Drilling a wall', 'true'),
+('2017-09-16 02:17:58', 20, 4, 10, 'Old', 'true'),
+('2017-09-16 02:17:58', 20, 5, 10, 'Mumbai', 'true'),
+('2017-09-16 02:18:53', 20, 1, 11, '3', 'true'),
+('2017-09-16 02:18:53', 20, 2, 11, 'Any', 'true'),
+('2017-09-16 02:18:53', 20, 3, 11, 'Building construction', 'true'),
+('2017-09-16 02:18:53', 20, 4, 11, 'Old', 'true'),
+('2017-09-16 02:18:53', 20, 5, 11, 'Panjim', 'true');
 
 -- --------------------------------------------------------
 
@@ -374,7 +499,7 @@ INSERT INTO `user_ans_questions` (`created_time`, `pid`, `qid`, `uid`, `answer`,
 -- Table structure for table `user_customer`
 --
 
-CREATE TABLE IF NOT EXISTS `user_customer` (
+CREATE TABLE `user_customer` (
   `userid` int(11) NOT NULL,
   `company` varchar(50) DEFAULT NULL,
   `phone` varchar(10) NOT NULL
@@ -385,7 +510,12 @@ CREATE TABLE IF NOT EXISTS `user_customer` (
 --
 
 INSERT INTO `user_customer` (`userid`, `company`, `phone`) VALUES
-(5, 'Chowgule FOSS Club', '9856321454');
+(5, 'Chowgule FOSS Club', '9856321454'),
+(7, NULL, '9658745213'),
+(8, NULL, '9565874521'),
+(9, NULL, '9654785412'),
+(10, NULL, '9865321456'),
+(11, NULL, '9865321145');
 
 --
 -- Indexes for dumped tables
@@ -505,27 +635,27 @@ ALTER TABLE `user_customer`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `specification`
 --
 ALTER TABLE `specification`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- Constraints for dumped tables
 --
@@ -596,6 +726,7 @@ ALTER TABLE `user_ans_questions`
 --
 ALTER TABLE `user_customer`
   ADD CONSTRAINT `user_customer_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

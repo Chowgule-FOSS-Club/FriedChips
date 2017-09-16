@@ -103,7 +103,7 @@
 
                 $.get('index.php?r=query/count' , { id : id} , function(data){
                     console.log(data);
-                    $("small[class='label pull-right']").html("("+data+")");
+                    $("small[class='label-success label pull-right']").html("("+data+")");
                 });
             });
             $('.card').hover(function() {
