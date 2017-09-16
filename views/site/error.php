@@ -10,7 +10,7 @@ use yii\helpers\Html;
 $this->title = $name;
 ?>
 <div class="container-fluid">
-    <div class="site-error" style="margin: 80px 0px;">
+    <div class="site-error" style="margin: 20px 0px;">
 
         <h1><?= Html::encode($this->title) ?></h1>
 

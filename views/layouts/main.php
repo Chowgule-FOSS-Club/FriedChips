@@ -92,7 +92,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                 $rbac_permission = true;
                             }
 
-                            $product_permission = false;
+                            $product_permission = true;
                             if(Yii::$app->user->can('product')){
                                 $product_permission = true;
                             }
@@ -278,6 +278,17 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                             echo HTML::a(
                                                 'Change Password',
                                                 ['users/change-password', 'id' => Yii::$app->user->identity->userid]
+                                            ) ; 
+                                        }
+                                    ?>
+                                
+                                </li>
+                                <li>
+                                    <?php 
+                                        if(!Yii::$app->user->isGuest){
+                                            echo HTML::a(
+                                                'Change Profile Photo',
+                                                ['users/update-dp', 'id' => Yii::$app->user->identity->userid]
                                             ) ; 
                                         }
                                     ?>

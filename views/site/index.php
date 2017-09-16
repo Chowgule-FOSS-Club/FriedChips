@@ -66,21 +66,22 @@
     <div class="row slideanim">
       <div class="col-sm-3">
 
-        <h4 class="elegantshd">National Hydroelectric Power Corporation Ltd.</h4>
+        
+        <img src="images/client1.png" class="img-responsive" alt="Image">
+        
+      </div>
+      <div class="col-sm-3">
+
+        <img src="images/client2.png" class="img-responsive" alt="Image">
+      </div>
+      <div class="col-sm-3">
+
+        <img src="images/client3.png" class="img-responsive" alt="Image">
 
       </div>
       <div class="col-sm-3">
 
-        <h4 class="elegantshd">Coal India Ltd.</h4>
-      </div>
-      <div class="col-sm-3">
-
-        <h4 class="elegantshd">Western Coalfields Ltd</h4>
-
-      </div>
-      <div class="col-sm-3">
-
-        <h4 class="elegantshd">South Eastern Coalfields Ltd</h4>
+        <img src="images/client4.png" class="img-responsive" alt="Image">
 
       </div>
     </div>
@@ -88,22 +89,22 @@
     <div class="row slideanim">
       <div class="col-sm-3">
 
-        <h4 class="elegantshd">Eastern Coalfields Ltd</h4>
+      <img src="images/client5.png" class="img-responsive" alt="Image">
 
       </div>
       <div class="col-sm-3">
 
-        <h4 class="elegantshd">Hindustan Copper Ltd.</h4>
+      <img src="images/client6.png" class="img-responsive" alt="Image">
 
       </div>
       <div class="col-sm-3">
 
-        <h4 class="elegantshd">Larsen & Toubro Ltd.</h4>
+      <img src="images/client7.png" class="img-responsive" alt="Image">
 
       </div>
       <div class="col-sm-3">
 
-        <h4 class="elegantshd">Eastern Coalfields Ltd</h4>
+      <img src="images/client8.png" class="img-responsive" alt="Image">
 
       </div>
     </div>

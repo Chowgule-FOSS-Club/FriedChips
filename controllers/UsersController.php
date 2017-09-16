@@ -238,7 +238,7 @@ class UsersController extends Controller
                 ]
             );
         }else{
-            Yii::$app->response->redirect(Url::to(['site/error-page'], true));
+            //Yii::$app->response->redirect(Url::to(['site/error-page'], true));
         }
     }
     /*
