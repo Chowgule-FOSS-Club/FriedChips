@@ -15,7 +15,7 @@
     <div class="row">
       <div class="col-sm-2"></div>
       <div class="col-sm-8">
-        <h2 class="text-center">About Company Page</h2><br>
+        <h2 class="text-center">About Us</h2><br>
         <h4>
           <p class="about">The Salgaocar Group of Companies, a leading multi crore conglomerate is engaged mainly in mining and export of
             iron ore to the different countries of the World (Japan, Korea, China, W. Europe, etc.) with its headquarter

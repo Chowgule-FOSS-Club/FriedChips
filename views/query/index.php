@@ -16,9 +16,9 @@
     $queries = UserAnsQuestions::find()->select('created_time')->distinct()->orderBy('created_time DESC')->all();
     
 ?>
-<div class="row">
+
     <h1><?= Html::encode($this->title) ?></h1><br>
-    <div class="col-md-12">
+   
       <div class="panel-group" id="accordion">
       <?php foreach($queries as $query){
         $flag;
@@ -78,8 +78,7 @@
     } 
     ?>
     </div>
-    </div>
-</div>
+  
 
 <?php 
     $script = <<< JS

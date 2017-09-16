@@ -318,7 +318,7 @@ use app\models\Users;
                 );
             }
             $('#prod-question').append('<br/>' +
-                    '<input type="hidden" name="all-questions"/> <br/><br/>');
+                    '<input type="hidden" name="all-questions"/>');
             $('[name="all-questions"]').val(raw);
             })
         });
