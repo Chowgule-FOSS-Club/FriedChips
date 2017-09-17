@@ -173,7 +173,9 @@ h2 {
   padding-right: 85px;
   transition: 0.5s;
   font-weight: bold;
-  border-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: #009688;
 }
 
 .btinqr:hover {
