@@ -18,7 +18,7 @@
 ?>
 
     <h1><?= Html::encode($this->title) ?></h1><br>
-   
+
       <div class="panel-group" id="accordion">
       <?php foreach($queries as $query){
         $flag;
@@ -35,13 +35,12 @@
             <div class="panel-heading card" style="background-color: <?php echo  $flag=="true" ? "white" : "#1ABB9C;";  ?>"    data-toggle="collapse" data-parent="#accordion" href="#<?= $idGen; ?>" data-id="<?= $query->created_time; ?>">
                 <h4 class="panel-title">
                     <div class='row'>
-                        <div class='col-md-4'>
+                        <div class='col-md-6'>
                             <?php  echo $user->getName();  ?>
                             <?php echo " - ". $product->name ?>
                         </div>
-                        <div class="col-md-6">
-                        </div>
-                        <div class="col-md-2">
+                        
+                        <div class="col-md-6 a">
                         <?php echo $query->created_time ?>
                         </div>
                     </div>
@@ -59,6 +58,14 @@
                                 echo "<b>Phone Number:</b> ". UserCustomer::findOne($user->userid)->phone."<br>";
                             ?>
                         </div>
+                        <style>
+                        .a{ 
+                            float:right;
+                            
+                            font-weight:bolder;
+                            font-size: 12px;
+                        }
+                        </style>
                         <div class="col-md-6">
                         <?php
                             echo "<h3>Questions</h3>";
@@ -78,7 +85,6 @@
     } 
     ?>
     </div>
-  
 
 <?php 
     $script = <<< JS
