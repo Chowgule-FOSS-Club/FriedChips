@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 16, 2017 at 05:17 AM
+-- Generation Time: Sep 20, 2017 at 08:51 AM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -154,6 +154,32 @@ CREATE TABLE `customer_questions` (
   `qid` int(11) NOT NULL,
   `value` varchar(500) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_number`
+--
+
+CREATE TABLE `model_number` (
+  `mid` int(11) NOT NULL,
+  `name` varchar(25) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `pid` int(11) DEFAULT NULL,
+  `status` enum('true','false') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_specs`
+--
+
+CREATE TABLE `model_specs` (
+  `sid` int(11) NOT NULL,
+  `mid` int(11) NOT NULL,
+  `value` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -562,6 +588,20 @@ ALTER TABLE `customer_questions`
   ADD KEY `customer_question_qid` (`qid`);
 
 --
+-- Indexes for table `model_number`
+--
+ALTER TABLE `model_number`
+  ADD PRIMARY KEY (`mid`),
+  ADD KEY `model_number_pid` (`pid`);
+
+--
+-- Indexes for table `model_specs`
+--
+ALTER TABLE `model_specs`
+  ADD PRIMARY KEY (`sid`,`mid`),
+  ADD KEY `model_specs_mid` (`mid`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
@@ -637,6 +677,11 @@ ALTER TABLE `user_customer`
 ALTER TABLE `category`
   MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
+-- AUTO_INCREMENT for table `model_number`
+--
+ALTER TABLE `model_number`
+  MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
@@ -685,6 +730,19 @@ ALTER TABLE `auth_item_child`
 ALTER TABLE `customer_questions`
   ADD CONSTRAINT `customer_question_qid` FOREIGN KEY (`qid`) REFERENCES `questions` (`qid`),
   ADD CONSTRAINT `customer_question_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`);
+
+--
+-- Constraints for table `model_number`
+--
+ALTER TABLE `model_number`
+  ADD CONSTRAINT `model_number_pid` FOREIGN KEY (`pid`) REFERENCES `product` (`pid`);
+
+--
+-- Constraints for table `model_specs`
+--
+ALTER TABLE `model_specs`
+  ADD CONSTRAINT `model_specs_mid` FOREIGN KEY (`mid`) REFERENCES `model_number` (`mid`),
+  ADD CONSTRAINT `model_specs_sid` FOREIGN KEY (`sid`) REFERENCES `specification` (`sid`);
 
 --
 -- Constraints for table `product_category`
