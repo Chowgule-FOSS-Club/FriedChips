@@ -196,44 +196,29 @@ use app\models\Users;
 
                     <div>
                         <div class="img-card1">
-                            <img class="img-responsive" src="<?=$product[0]->p->image?>" />
+                            <img class="img-responsive" src="<?=$product[0]->image?>" />
 
                             <br />
                         </div>
 
                         <div class="btcnt" style="text-align:center">
 
-                             <button type="submit" class="btnview btn-responsive" data-target="#modal-1" data-toggle="modal" name='enquire' value=<?= $product[0]->p->pid ?>><p >ENQUIRE</p></button> 
+                             <button type="submit" class="btnview btn-responsive" data-target="#modal-1" data-toggle="modal" name='enquire' value=<?= $product[0]->pid ?>><p >ENQUIRE</p></button> 
                         
                         </div>
                     </div>
 
                 </div>
                 <div class=" col-sm-8">
-                    <h2 class="h2title"><?=$product[0]->p->name?></h2>
+                    <h2 class="h2title"><?=$product[0]->name?></h2>
                     <hr class="hr-primary">
 
                     <p class="info">
-                       <?=$product[0]->p->description?>
+                       <?=$product[0]->description?>
                     </p>
                 </div>
 
-                <button type="button" class="btncollapse col-sm-5 col-md-4 col-xs-7 col-lg-2" data-toggle="collapse" data-target="#table">Specification</button>
-
-                <div id="table" class="collapse col-sm-8 col-md-8 col-xs-8 col-lg-8">
-                    <div class="table table-striped">
-                        <table class="table">
-                            <tbody>
-                            <?php foreach ($product as $product_spec) : ?>       
-                                <tr>
-                                    <th> <?= $product_spec->s->name?></th>
-                                    <td> <?= $product_spec->value?></td>
-                                </tr>
-                                <?php endforeach?>                                
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                
 
 
             </div>

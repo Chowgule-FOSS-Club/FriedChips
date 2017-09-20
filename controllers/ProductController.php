@@ -94,12 +94,8 @@ class ProductController extends Controller
 
     public function actionViewSpecs($id)
     {
-        $product_query = ProductSpecs::find();
-
-        $product_query->joinWith('s');
-        $product_query->joinWith('p');
-
-        $product=$product_query->where(['product.pid' => $id])->all();        
+        $product = Product::find()->where(['pid' => $id])->all(); ;
+    
         
         if ($product!=null) {
             $this->layout = 'product';

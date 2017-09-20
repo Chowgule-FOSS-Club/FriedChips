@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
--- https://www.phpmyadmin.net/
+-- version 4.4.14
+-- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 20, 2017 at 08:51 AM
--- Server version: 10.1.22-MariaDB
--- PHP Version: 7.1.4
+-- Generation Time: Sep 20, 2017 at 02:03 PM
+-- Server version: 5.6.26
+-- PHP Version: 5.6.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -28,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `auth_assignment`
 --
 
-CREATE TABLE `auth_assignment` (
+CREATE TABLE IF NOT EXISTS `auth_assignment` (
   `item_name` varchar(64) NOT NULL,
   `user_id` varchar(64) NOT NULL,
   `created_at` int(11) DEFAULT NULL
@@ -47,7 +45,7 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 -- Table structure for table `auth_item`
 --
 
-CREATE TABLE `auth_item` (
+CREATE TABLE IF NOT EXISTS `auth_item` (
   `name` varchar(64) NOT NULL,
   `type` int(11) NOT NULL,
   `description` text,
@@ -80,7 +78,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 -- Table structure for table `auth_item_child`
 --
 
-CREATE TABLE `auth_item_child` (
+CREATE TABLE IF NOT EXISTS `auth_item_child` (
   `parent` varchar(64) NOT NULL,
   `child` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -106,7 +104,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 -- Table structure for table `auth_rule`
 --
 
-CREATE TABLE `auth_rule` (
+CREATE TABLE IF NOT EXISTS `auth_rule` (
   `name` varchar(64) NOT NULL,
   `data` text,
   `created_at` int(11) DEFAULT NULL,
@@ -118,7 +116,7 @@ CREATE TABLE `auth_rule` (
 --
 
 INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
-('isUser', 'O:34:\"app\\models\\rules\\DisplayLoggedUser\":3:{s:4:\"name\";s:6:\"isUser\";s:9:\"createdAt\";i:1505443284;s:9:\"updatedAt\";i:1505443284;}', 1505443284, 1505443284);
+('isUser', 'O:34:"app\\models\\rules\\DisplayLoggedUser":3:{s:4:"name";s:6:"isUser";s:9:"createdAt";i:1505443284;s:9:"updatedAt";i:1505443284;}', 1505443284, 1505443284);
 
 -- --------------------------------------------------------
 
@@ -126,10 +124,10 @@ INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
 -- Table structure for table `category`
 --
 
-CREATE TABLE `category` (
+CREATE TABLE IF NOT EXISTS `category` (
   `cid` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
@@ -149,7 +147,7 @@ INSERT INTO `category` (`cid`, `name`) VALUES
 -- Table structure for table `customer_questions`
 --
 
-CREATE TABLE `customer_questions` (
+CREATE TABLE IF NOT EXISTS `customer_questions` (
   `userid` int(11) NOT NULL,
   `qid` int(11) NOT NULL,
   `value` varchar(500) NOT NULL,
@@ -159,65 +157,38 @@ CREATE TABLE `customer_questions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `model_number`
---
-
-CREATE TABLE `model_number` (
-  `mid` int(11) NOT NULL,
-  `name` varchar(25) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `pid` int(11) DEFAULT NULL,
-  `status` enum('true','false') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `model_specs`
---
-
-CREATE TABLE `model_specs` (
-  `sid` int(11) NOT NULL,
-  `mid` int(11) NOT NULL,
-  `value` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `product`
 --
 
-CREATE TABLE `product` (
+CREATE TABLE IF NOT EXISTS `product` (
   `pid` int(11) NOT NULL,
   `name` varchar(25) NOT NULL,
   `description` text NOT NULL,
   `image` varchar(200) NOT NULL,
   `status` enum('true','false') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`pid`, `name`, `description`, `image`, `status`) VALUES
-(8, 'Tunnel Heading', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Tunnel Heading.jpg', 'true'),
-(9, 'Mucking', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Mucking.jpg', 'true'),
-(11, 'Load Haul Dump (LHD\'s)', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Load Haul Dump (LHD\'s).jpg', 'true'),
-(12, 'Dump Trucks', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Dump Trucks.jpg', 'true'),
-(14, 'Battery Locomotives', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Battery Locomotives.jpg', 'true'),
-(15, 'Transverse Cutting Units', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Transverse Cutting Units.jpg', 'true'),
-(17, 'Drilling Jumbos', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Drilling Jumbos.jpg', 'true'),
-(19, 'Trolley Locomotives', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Trolley Locomotives.jpg', 'true'),
-(20, 'Underground Trucks ', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Underground Trucks .jpg', 'true'),
-(21, 'Bitumen & Emulsion', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Bitumen & Emulsion.jpg', 'true'),
-(23, 'Pipe Layers', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Pipe Layers.jpg', 'true'),
-(24, 'Micro Surface Pavers', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Micro Surface Pavers.jpg', 'true'),
-(25, 'Raise Climbers', ' It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n', 'uploads/Raise Climbers.jpg', 'true'),
-(26, 'Pinion Hoist', ' It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n', 'uploads/Pinion Hoist.jpg', 'true'),
-(27, 'Crawler Cranes', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Crawler Cranes.png', 'true'),
-(28, 'All Terrain Cranes', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/All Terrain Cranes.jpg', 'true'),
-(29, 'Mobile Cranes', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Mobile Cranes.jpg', 'true');
+(11, 'Load Haul Dump (LHD''s)', 'PAUS diesel driven LHDs are designed for high productivity, reliability and easy maintenance in tough under-\r\nground mining applications. The Paus PFL 18 is a very compact 1.8 m3 loader and due to its dimensions suitable\r\nfor narrow vine operations.\r\nThe PFL 18 is powered by a 84 kW Deutz F6L914 air-cooled engine. The diesel engine combined with a hydro-\r\ndynamic drive convinces with very low operation costs, high breakout forces, extraordinary productivity and ex-\r\ntremely long lifetime.\r\nExtreme maneuverability is achieved by articulated steering (±40°) and compact dimensions. The oscillating rear\r\naxle (±8°) guarantees always an excellent ground contact even under rough road conditions. The ROPS/FOPS\r\napproved drive compartment is designed after the latest ergonomic standards and grants excellent operating\r\ncomfort and extremely good view. Clearly arranged operating elements allow the operator to be focused on pro-\r\nduction.\r\nThe PFL 18 is designed for easy maintenance and all daily maintenance checks could be done from one side for\r\nreducing down time of the machine. Central lubrication bars facilitate greasing.', 'uploads/Load Haul Dump (LHD''s).jpg', 'true'),
+(14, 'Battery Locomotives', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Battery Locomotives.jpg', 'true'),
+(15, 'Transverse Cutting Units', 'The transverse drum cutter is ideally suited for tren-\r\nching, tunnelling, special foundation work, demolition\r\nand for soil mixing. The operating characteristics of erkat\r\nspecial drum cutters allow them to be used in noise and\r\nvibration sensitive areas.\r\nThe ER range of transverse drum cutters consists of\r\n15 different models.\r\nBy changing the cutter drums, erkat transverse drum\r\ncutters can be easily converted to suit several special\r\napplications such as tunnelling, profiling or cutting wood\r\n(non-standard models).', 'uploads/Transverse Cutting Units.jpg', 'true'),
+(17, 'Drilling Jumbos', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Drilling Jumbos.jpg', 'true'),
+(19, 'Trolley Locomotives', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here, content here'', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ''lorem ipsum'' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'uploads/Trolley Locomotives.jpg', 'true'),
+(20, 'Underground Trucks ', 'This mine transporter articulated dump truck can be applied to the underground work, such as mine roadway. This tipper truck underground mining is suitable for transporting the ore, rock and other various objects. So this Underground Truck without track can be used as transportation equipment.\r\n\r\n\r\n1. All diesel engines with low pollution are from DEUTZ.\r\n\r\n2. And the hydraulic torque converter, speed changing box and the driven axle equipped on this mine transporter articulated dump truck are all from DANA.\r\n\r\n3. Hydraulic braking system from Mico also is installed on this Underground Truck.\r\n\r\n4. The off-gas discharged from such articulated dump truck is processed though oxidation, catalysis and anechoic treatment, etc. This processing unit and other advanced complement parts are all imported from Italia.\r\n\r\n5. The driving brake is wet type and multi-discs, which has stable performance and maintains avoidance.\r\n\r\n6. The carriage of this vehicle is made of steel plate with well anti-friction. It ensures the duality of the coach. This Underground Truck can dump the cargo automatically. So this mine transporter articulated dump trucks can be used to load and transport various ores and materials.\r\n', 'uploads/Underground Trucks .jpg', 'true'),
+(21, 'Bitumen & Emulsion', 'The MELTING DRUM unit is used all the time that bitumen is\r\nsupplied to customer inside drums and he needs to liquefy it prior\r\nutilisation.\r\nWe have available two models: “MD 3x8” and “MD 3x10”. The\r\nmodel name indicates the number of lines (3) and the quantity of\r\ndrums for each line (8 or 10) inside the drum melting unit. This\r\nequipment is designed to continuously melt bitumen contained in\r\nstandard drums of 200 kg/each, so to enable constant supply of\r\nbitumen.', 'uploads/Bitumen & Emulsion.jpg', 'true'),
+(23, 'Pipe Layers', 'Taishan Construction Machinery Group Co., Ltd. is a professional manufacturer of a comprehensive range of Pipelayer and Special construction machinery. The main series of their Products are Daifeng brand Hydraulic Pipelayers having lifting capacity from 25 Ton to 100 Ton, Marsh Pipelayers, Multifunction Pipelayers, Tracked Crane, Hydraulic Backfiller, Colligated welding vehicle, Pipeline Mobile Power station and Hydraulic wheeled Excavator.', 'uploads/Pipe Layers.jpg', 'true'),
+(24, 'Micro Surface Pavers', 'As a professional micro-surfacing manufacture and supplier in China(Zhejiang Metong Road Machinery), we have received ISO9001 certification of quality regulatory system. We provide our customers with road equipment, such as micro-surfacing, chip sealer, asphalt distributor and rubber asphalt plant. They are exported to more than forty countries and regions, including Russia, Indonesia, Chile and Kenya. We are in a position to produce high-quality pavement machinery according to customers'' various demands. Thank you for visiting our website. If you have any question, please feel free to contact us.', 'uploads/Micro Surface Pavers.jpg', 'true'),
+(25, 'Raise Climbers', 'Arkbro designs, manufactures and sells or leases Raise Climbers and related equipment to be used for horizontal drilling to enlarge pilot raises for ventilation shafts, transport shafts etc. as well as for production mining (Long Hole Drilling), of Narrow ore veins or wide ore bodies.\r\nArkbro also designs, manufactures and sells or leases Universal Rack and Pinion Hoists. They are ideal for use in various applications, especially in mines and Underground shafts for inspection, servicing and repairing of cables , emergency egress, and interval hoisting. The quick installation due to the rack and pinion system and the limited space requirements, (no machine room is needed) makes the ABU-600 Hoist the most economical and practical solution for your specific project.\r\n', 'uploads/Raise Climbers.jpg', 'true'),
+(26, 'Pinion Hoist', 'Arkbro also designs, manufactures and sells or leases Universal Rack and Pinion Hoists. They are ideal for use in various applications, especially in mines and Underground shafts for inspection, servicing and repairing of cables , emergency egress, and interval hoisting. The quick installation due to the rack and pinion system and the limited space requirements, (no machine room is needed) makes the ABU-600 Hoist the most economical and practical solution for your specific project.\r\n', 'uploads/Pinion Hoist.jpg', 'true'),
+(27, 'Crawler Cranes', 'XCMG Group is the largest enterprise in developing, manufacturing and exporting comprehensive range of construction machinery in China with their equipments working in more than 120 countries.\r\nXCMG''s fully hydraulic Cranes are developed independently in absorption of foreign advanced technology and combined with China domestic work conditions. Power, Drive and Hydraulic components, Steel cables and Wire Ropes are selected from Domestic and internationally famous enterprises.', 'uploads/Crawler Cranes.png', 'true'),
+(28, 'All Terrain Cranes', 'XCMG Group is the largest enterprise in developing, manufacturing and exporting comprehensive range of construction machinery in China with their equipments working in more than 120 countries.\r\nXCMG''s fully hydraulic Cranes are developed independently in absorption of foreign advanced technology and combined with China domestic work conditions. Power, Drive and Hydraulic components, Steel cables and Wire Ropes are selected from Domestic and internationally famous enterprises.', 'uploads/All Terrain Cranes.jpg', 'true'),
+(29, 'Mobile Cranes', 'XCMG Group is the largest enterprise in developing, manufacturing and exporting comprehensive range of construction machinery in China with their equipments working in more than 120 countries.\r\nXCMG''s fully hydraulic Cranes are developed independently in absorption of foreign advanced technology and combined with China domestic work conditions. Power, Drive and Hydraulic components, Steel cables and Wire Ropes are selected from Domestic and internationally famous enterprises..', 'uploads/Mobile Cranes.jpg', 'true'),
+(30, 'Concrete Sprayer', 'Solves problem of deficiency spraying of small sprayer in big and long tunnels, greatly improves the working conditions for tunnel workers,raises work efficiency, reduce concrete consumption,guarantee the construction quality. with dual power system, it greatly reduces exhaust emissions. It is the best choice for hydro-power, railway and roadway tunnels.', 'uploads/Concrete Sprayer.jpg', 'true'),
+(31, 'Tunnel Loading  Machines', 'For heading in soft ground and high speed\r\nmucking of blasted rock\r\nMinimal cross section  15 m2,\r\nDiesel drive 140 kW.\r\nElectric drive 90 kW\r\nOperating weight approx. 31 t\r\n', 'uploads/Tunnel Loading  Machines.jpg', 'true');
 
 -- --------------------------------------------------------
 
@@ -225,38 +196,10 @@ INSERT INTO `product` (`pid`, `name`, `description`, `image`, `status`) VALUES
 -- Table structure for table `product_category`
 --
 
-CREATE TABLE `product_category` (
+CREATE TABLE IF NOT EXISTS `product_category` (
   `pid` int(11) NOT NULL,
   `cid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `product_category`
---
-
-INSERT INTO `product_category` (`pid`, `cid`) VALUES
-(8, 7),
-(9, 7),
-(9, 12),
-(11, 7),
-(11, 11),
-(12, 7),
-(14, 8),
-(15, 8),
-(17, 8),
-(19, 8),
-(20, 8),
-(21, 9),
-(21, 10),
-(23, 9),
-(24, 9),
-(25, 7),
-(25, 12),
-(26, 7),
-(27, 9),
-(28, 9),
-(28, 11),
-(29, 9);
 
 -- --------------------------------------------------------
 
@@ -264,7 +207,7 @@ INSERT INTO `product_category` (`pid`, `cid`) VALUES
 -- Table structure for table `product_question`
 --
 
-CREATE TABLE `product_question` (
+CREATE TABLE IF NOT EXISTS `product_question` (
   `pid` int(11) NOT NULL,
   `qid` int(11) NOT NULL,
   `status` enum('true','false') NOT NULL
@@ -275,87 +218,21 @@ CREATE TABLE `product_question` (
 --
 
 INSERT INTO `product_question` (`pid`, `qid`, `status`) VALUES
-(8, 1, 'true'),
-(9, 1, 'true'),
-(9, 2, 'true'),
-(9, 3, 'true'),
-(9, 4, 'true'),
-(9, 5, 'true'),
-(11, 1, 'true'),
-(11, 2, 'true'),
-(11, 3, 'true'),
-(11, 4, 'true'),
-(11, 5, 'true'),
-(12, 1, 'true'),
-(12, 2, 'true'),
-(12, 3, 'true'),
-(12, 4, 'true'),
-(12, 5, 'true'),
-(14, 1, 'true'),
-(14, 2, 'true'),
-(14, 3, 'true'),
-(14, 4, 'true'),
-(14, 5, 'true'),
-(15, 1, 'true'),
-(15, 2, 'true'),
-(15, 3, 'true'),
-(15, 4, 'true'),
-(15, 5, 'true'),
-(17, 1, 'true'),
-(17, 2, 'true'),
-(17, 3, 'true'),
-(17, 4, 'true'),
-(17, 5, 'true'),
-(19, 1, 'true'),
-(19, 2, 'true'),
-(19, 3, 'true'),
-(19, 4, 'true'),
-(19, 5, 'true'),
-(20, 1, 'true'),
-(20, 2, 'true'),
-(20, 3, 'true'),
-(20, 4, 'true'),
-(20, 5, 'true'),
-(21, 1, 'true'),
-(21, 2, 'true'),
-(21, 3, 'true'),
-(21, 4, 'true'),
-(21, 5, 'true'),
-(23, 1, 'true'),
-(23, 2, 'true'),
-(23, 3, 'true'),
-(23, 4, 'true'),
-(23, 5, 'true'),
-(24, 1, 'true'),
-(24, 2, 'true'),
-(24, 3, 'true'),
-(24, 4, 'true'),
-(24, 5, 'true'),
-(25, 1, 'true'),
-(25, 2, 'true'),
-(25, 3, 'true'),
-(25, 4, 'true'),
-(25, 5, 'true'),
-(26, 1, 'true'),
-(26, 2, 'true'),
-(26, 3, 'true'),
-(26, 4, 'true'),
-(26, 5, 'true'),
-(27, 1, 'true'),
-(27, 2, 'true'),
-(27, 3, 'true'),
-(27, 4, 'true'),
-(27, 5, 'true'),
-(28, 1, 'true'),
-(28, 2, 'true'),
-(28, 3, 'true'),
-(28, 4, 'true'),
-(28, 5, 'true'),
-(29, 1, 'true'),
-(29, 2, 'true'),
-(29, 3, 'true'),
-(29, 4, 'true'),
-(29, 5, 'true');
+(11, 6, 'true'),
+(14, 6, 'true'),
+(15, 6, 'true'),
+(17, 6, 'true'),
+(19, 6, 'true'),
+(20, 6, 'true'),
+(21, 6, 'true'),
+(23, 6, 'true'),
+(24, 6, 'true'),
+(25, 6, 'true'),
+(26, 6, 'true'),
+(27, 6, 'true'),
+(28, 6, 'true'),
+(30, 6, 'true'),
+(31, 6, 'true');
 
 -- --------------------------------------------------------
 
@@ -363,35 +240,12 @@ INSERT INTO `product_question` (`pid`, `qid`, `status`) VALUES
 -- Table structure for table `product_specs`
 --
 
-CREATE TABLE `product_specs` (
+CREATE TABLE IF NOT EXISTS `product_specs` (
   `sid` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   `value` varchar(500) NOT NULL,
   `status` enum('true','false') NOT NULL DEFAULT 'true'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `product_specs`
---
-
-INSERT INTO `product_specs` (`sid`, `pid`, `value`, `status`) VALUES
-(6, 8, '-', 'true'),
-(6, 9, '-', 'true'),
-(6, 11, '-', 'true'),
-(6, 12, '-', 'true'),
-(6, 14, '-', 'true'),
-(6, 15, '-', 'true'),
-(6, 17, '-', 'true'),
-(6, 19, '-', 'true'),
-(6, 20, '-', 'true'),
-(6, 21, '-', 'true'),
-(6, 23, '-', 'true'),
-(6, 24, '-', 'true'),
-(6, 25, '-', 'true'),
-(6, 26, '-', 'true'),
-(6, 27, '-', 'true'),
-(6, 28, '-', 'true'),
-(6, 29, '-', 'true');
 
 -- --------------------------------------------------------
 
@@ -399,21 +253,17 @@ INSERT INTO `product_specs` (`sid`, `pid`, `value`, `status`) VALUES
 -- Table structure for table `questions`
 --
 
-CREATE TABLE `questions` (
+CREATE TABLE IF NOT EXISTS `questions` (
   `qid` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `questions`
 --
 
 INSERT INTO `questions` (`qid`, `name`) VALUES
-(1, 'Quantity'),
-(2, 'Color'),
-(3, 'Usage'),
-(4, 'New/Old'),
-(5, 'Construction area');
+(6, 'Message');
 
 -- --------------------------------------------------------
 
@@ -421,10 +271,10 @@ INSERT INTO `questions` (`qid`, `name`) VALUES
 -- Table structure for table `specification`
 --
 
-CREATE TABLE `specification` (
+CREATE TABLE IF NOT EXISTS `specification` (
   `sid` int(11) NOT NULL,
   `name` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `specification`
@@ -439,7 +289,7 @@ INSERT INTO `specification` (`sid`, `name`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `userid` int(11) NOT NULL,
   `fname` varchar(25) NOT NULL,
   `lname` varchar(25) NOT NULL,
@@ -447,7 +297,7 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `authKey` varchar(50) DEFAULT NULL,
   `image` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -468,7 +318,7 @@ INSERT INTO `users` (`userid`, `fname`, `lname`, `password`, `email`, `authKey`,
 -- Table structure for table `user_admin`
 --
 
-CREATE TABLE `user_admin` (
+CREATE TABLE IF NOT EXISTS `user_admin` (
   `userid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -478,7 +328,7 @@ CREATE TABLE `user_admin` (
 -- Table structure for table `user_ans_questions`
 --
 
-CREATE TABLE `user_ans_questions` (
+CREATE TABLE IF NOT EXISTS `user_ans_questions` (
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `pid` int(11) NOT NULL,
   `qid` int(11) NOT NULL,
@@ -487,45 +337,13 @@ CREATE TABLE `user_ans_questions` (
   `isRead` enum('true','false') DEFAULT 'false'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `user_ans_questions`
---
-
-INSERT INTO `user_ans_questions` (`created_time`, `pid`, `qid`, `uid`, `answer`, `isRead`) VALUES
-('2017-09-15 16:38:54', 8, 1, 5, '', 'true'),
-('2017-09-16 02:10:37', 14, 1, 7, '2 units', 'true'),
-('2017-09-16 02:10:37', 14, 2, 7, 'Yellow', 'true'),
-('2017-09-16 02:10:37', 14, 3, 7, 'Drilling a hole', 'true'),
-('2017-09-16 02:10:37', 14, 4, 7, 'Old', 'true'),
-('2017-09-16 02:10:37', 14, 5, 7, 'Margoa', 'true'),
-('2017-09-16 02:12:42', 17, 1, 8, '5', 'true'),
-('2017-09-16 02:12:42', 17, 2, 8, 'Blue', 'true'),
-('2017-09-16 02:12:42', 17, 3, 8, 'Climbing a building', 'true'),
-('2017-09-16 02:12:42', 17, 4, 8, 'New', 'true'),
-('2017-09-16 02:12:42', 17, 5, 8, 'Mumbai', 'true'),
-('2017-09-16 02:14:04', 27, 1, 9, '2', 'true'),
-('2017-09-16 02:14:04', 27, 2, 9, 'Yellow', 'true'),
-('2017-09-16 02:14:04', 27, 3, 9, 'Need to do some construction work', 'true'),
-('2017-09-16 02:14:04', 27, 4, 9, 'New', 'true'),
-('2017-09-16 02:14:04', 27, 5, 9, 'Canada', 'true'),
-('2017-09-16 02:17:58', 20, 1, 10, '1', 'true'),
-('2017-09-16 02:17:58', 20, 2, 10, 'Yellow', 'true'),
-('2017-09-16 02:17:58', 20, 3, 10, 'Drilling a wall', 'true'),
-('2017-09-16 02:17:58', 20, 4, 10, 'Old', 'true'),
-('2017-09-16 02:17:58', 20, 5, 10, 'Mumbai', 'true'),
-('2017-09-16 02:18:53', 20, 1, 11, '3', 'true'),
-('2017-09-16 02:18:53', 20, 2, 11, 'Any', 'true'),
-('2017-09-16 02:18:53', 20, 3, 11, 'Building construction', 'true'),
-('2017-09-16 02:18:53', 20, 4, 11, 'Old', 'true'),
-('2017-09-16 02:18:53', 20, 5, 11, 'Panjim', 'true');
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `user_customer`
 --
 
-CREATE TABLE `user_customer` (
+CREATE TABLE IF NOT EXISTS `user_customer` (
   `userid` int(11) NOT NULL,
   `company` varchar(50) DEFAULT NULL,
   `phone` varchar(10) NOT NULL
@@ -586,20 +404,6 @@ ALTER TABLE `category`
 ALTER TABLE `customer_questions`
   ADD PRIMARY KEY (`userid`,`qid`),
   ADD KEY `customer_question_qid` (`qid`);
-
---
--- Indexes for table `model_number`
---
-ALTER TABLE `model_number`
-  ADD PRIMARY KEY (`mid`),
-  ADD KEY `model_number_pid` (`pid`);
-
---
--- Indexes for table `model_specs`
---
-ALTER TABLE `model_specs`
-  ADD PRIMARY KEY (`sid`,`mid`),
-  ADD KEY `model_specs_mid` (`mid`);
 
 --
 -- Indexes for table `product`
@@ -675,32 +479,27 @@ ALTER TABLE `user_customer`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `model_number`
---
-ALTER TABLE `model_number`
-  MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `specification`
 --
 ALTER TABLE `specification`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- Constraints for dumped tables
 --
@@ -730,19 +529,6 @@ ALTER TABLE `auth_item_child`
 ALTER TABLE `customer_questions`
   ADD CONSTRAINT `customer_question_qid` FOREIGN KEY (`qid`) REFERENCES `questions` (`qid`),
   ADD CONSTRAINT `customer_question_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`);
-
---
--- Constraints for table `model_number`
---
-ALTER TABLE `model_number`
-  ADD CONSTRAINT `model_number_pid` FOREIGN KEY (`pid`) REFERENCES `product` (`pid`);
-
---
--- Constraints for table `model_specs`
---
-ALTER TABLE `model_specs`
-  ADD CONSTRAINT `model_specs_mid` FOREIGN KEY (`mid`) REFERENCES `model_number` (`mid`),
-  ADD CONSTRAINT `model_specs_sid` FOREIGN KEY (`sid`) REFERENCES `specification` (`sid`);
 
 --
 -- Constraints for table `product_category`
@@ -784,7 +570,6 @@ ALTER TABLE `user_ans_questions`
 --
 ALTER TABLE `user_customer`
   ADD CONSTRAINT `user_customer_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
