@@ -18,7 +18,6 @@ HomeAsset::register($this);
 <html lang="<?= Yii::$app->language ?>">
 <head>
 
-">
 <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link href='https://fonts.googleapis.com/css?family=Khula' rel='stylesheet'>
