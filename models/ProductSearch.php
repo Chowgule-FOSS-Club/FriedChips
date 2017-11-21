@@ -42,13 +42,14 @@ class ProductSearch extends Product
     public function search($params)
     {
         $query = Product::find();
+        $query = $query->orderBy('rank');
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 5,
+                'pageSize' => 9,
             ],
         ]);
 

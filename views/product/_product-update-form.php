@@ -18,10 +18,8 @@ use kartik\file\FileInput;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'image')->widget(FileInput::classname()); ?>
-
     <?= $form->field($model, 'status')->dropDownList([ 'true' => 'True', 'false' => 'False', ], ['prompt' => 'STATUS']) ?>
-
+    
     <?= $form->field($model, 'rank')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">

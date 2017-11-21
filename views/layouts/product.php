@@ -92,47 +92,47 @@ ProductAsset::register($this);
 
 
 
-<footer class="text-center ">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                        <h3>Location</h3>
-                        <p class="addr"><span></span>1110, New Delhi House, 27, Barakhamba Road, New Delhi - 110 001</p>
-       
-        <p><span ></span> sepldel@gmail.com</p>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>Find us on</h3>
-                            
-                    <ul class="social-network social-circle">
-                       
-                        <li><a href="#" class="icoFacebook icon" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#" class="icoTwitter icon" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#" class="icoGoogle icon" title="Google +"><i class="fa fa-google-plus"></i></a></li>
-                        <li><a href="#" class="icoLinkedin icon" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-                    </ul>               
-                
-                    </div>
-                    <div class="col-md-4">
-                        <h3>Contact numbers</h3>
-                          Equipment Division: +91 9811129655<br>
-                          +91-11-23315929<br>
-                          +91-11-23312693
-                    </div>
-                </div>
+<<footer class="text-center hideDiv">
+<div class="footer-above">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col col-md-4">
+                <h3>Location</h3>
+                <p class="addr"><span></span>1110, New Delhi House, 27, Barakhamba Road, New Delhi - 110 001</p>
+
+<p><span ></span> sepldel@gmail.com</p>
+            </div>
+            <div class="footer-col col-md-4">
+             <!--   <h3>Find us on</h3>
+                    
+            <ul class="social-network social-circle">
+               
+                <li><a href="#" class="icoFacebook icon" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#" class="icoTwitter icon" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#" class="icoGoogle icon" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+                <li><a href="#" class="icoLinkedin icon" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+            </ul>				
+    -->	
+            </div>
+            <div class="col-md-4">
+                <h3>Contact numbers</h3>
+                  Equipment Division: +91 9811129655<br>
+                  +91-11-23315929<br>
+                  +91-11-23312693
             </div>
         </div>
-        <div class="footer-below">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        Copyright &copy; salgaocarEngineers.com 2017
-                    </div>
-                </div>
+    </div>
+</div>
+<div class="footer-below">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                Copyright &copy; salgaocarEngineers.com 2017
             </div>
         </div>
-    </footer>
+    </div>
+</div>
+</footer>
 
 <?php $this->endBody() ?>
 </body>

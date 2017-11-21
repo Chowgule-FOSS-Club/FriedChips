@@ -29,11 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'format' => 'html',      
             'attribute' => 'image',    
             'value' => function ($model) {
-             return Html::img($model->image,['class'=>'col-md-10']);
+             return Html::a(Html::img($model->image,['class'=>'col-md-10']),'index.php?r=product%2Fupdate-image&id='.$model->pid);
             },
             'options' => ['class' => 'col-md-3'],
             ],
             'status',
+            'rank',            
             
 
             ['class' => 'yii\grid\ActionColumn'],

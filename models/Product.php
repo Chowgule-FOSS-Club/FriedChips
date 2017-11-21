@@ -12,6 +12,7 @@ use Yii;
  * @property string $description
  * @property string $image
  * @property string $status
+ * @property string $rank
  *
  * @property ProductCategory[] $productCategories
  * @property Category[] $cs
@@ -38,7 +39,7 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description', 'status','image'], 'required'],
+            [['name', 'description', 'status','image','rank'], 'required'],
             [['description', 'status'], 'string'],
             ['file','file'],
             ['name', 'unique',],

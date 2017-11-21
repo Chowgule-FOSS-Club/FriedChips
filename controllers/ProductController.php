@@ -63,19 +63,24 @@ class ProductController extends Controller
      */
     public function actionViewProducts()
     {
-        $product_query = Product::find();
+        $product_query = Product::find()
+        ->where(['status' => true]);
 
         $category_query = Category::find();
 
-        $pagination = new Pagination([
-        'defaultPageSize' => 9,
-        'totalCount'=> $product_query->count(),
-        ]);
 
+        $pagination = new Pagination([
+            'defaultPageSize' => 9,
+            'totalCount'=> $product_query->count(),
+            ]);
+
+        
         $product = $product_query->offset($pagination->offset)
         ->limit($pagination->limit)
-        ->where(['status' => true])
+        ->orderBy('rank')
         ->all();
+
+
 
         $category_query->joinWith('ps');
 
@@ -231,13 +236,27 @@ class ProductController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->file = UploadedFile::getInstance($model, 'image');
-            $model->file->saveAs('uploads/'.$model->name.'.'.$model->file->extension);
-            $model->image = 'uploads/'.$model->name.'.'.$model->file->extension;
             $model->save();
             return $this->redirect(['view', 'id' => $model->pid]);
         } else {
             return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionUpdateImage($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstance($model, 'image');
+            $model->file->saveAs('uploads/'.$model->name.'.'.$model->file->extension);
+            $model->image = 'uploads/'.$model->name.'.'.$model->file->extension; 
+            $model->save();
+            return $this->redirect(['view', 'id' => $model->pid]);
+        } else {
+            return $this->render('update_image', [
                 'model' => $model,
             ]);
         }
